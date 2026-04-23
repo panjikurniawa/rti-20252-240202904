@@ -70,7 +70,7 @@ Tanggal          : 23 April 2026
 
 
 2. Posisi paradigma:
-   - Pendekatan: [ ] Positivis  [ ] Interpretivis  [ ] Design Science  [ ] Mixed
+   - Pendekatan: [✓ ] Positivis  [ ] Interpretivis  [✓ ] Design Science  [ ] Mixed
    - Alasan: Penelitian menguji performa model secara kuantitatif (positivis) sekaligus membangun artefak berupa model machine learning untuk membuktikan efektivitasnya (design science).
 
 3. Identifikasi distorsi:
