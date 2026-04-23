@@ -102,7 +102,7 @@ Pilih satu paper riset di bidang TI yang mengklaim "metode X meningkatkan perfor
 |-------|-------------------|-----------------|
 | Reality → Data | Menggunakan dataset NSL-KDD sebagai representasi trafik jaringan | Dataset lama → tidak mencerminkan serangan modern (external validity) |
 | Data → Processing |Normalisasi, encoding, penghapusan outlier |Outlier bisa merupakan serangan nyata → bias |
-| Processing → Analysis |Training model (DT, RF, SVM) + cross-validation |Hyperparameter tuning tidak dijelaskan detail → fairness issue |
+| Processing → Analysis |Training model (DT, RF, SVM) + cross-validation |Hyperparameter tuning tidak dijelaskan secara rinci, sehingga berpotensi menyebabkan ketidakadilan dalam perbandingan model (fairness issue) |
 | Analysis → Inference |Bandingkan performa berdasarkan akurasi, presisi, recall |Tidak ada uji signifikansi statistik |
 | Inference → Knowledge |Klaim Random Forest paling efektif |Over-generalization (hanya 1 dataset) |
 
