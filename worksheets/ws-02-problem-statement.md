@@ -114,8 +114,7 @@ Pilih satu topik di bidang TI yang diminati. Transformasikan melalui 5 tahap Pro
 
 **Apakah terjebak solution-first thinking?** [ ] Ya / [✓ ] Tidak
 > Jika ya, kembali ke tahap mana?
-> Kamu mulai dari fenomena → masalah
-Bukan langsung “pakai Random Forest”
+> Tidak relevan (tidak terjebak solution-first thinking)
 
 ---
 
