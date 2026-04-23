@@ -106,11 +106,12 @@ Pilih satu paper riset di bidang TI yang mengklaim "metode X meningkatkan perfor
 | Analysis → Inference |Bandingkan performa berdasarkan akurasi, presisi, recall |Tidak ada uji signifikansi statistik |
 | Inference → Knowledge |Klaim Random Forest paling efektif |Over-generalization (hanya 1 dataset) |
 
-**Distorsi paling besar di tahap:** External Validity (dataset tidak representatif terhadap kondisi nyata)
+**Distorsi paling besar di tahap:** External Validity (dataset tidak representatif terhadap kondisi nyata) 
+Tingginya akurasi model kemungkinan dipengaruhi oleh karakteristik dataset yang sudah terstruktur dengan baik, bukan semata karena keunggulan algoritma.
 
 **Dua distorsi spesifik yang teridentifikasi:**
 1. Penggunaan dataset NSL-KDD yang tidak mencerminkan kondisi jaringan modern
-2. Penghapusan outlier yang berpotensi menghilangkan data serangan pentin
+2. Penghapusan outlier yang berpotensi menghilangkan data serangan penting
 
 ---
 
