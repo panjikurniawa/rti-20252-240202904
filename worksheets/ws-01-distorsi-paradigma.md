@@ -95,7 +95,7 @@ Pilih satu paper riset di bidang TI yang mengklaim "metode X meningkatkan perfor
 
 **Paper yang dipilih:**
 > Judul: Implementasi Machine Learning untuk Deteksi Intrusi pada Jaringan Komputer
-> Penulis (Tahun): Dyan Prawita Sari, Zuhri Halim, Irlon, Bayu Waseso, Saromah (2024)
+> Penulis (Tahun): Dyan Prawita Sari et al.(2024)
 > Sumber/Link DOI: (https://jurnal.polgan.ac.id/index.php/jmp/article/view/14074)
 
 | Tahap | Apa yang Dilakukan | Potensi Distorsi |
