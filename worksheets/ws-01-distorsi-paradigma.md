@@ -94,8 +94,7 @@ Pilih satu paper riset di bidang TI yang mengklaim "metode X meningkatkan perfor
 > **Contoh domain TI:** "Deteksi anomali lalu-lintas jaringan menggunakan CNN — akurasi meningkat 94% vs baseline SVM 87%." Distorsi potensial: apakah dataset normal/anomali seimbang? Apakah hanya diuji pada satu vendor traffic?
 
 **Paper yang dipilih:**
-> Judul: Implementasi Machine Learning untuk Deteksi
-Intrusi pada Jaringan Komputer
+> Judul: Implementasi Machine Learning untuk Deteksi Intrusi pada Jaringan Komputer
 > Penulis (Tahun): Dyan Prawita Sari, Zuhri Halim, Irlon, Bayu Waseso, Saromah (2024)
 > Sumber/Link DOI: (https://jurnal.polgan.ac.id/index.php/jmp/article/view/14074)
 
@@ -153,6 +152,4 @@ Skenario: Seorang peneliti menemukan bahwa jika 3 data point outlier dihapus, ha
 
 **Jawaban:**
 > Sebelumnya, saya cenderung menerima klaim akurasi tinggi seperti 95% tanpa mempertanyakan konteksnya. Setelah memahami konsep distorsi dalam Research Trust Model, saya menyadari bahwa angka tersebut bisa dipengaruhi oleh banyak faktor seperti pemilihan dataset, preprocessing, dan metode evaluasi.
-
-Sekarang, saya akan mempertanyakan apakah dataset yang digunakan representatif, apakah terdapat bias dalam preprocessing seperti penghapusan outlier, serta apakah hasil tersebut dapat digeneralisasi. Saya juga lebih kritis terhadap klaim performa tinggi dan tidak langsung menganggapnya sebagai bukti keunggulan metode.
-> ___________________________________________________
+> Sekarang, saya akan mempertanyakan apakah dataset yang digunakan representatif, apakah terdapat bias dalam preprocessing seperti penghapusan outlier, serta apakah hasil tersebut dapat digeneralisasi. Saya juga lebih kritis terhadap klaim performa tinggi dan tidak langsung menganggapnya sebagai bukti keunggulan metode.
