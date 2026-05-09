@@ -107,7 +107,7 @@ Evaluasi metrik DV yang dipilih di Latihan 1 menggunakan 3 kriteria.
 
 | Kriteria | Skor (1-5) | Justifikasi |
 |----------|-----------|-------------|
-| RRepresentative | 5 |F1-Score dan recall cukup mewakili kemampuan model dalam mendeteksi intrusi jaringan |
+| Representative | 5 |F1-Score dan recall cukup mewakili kemampuan model dalam mendeteksi intrusi jaringan |
 | Sensitive |4 |Perbedaan performa antar model masih dapat terlihat dari hasil evaluasi |
 | Feasible |5 |Data dan metrik dapat diperoleh langsung dari hasil pengujian model |
 
