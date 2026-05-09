@@ -66,19 +66,20 @@ Metrik harus ditentukan **sebelum** eksperimen. Memilih metrik setelah melihat d
 ```
 VARIABLE & METRIC DEFINITION
 
-Research Question: ____________________
+Research Question: Apakah Random Forest menghasilkan performa deteksi intrusi yang lebih baik dibandingkan Decision Tree dan SVM pada dataset NSL-KDD?
+
 
 | Variabel | Tipe | Konsep | Metrik | Skala | Satuan | Cara Mengukur | Justifikasi |
 |----------|------|--------|--------|-------|--------|---------------|-------------|
-|          | IV   |        |        |       |        |               |             |
-|          | DV   |        |        |       |        |               |             |
-|          | CV   |        |        |       |        |               |             |
+|Jenis algoritma machine learning          | IV   |Pendekatan klasifikasi intrusi        |Random Forest, Decision Tree, SVM        |Nominal       |—         | Membandingkan algoritma yang digunakan dalam eksperimen               |Digunakan untuk melihat pengaruh jenis algoritma terhadap hasil deteksi intrusi             |
+|Performa deteksi intrusi          | DV   |Kemampuan model mendeteksi serangan        |Akurasi, presisi, recall, dan F1-Score        |Ratio       |Persen (%)        | Menghitung hasil evaluasi model pada dataset pengujian               |Metrik ini dapat menunjukkan seberapa baik model mendeteksi intrusi jaringan             |
+|Dataset NSL-KDD          | CV   |Sumber data pengujian model        |Jumlah data latih dan data uji        |Ratio       |Data record        |Dataset dibagi menjadi data training dan testing               |Digunakan agar pengujian model dilakukan pada data yang sama dan lebih adil             |
 
 Alignment Check:
   RQ → Concept → Variable → Metric → Data → Result
-  [ ] Setiap langkah terdokumentasi
-  [ ] Tidak ada "lompatan logis"
-  [ ] Metrik mengukur apa yang dimaksud (construct validity)
+  [✓ ] Setiap langkah terdokumentasi
+  [✓ ] Tidak ada "lompatan logis"
+  [✓ ] Metrik mengukur apa yang dimaksud (construct validity)
 ```
 
 ---
@@ -87,16 +88,16 @@ Alignment Check:
 
 Gunakan RQ dari WS-04. Definisikan variabel dan metriknya.
 
-**RQ:** __________________________________________________
+**RQ:** Apakah Random Forest menghasilkan performa deteksi intrusi yang lebih baik dibandingkan Decision Tree dan SVM pada dataset NSL-KDD?
 
 | Variabel | Tipe | Konsep Abstrak | Metrik Konkret | Skala (NOIR) | Satuan |
 |----------|------|---------------|----------------|-------------|--------|
-| *Contoh: Jenis model* | *IV* | *Pendekatan klasifikasi* | *Categorical: CNN vs RF* | *Nominal* | *—* |
-| | DV | | | | |
-| | CV | | | | |
+| Jenis algoritma | IV | Pendekatan machine learning | RF, DT, dan SVM | Nominal | — |
+|Performa model | DV |Kemampuan mendeteksi intrusi |Akurasi, presisi, recall, F1-Score |Ratio |Persen (%) |
+|Dataset NSL-KDD | CV |Sumber data eksperimen |Jumlah data training dan testing |Ratio |Record data |
 
-**Apakah ada lompatan logis dalam rantai?** [ ] Ya / [ ] Tidak
-> Jika ya, di mana? ____________________________________
+**Apakah ada lompatan logis dalam rantai?**  [✓ ] Tidak
+> Jika ya, di mana? Tidak ada, karena variabel, metrik, dan data yang digunakan sudah sesuai dengan research question.
 
 ---
 
@@ -106,15 +107,15 @@ Evaluasi metrik DV yang dipilih di Latihan 1 menggunakan 3 kriteria.
 
 | Kriteria | Skor (1-5) | Justifikasi |
 |----------|-----------|-------------|
-| Representative | *Contoh: 4 — F1-Score mewakili keseimbangan precision-recall* | |
-| Sensitive | | |
-| Feasible | | |
+| RRepresentative | 5 |F1-Score dan recall cukup mewakili kemampuan model dalam mendeteksi intrusi jaringan |
+| Sensitive |4 |Perbedaan performa antar model masih dapat terlihat dari hasil evaluasi |
+| Feasible |5 |Data dan metrik dapat diperoleh langsung dari hasil pengujian model |
 
-**Apakah perlu secondary metric?** [ ] Ya / [ ] Tidak
-> Jika ya, apa dan mengapa? _____________________________
+**Apakah perlu secondary metric?** [✓ ] Ya 
+> Jika ya, apa dan mengapa? AUC dan waktu pemrosesan dapat digunakan sebagai secondary metric untuk melihat kemampuan model dalam membedakan data normal dan serangan, serta melihat efisiensi proses deteksi.
 
 **Contoh kasus ceiling effect untuk metrik ini:**
-> ___________________________________________________
+> Jika semua model memiliki akurasi di atas 99%, maka perbedaan performa antar model akan sulit terlihat hanya dari metrik akurasi.
 
 ---
 
@@ -124,10 +125,10 @@ Bayangkan data yang akan dikumpulkan dari eksperimen. Evaluasi 4 dimensi kualita
 
 | Dimensi | Pertanyaan | Jawaban | Strategi Mitigasi |
 |---------|-----------|---------|------------------|
-| Completeness | *Apakah semua data point terkumpul?* | | |
-| Consistency | *Apakah ada kontradiksi internal?* | | |
-| Validity | *Apakah benar-benar mengukur yang dimaksud?* | | |
-| Representativeness | *Apakah sampel mewakili populasi target?* | | |
+| Completeness | Apakah semua data point terkumpul? |Sebagian besar data tersedia lengkap pada dataset NSL-KDD |Memastikan tidak ada data penting yang hilang sebelum preprocessing |
+| Consistency | Apakah ada kontradiksi internal? |Data memiliki format yang cukup konsisten |Melakukan pengecekan data sebelum pelatihan model |
+| Validity | Apakah benar-benar mengukur yang dimaksud? |Dataset berisi data normal dan data serangan jaringan |Menggunakan metrik evaluasi yang sesuai seperti recall dan F1-Score |
+| Representativeness | Apakah sampel mewakili populasi target? |Dataset cukup sering digunakan dalam penelitian IDS, tetapi masih tergolong dataset lama |Membandingkan hasil dengan dataset yang lebih baru pada penelitian selanjutnya |
 
 ---
 
@@ -136,5 +137,5 @@ Bayangkan data yang akan dikumpulkan dari eksperimen. Evaluasi 4 dimensi kualita
 > Mengapa memilih metrik setelah melihat data dianggap p-hacking? Apa bedanya dengan eksplorasi data yang sah?
 
 **Jawaban:**
-> ___________________________________________________
-> ___________________________________________________
+> Memilih metrik setelah melihat hasil data bisa membuat penelitian menjadi tidak objektif karena peneliti dapat memilih metrik yang memberikan hasil terbaik saja. Hal ini dapat membuat kesimpulan penelitian menjadi bias.
+> Berbeda dengan eksplorasi data yang sah, eksplorasi dilakukan untuk memahami pola data atau menemukan informasi tambahan, bukan untuk mengganti metrik utama yang sudah ditentukan sejak awal penelitian.
