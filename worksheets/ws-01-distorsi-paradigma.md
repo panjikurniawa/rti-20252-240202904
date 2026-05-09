@@ -141,7 +141,7 @@ Skenario: Seorang peneliti menemukan bahwa jika 3 data point outlier dihapus, ha
 | Limitasi paradigma |Terbatas pada dataset, tidak menangkap konteks nyata |Tidak relevan untuk masalah teknis ini |Artefak bisa overfit pada dataset tertentu |
 
 **Paradigma yang dipilih:** Positivis + Design Science
-**Alasan:** Penelitian ini fokus menguji performa model menggunakan data dan juga membuat model machine learning sebagai solusi deteksi intrusi.
+**Alasan:** Penelitian ini menggunakan data dan pengujian untuk melihat performa model, sekaligus membuat model machine learning untuk mendeteksi intrusi jaringan.
 
 ---
 
@@ -150,5 +150,5 @@ Skenario: Seorang peneliti menemukan bahwa jika 3 data point outlier dihapus, ha
 > Sebelum membaca materi ini, apakah pernah mempertanyakan klaim "95% akurat"? Setelah memahami rantai distorsi, pertanyaan apa yang sekarang akan diajukan saat membaca paper?
 
 **Jawaban:**
-> Sebelumnya, saya cenderung menerima klaim akurasi tinggi seperti 95% tanpa mempertanyakan konteksnya. Setelah mempelajari materi ini, saya sadar kalau akurasi tinggi belum tentu berarti modelnya benar-benar bagus karena hasilnya bisa dipengaruhi dataset dan cara pengujiannya.
+> Sebelumnya, saya biasanya langsung percaya kalau ada penelitian yang mengklaim akurasi tinggi seperti 95%. Setelah mempelajari materi ini, saya sadar kalau akurasi tinggi belum tentu berarti modelnya benar-benar bagus karena hasilnya bisa dipengaruhi dataset dan cara pengujiannya.
 > Sekarang, saya akan mempertanyakan apakah dataset yang digunakan representatif, apakah terdapat bias dalam preprocessing seperti penghapusan outlier, serta apakah hasil tersebut dapat digeneralisasi. Sekarang saya jadi lebih hati-hati saat melihat klaim akurasi tinggi dan tidak langsung percaya begitu saja.
