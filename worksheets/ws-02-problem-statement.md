@@ -161,4 +161,4 @@ Evaluasi problem statement yang sudah dibuat menggunakan 5 kriteria.
 
 **Jawaban:**
 > Masalah dalam coding biasanya bersifat teknis dan langsung terlihat, seperti error atau bug yang harus diperbaiki agar sistem dapat berjalan. Pendekatannya adalah mencari solusi secepat mungkin agar sistem berfungsi kembali.
-> Sebaliknya, masalah dalam riset tidak selalu terlihat secara langsung dan sering kali berkaitan dengan gap dalam pengetahuan. Pendekatannya bukan hanya menyelesaikan masalah, tetapi memahami penyebabnya secara mendalam, membatasi ruang lingkup, serta membuktikan klaim secara sistematis dan terukur.
+> Sebaliknya, masalah dalam riset tidak selalu terlihat secara langsung dan sering kali berkaitan dengan gap dalam pengetahuan. Dalam riset, masalah tidak langsung diselesaikan begitu saja, tetapi perlu dipahami penyebabnya dan dibuktikan dengan pengujian yang jelas.
