@@ -77,39 +77,46 @@ Membandingkan deep learning 2024 dengan decision tree sederhana tanpa justifikas
 ```
 LITERATURE MAPPING
 
-Topik      : ____________________
-Database   : ____________________
-Query      : ____________________
-Tahun      : ____________________
-Hasil awal : ____ paper → Screening → ____ paper final
+Topik      : Deteksi intrusi jaringan menggunakan machine learning
+Database   : Google Scholar dan IEEE Xplore
+Query      : ("intrusion detection" OR "network intrusion detection") AND ("machine learning" OR "random forest" OR "SVM")
+Tahun      : 2020–2024
+Hasil awal : 15 paper paper → Screening → 5 paper final
 
 Literature Matrix (concept-centric):
 
 | Study | Tahun | Method | Data | Result | Limitation |
 |-------|-------|--------|------|--------|------------|
-|       |       |        |      |        |            |
+|Dyan Prawita Sari et al.| 2024  |Random Forest, DT, SVM |NSL-KDD |Random Forest akurasi 96.8% | Dataset masih menggunakan NSL-KDD yang cukup lama|
+|Singh et al. | 2021 |Supervised Learning | KDD Cup / NSL-KDD | Machine learning efektif untuk IDS | Belum membahas serangan modern secara mendalam |
+|Bororing | 2024 | ML Anomaly Detection | Traffic jaringan | Deteksi anomali meningkat | False positive masih cukup tinggi |
+|Bhanu et al. | 2020 | Decision Tree | IoT Dataset | Model ringan dan mudah diterapkan | Performa menurun pada data yang kompleks |
+|Heizmann et al. | 2022 | Implementasi Machine Learning | Multi dataset | ML membantu proses deteksi otomatis | Generalisasi model masih menjadi tantangan |
 
 Pola yang ditemukan:
-  Metode dominan     : ____________________
-  Dataset umum       : ____________________
-  Limitasi berulang  : ____________________
+  Metode dominan     :  Supervised learning seperti Random Forest, Decision Tree, dan SVM
+  Dataset umum       : NSL-KDD dan KDD Cup
+  Limitasi berulang  : Banyak penelitian masih memakai dataset lama dan belum menguji kondisi jaringan modern
+
 
 GAP IDENTIFICATION
 
 Gap 1: [Jenis: performance / method / data / context]
-  Deskripsi    : ____________________
-  Bukti        : ____________________
-  Signifikansi : ____________________
+  Deskripsi    : Banyak penelitian masih menggunakan dataset lama seperti NSL-KDD
+  Bukti        : Sebagian besar paper pada literature mapping masih memakai dataset NSL-KDD atau KDD Cup
+  Signifikansi : Dataset lama belum tentu mewakili pola serangan jaringan saat ini sehingga hasil penelitian bisa kurang sesuai dengan kondisi nyata
 
-Gap 2: [Jenis: ____]
-  Deskripsi    : ____________________
-  Bukti        : ____________________
-  Signifikansi : ____________________
+Gap 2: [Jenis: Context Gap]
+  Deskripsi    : Model belum banyak diuji pada lingkungan jaringan modern dan serangan terbaru
+  Bukti        :  Penelitian lebih banyak fokus pada data simulasi dibanding pengujian pada kondisi jaringan nyata
+  Signifikansi : Pengujian pada konteks modern penting untuk mengetahui apakah model masih efektif digunakan saat ini
+
 
 Baseline Selection:
 | Baseline | Relevansi | Representatif | Source |
 |----------|-----------|---------------|--------|
-|          |           |               |        |
+|  Random Forest  | Sama-sama digunakan untuk deteksi intrusi  | Banyak dipakai pada penelitian IDS berbasis ML  | Dyan Prawita Sari et al., 2024 |
+| Support Vector Machine (SVM) | Digunakan untuk klasifikasi traffic jaringan |  Menjadi metode pembanding yang cukup umum digunakan | Singh et al., 2021 |
 ```
 
 ---
@@ -123,20 +130,20 @@ Gunakan topik riset dari WS-02. Cari minimal 5 paper relevan menggunakan databas
 > - Tulis query Boolean yang digunakan: contoh `("object detection" OR "image classification") AND ("edge computing") NOT ("medical")`. Dokumentasikan query secara eksplisit.
 > - Akses gratis: buka Google Scholar → cari judul paper → klik [PDF] jika tersedia, atau akses lewat campus VPN
 
-**Topik riset:** ________________________________________
-**Query pencarian:** ____________________________________
-**Database:** ___________________________________________
+**Topik riset:** Deteksi intrusi jaringan menggunakan machine learning
+**Query pencarian:** "intrusion detection" OR "network intrusion detection") AND ("machine learning" OR "random forest" OR "SVM"
+**Database:** Google Scholar dan IEEE Xplore
 
 | # | Study | Tahun | Method | Dataset | Result | Limitasi |
 |---|-------|-------|--------|---------|--------|----------|
-| 1 | *Contoh: Rahman et al.* | *2023* | *CNN* | *ImageNet subset* | *Acc 91%* | *Hanya 3 kelas* |
-| 2 | | | | | | |
-| 3 | | | | | | |
-| 4 | | | | | | |
-| 5 | | | | | | |
+| 1 | Dyan Prawita Sari et al. | 2024 | Random Forest, Decision Tree, SVM | NSL-KDD | Random Forest memperoleh akurasi tertinggi sebesar 96.8% | Dataset masih memakai NSL-KDD yang sudah cukup lama |
+| 2 | Singh et al. | 2021 | Supervised Learning | KDD Cup / NSL-KDD | Machine learning cukup efektif untuk IDS | Belum banyak membahas serangan terbaru |
+| 3 | Bororing | 2024 | Machine Learning Anomaly Detection | Traffic jaringan | Deteksi anomali meningkat | False positive masih cukup tinggi |
+| 4 | Bhanu et al. | 2020 | Decision Tree | IoT Dataset | Model mudah diterapkan dan ringan | Performa menurun pada data yang kompleks |
+| 5 | Heizmann et al. | 2022 | Implementasi ML | Multi dataset | ML membantu proses deteksi otomatis | Generalisasi model masih menjadi tantangan |
 
-**Pola yang terlihat — Metode dominan:** ___________________
-**Limitasi yang berulang:** ______________________________
+**Pola yang terlihat — Metode dominan:** Sebagian besar penelitian menggunakan metode supervised learning seperti Random Forest, Decision Tree, dan SVM untuk mendeteksi intrusi jaringan.
+**Limitasi yang berulang:** Banyak penelitian masih memakai dataset lama seperti NSL-KDD sehingga hasil pengujian belum tentu sesuai dengan kondisi jaringan modern saat ini.
 
 ---
 
@@ -146,14 +153,14 @@ Berdasarkan tabel di Latihan 1, identifikasi gap.
 
 | Jenis Gap | Ditemukan? | Gap Statement |
 |-----------|-----------|---------------|
-| Performance Gap | [ ] Ya / [ ] Tidak | *Contoh: Akurasi turun di bawah 80% untuk kelas minoritas* |
-| Method Gap | [ ] Ya / [ ] Tidak | |
-| Data Gap | [ ] Ya / [ ] Tidak | |
-| Context Gap | [ ] Ya / [ ] Tidak | |
+| Performance Gap | [✓ ] Ya  | Performa model dapat berubah ketika diuji pada dataset atau kondisi jaringan yang berbeda |
+| Method Gap |  [x] Tidak | Metode seperti Random Forest dan SVM sudah cukup sering digunakan |
+| Data Gap | [✓ ] Ya  |Banyak penelitian masih menggunakan dataset lama seperti NSL-KDD |
+| Context Gap | [✓ ] Ya  |Belum banyak pengujian model pada kondisi jaringan modern dan serangan terbaru |
 
-**Gap utama yang dipilih:** _____________________________
+**Gap utama yang dipilih:** Data Gap dan Context Gap
 **Mengapa gap ini penting (bukan sekadar "belum ada yang meneliti")?**
-> ___________________________________________________
+> Penggunaan dataset lama dapat membuat hasil penelitian terlihat bagus, tetapi belum tentu memberikan hasil yang sama ketika diterapkan pada jaringan nyata. Jika model hanya diuji menggunakan data lama, kemampuan deteksi terhadap serangan modern masih belum dapat dipastikan. Karena itu, pengujian menggunakan dataset yang lebih baru penting untuk melihat apakah model benar-benar efektif digunakan saat ini.
 
 ---
 
@@ -163,11 +170,11 @@ Pilih 2 baseline dari literatur yang sudah dibaca.
 
 | # | Baseline | Mengapa Relevan | Mengapa Representatif | Apakah SOTA? | Sumber |
 |---|----------|----------------|----------------------|-------------|--------|
-| 1 | *Contoh: RF + TF-IDF* | *Task sama: klasifikasi teks* | *Dipakai 6 dari 10 paper* | *Bukan, tapi common practice* | *Lee et al., 2022* |
-| 2 | | | | | |
+| 1 | Random Forest | Sama-sama digunakan untuk deteksi intrusi jaringan | Banyak digunakan dalam penelitian IDS berbasis machine learning | Bukan SOTA terbaru, tetapi masih sering digunakan | Dyan Prawita Sari et al., 2024 |
+| 2 |Support Vector Machine (SVM) | Digunakan untuk klasifikasi traffic jaringan | Menjadi metode pembanding yang umum dipakai | Bukan SOTA | Singh et al., 2021 |
 
-**Apakah pemilihan baseline ini bisa dianggap straw man?** [ ] Ya / [ ] Tidak
-> Justifikasi: ________________________________________
+**Apakah pemilihan baseline ini bisa dianggap straw man?**  [✓ ] Tidak
+> Justifikasi: Baseline yang dipilih masih relevan dan sering digunakan dalam penelitian deteksi intrusi jaringan, sehingga perbandingan tetap adil dan tidak menggunakan metode yang terlalu lemah.
 
 ---
 
@@ -176,5 +183,5 @@ Pilih 2 baseline dari literatur yang sudah dibaca.
 > Apa perbedaan antara "belum ada yang meneliti ini" (klaim tanpa bukti) dengan research gap yang valid? Bagaimana cara membuktikan bahwa sebuah gap benar-benar ada?
 
 **Jawaban:**
-> ___________________________________________________
-> ___________________________________________________
+> Pernyataan “belum ada yang meneliti ini” tidak bisa langsung dianggap benar tanpa adanya bukti dari pencarian literatur. Research gap yang valid harus didukung oleh beberapa penelitian sebelumnya dan menunjukkan bagian mana yang masih memiliki kekurangan atau belum dibahas secara mendalam.
+> Gap penelitian dapat dibuktikan dengan membandingkan beberapa paper yang relevan, misalnya banyak penelitian masih memakai dataset lama atau belum menguji model pada kondisi jaringan modern. Dari pola tersebut dapat terlihat bahwa masih ada bagian yang perlu diteliti lebih lanjut.
