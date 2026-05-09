@@ -65,18 +65,17 @@ Nama Peneliti    : Panji Kurniawan
 Tanggal          : 23 April 2026
 
 1. Ketika membaca klaim "metode X 95% akurat":
-   - Pertanyaan pertama saya: Apakah akurasi tersebut diuji pada dataset yang representatif terhadap kondisi nyata, dan apakah ada perbandingan yang adil dengan metode lain?
-   - Data yang dibutuhkan untuk verifikasi: Confusion matrix, distribusi kelas, detail dataset (jenis & tahun), metode evaluasi (cross-validation), serta baseline model.
-
+   - Pertanyaan pertama saya:Apakah dataset yang digunakan benar-benar sesuai dengan kondisi nyata, dan apakah metode pembandingnya diuji secara adil?
+   - Data yang dibutuhkan untuk verifikasi: Saya ingin melihat detail dataset, pembagian data, confusion matrix, dan bagaimana model tersebut diuji.
 
 2. Posisi paradigma:
    - Pendekatan: [✓ ] Positivis  [ ] Interpretivis  [✓ ] Design Science  [ ] Mixed
-   - Alasan: Penelitian menguji performa model secara kuantitatif (positivis) sekaligus membangun artefak berupa model machine learning untuk membuktikan efektivitasnya (design science).
+   - Alasan: “Penelitian ini menggunakan data dan pengujian angka untuk melihat performa model, sekaligus membuat model machine learning sebagai solusi deteksi intrusi.
 
 3. Identifikasi distorsi:
-   - Asumsi tersembunyi:  Dataset NSL-KDD dianggap mewakili kondisi nyata jaringan modern.
+   - Asumsi tersembunyi:  Penelitian menganggap dataset NSL-KDD masih cocok untuk kondisi jaringan saat ini.
    - Sumber bias potensial: Dataset bias (data lama), penghapusan outlier, dan kemungkinan ketidakseimbangan kelas.
-   - Langkah mitigasi: Menggunakan dataset tambahan yang lebih modern, melakukan evaluasi lintas dataset, serta melaporkan hasil dengan dan tanpa preprocessing tertentu.
+   - Langkah mitigasi: Penelitian sebaiknya memakai dataset yang lebih baru dan membandingkan hasil sebelum dan sesudah preprocessing.
 
 4. Komitmen etika:
    - Data yang tidak akan dimanipulasi: Data outlier dan data yang menurunkan performa model tetap dilaporkan.
@@ -107,12 +106,11 @@ Pilih satu paper riset di bidang TI yang mengklaim "metode X meningkatkan perfor
 | Inference → Knowledge |Klaim Random Forest paling efektif |Over-generalization (hanya 1 dataset) |
 
 **Distorsi paling besar di tahap:** External Validity (dataset tidak representatif terhadap kondisi nyata) 
-Tingginya akurasi model kemungkinan dipengaruhi oleh karakteristik dataset yang sudah terstruktur dengan baik, bukan semata karena keunggulan algoritma.
+Akurasi tinggi bisa jadi karena dataset yang digunakan sudah cukup mudah dipelajari oleh model, jadi belum tentu hasilnya sama di kondisi nyata.
 
 **Dua distorsi spesifik yang teridentifikasi:**
-1. Penggunaan dataset NSL-KDD yang tidak mencerminkan kondisi jaringan modern
-2. Penghapusan outlier yang berpotensi menghilangkan data serangan penting
-
+1. Dataset NSL-KDD sudah cukup lama sehingga belum tentu sesuai dengan kondisi jaringan sekarang.
+2. Beberapa outlier mungkin sebenarnya bagian dari pola serangan sehingga tidak seharusnya langsung dihapus.
 ---
 
 ## Latihan 2 — Analisis Kasus Etika
@@ -122,11 +120,11 @@ Skenario: Seorang peneliti menemukan bahwa jika 3 data point outlier dihapus, ha
 | Perspektif | Analisis |
 |------------|---------|
 | Kejujuran ilmiah | Outlier tidak boleh dihapus hanya untuk meningkatkan hasil; harus dilaporkan dua versi |
-| Transparansi |Peneliti harus menjelaskan alasan penghapusan outlier dan dampaknya terhadap hasil |
+| Transparansi |Peneliti perlu menjelaskan kenapa outlier dihapus dan bagaimana pengaruhnya terhadap hasil penelitian.|
 | Peer review |Reviewer akan mempertanyakan validitas jika outlier dihapus tanpa justifikasi kuat |
 
 **Keputusan akhir dan justifikasi:**
-> Outlier sebaiknya tidak langsung dihapus. Analisis harus dilakukan dalam dua skenario (dengan dan tanpa outlier), disertai penjelasan apakah outlier merupakan noise atau bagian dari fenomena nyata. Hal ini penting untuk menjaga integritas ilmiah dan menghindari bias dalam interpretasi hasil.
+> Outlier sebaiknya tidak langsung dihapus. Analisis harus dilakukan dalam dua skenario (dengan dan tanpa outlier), disertai penjelasan apakah outlier merupakan noise atau bagian dari fenomena nyata. Hal ini penting supaya hasil penelitian tetap jujur dan tidak menyesatkan.
 
 ---
 
@@ -143,7 +141,7 @@ Skenario: Seorang peneliti menemukan bahwa jika 3 data point outlier dihapus, ha
 | Limitasi paradigma |Terbatas pada dataset, tidak menangkap konteks nyata |Tidak relevan untuk masalah teknis ini |Artefak bisa overfit pada dataset tertentu |
 
 **Paradigma yang dipilih:** Positivis + Design Science
-**Alasan:** Penelitian ini menguji performa model secara kuantitatif (positivis) sekaligus membangun artefak berupa model machine learning untuk membuktikan efektivitasnya (design science research).
+**Alasan:** Penelitian ini fokus menguji performa model menggunakan data dan juga membuat model machine learning sebagai solusi deteksi intrusi.
 
 ---
 
@@ -152,5 +150,5 @@ Skenario: Seorang peneliti menemukan bahwa jika 3 data point outlier dihapus, ha
 > Sebelum membaca materi ini, apakah pernah mempertanyakan klaim "95% akurat"? Setelah memahami rantai distorsi, pertanyaan apa yang sekarang akan diajukan saat membaca paper?
 
 **Jawaban:**
-> Sebelumnya, saya cenderung menerima klaim akurasi tinggi seperti 95% tanpa mempertanyakan konteksnya. Setelah memahami konsep distorsi dalam Research Trust Model, saya menyadari bahwa angka tersebut bisa dipengaruhi oleh banyak faktor seperti pemilihan dataset, preprocessing, dan metode evaluasi.
-> Sekarang, saya akan mempertanyakan apakah dataset yang digunakan representatif, apakah terdapat bias dalam preprocessing seperti penghapusan outlier, serta apakah hasil tersebut dapat digeneralisasi. Saya juga lebih kritis terhadap klaim performa tinggi dan tidak langsung menganggapnya sebagai bukti keunggulan metode.
+> Sebelumnya, saya cenderung menerima klaim akurasi tinggi seperti 95% tanpa mempertanyakan konteksnya. Setelah mempelajari materi ini, saya sadar kalau akurasi tinggi belum tentu berarti modelnya benar-benar bagus karena hasilnya bisa dipengaruhi dataset dan cara pengujiannya.
+> Sekarang, saya akan mempertanyakan apakah dataset yang digunakan representatif, apakah terdapat bias dalam preprocessing seperti penghapusan outlier, serta apakah hasil tersebut dapat digeneralisasi. Sekarang saya jadi lebih hati-hati saat melihat klaim akurasi tinggi dan tidak langsung percaya begitu saja.
