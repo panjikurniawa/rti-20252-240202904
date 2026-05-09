@@ -81,7 +81,7 @@ Topik      : Deteksi intrusi jaringan menggunakan machine learning
 Database   : Google Scholar dan IEEE Xplore
 Query      : ("intrusion detection" OR "network intrusion detection") AND ("machine learning" OR "random forest" OR "SVM")
 Tahun      : 2020–2024
-Hasil awal : 15 paper paper → Screening → 5 paper final
+Hasil awal : 15 paper → Screening → 5 paper final
 
 Literature Matrix (concept-centric):
 
@@ -104,7 +104,7 @@ GAP IDENTIFICATION
 Gap 1: [Jenis: performance / method / data / context]
   Deskripsi    : Banyak penelitian masih menggunakan dataset lama seperti NSL-KDD
   Bukti        : Sebagian besar paper pada literature mapping masih memakai dataset NSL-KDD atau KDD Cup
-  Signifikansi : Dataset lama belum tentu mewakili pola serangan jaringan saat ini sehingga hasil penelitian bisa kurang sesuai dengan kondisi nyata
+  Signifikansi : Dataset lama belum tentu sesuai dengan pola serangan jaringan saat ini, sehingga hasil penelitian bisa berbeda ketika diterapkan pada kondisi nyata.
 
 Gap 2: [Jenis: Context Gap]
   Deskripsi    : Model belum banyak diuji pada lingkungan jaringan modern dan serangan terbaru
@@ -131,7 +131,7 @@ Gunakan topik riset dari WS-02. Cari minimal 5 paper relevan menggunakan databas
 > - Akses gratis: buka Google Scholar → cari judul paper → klik [PDF] jika tersedia, atau akses lewat campus VPN
 
 **Topik riset:** Deteksi intrusi jaringan menggunakan machine learning
-**Query pencarian:** "intrusion detection" OR "network intrusion detection") AND ("machine learning" OR "random forest" OR "SVM"
+**Query pencarian:** ("intrusion detection" OR "network intrusion detection") AND ("machine learning" OR "random forest" OR "SVM")
 **Database:** Google Scholar dan IEEE Xplore
 
 | # | Study | Tahun | Method | Dataset | Result | Limitasi |
@@ -183,5 +183,5 @@ Pilih 2 baseline dari literatur yang sudah dibaca.
 > Apa perbedaan antara "belum ada yang meneliti ini" (klaim tanpa bukti) dengan research gap yang valid? Bagaimana cara membuktikan bahwa sebuah gap benar-benar ada?
 
 **Jawaban:**
-> Pernyataan “belum ada yang meneliti ini” tidak bisa langsung dianggap benar tanpa adanya bukti dari pencarian literatur. Research gap yang valid harus didukung oleh beberapa penelitian sebelumnya dan menunjukkan bagian mana yang masih memiliki kekurangan atau belum dibahas secara mendalam.
-> Gap penelitian dapat dibuktikan dengan membandingkan beberapa paper yang relevan, misalnya banyak penelitian masih memakai dataset lama atau belum menguji model pada kondisi jaringan modern. Dari pola tersebut dapat terlihat bahwa masih ada bagian yang perlu diteliti lebih lanjut.
+> Pernyataan “belum ada yang meneliti ini” tidak bisa langsung dianggap benar tanpa adanya bukti dari pencarian literatur. Research gap yang valid harus didukung dari beberapa penelitian sebelumnya dan menunjukkan bagian mana yang masih kurang atau belum banyak dibahas.
+> Gap penelitian dapat dibuktikan dengan membandingkan beberapa paper yang relevan, misalnya banyak penelitian masih memakai dataset lama atau belum menguji model pada kondisi jaringan modern. Dari situ bisa terlihat bagian mana yang masih perlu diteliti lebih lanjut.
