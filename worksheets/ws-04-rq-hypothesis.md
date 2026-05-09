@@ -70,7 +70,7 @@ RQ-CONTRIBUTION-HYPOTHESIS
 Gap Statement  : Banyak penelitian deteksi intrusi masih menggunakan dataset lama seperti NSL-KDD sehingga hasil model belum tentu sesuai dengan kondisi jaringan modern.
 
 Research Question:
-  Tipe         : [✓ ] Comparison  [ ] Improvement  [ ] Exploratory
+  Tipe         : [✓] Comparison  [ ] Improvement  [ ] Exploratory
   Formulasi    : Apakah Random Forest menghasilkan performa deteksi intrusi yang lebih baik dibandingkan Decision Tree dan SVM pada dataset NSL-KDD?
   Variabel IV  : Jenis algoritma machine learning (Random Forest, Decision Tree, SVM)
   Variabel DV  :  Performa deteksi intrusi
@@ -87,7 +87,7 @@ Quality Check RQ:
 
 Contribution Statement:
   Apa yang baru diketahui : Penelitian menunjukkan bahwa Random Forest memberikan hasil yang lebih baik dibandingkan Decision Tree dan SVM dalam mendeteksi intrusi jaringan pada dataset NSL-KDD.
-  Jenis kontribusi        : [✓ ] Improvement  [ ] Comparison  [ ] Novel approach
+  Jenis kontribusi        : [ ] Improvement  [✓ ] Comparison  [ ] Novel approach
   Gap yang diisi          : Evaluasi performa beberapa algoritma machine learning pada deteksi intrusi jaringan.
 
 Hypothesis Pair:
@@ -134,7 +134,7 @@ Rumuskan pasangan hipotesis dari RQ di Latihan 1.
 | H₁ |Random Forest memiliki performa lebih baik dibandingkan Decision Tree dan SVM pada dataset NSL-KDD |
 | Metrik |Akurasi, presisi, recall, dan F1-Score |
 | Threshold |Nilai evaluasi Random Forest lebih tinggi dibanding baseline |
-| Justifikasi threshold |Metrik tersebut digunakan untuk melihat kemampuan model dalam mendeteksi intrusi secara lebih akurat dan stabil |
+| Justifikasi threshold |Metrik tersebut digunakan untuk melihat seberapa baik model mendeteksi intrusi jaringan. |
 
 **Apakah hipotesis ini falsifiable?** [✓ ] Ya / [ ] Tidak
 > Bagaimana cara membuktikannya salah? Jika hasil pengujian menunjukkan bahwa Random Forest tidak lebih baik atau memiliki performa yang sama dengan Decision Tree dan SVM, maka hipotesis alternatif ditolak.
@@ -155,7 +155,7 @@ Lengkapi rantai dari RQ hingga metode analisis.
 | Analysis method |Perbandingan hasil evaluasi model menggunakan cross-validation |
 
 **Apakah rantai lengkap?** [✓ ] Ya / [ ] Tidak
-> Jika tidak, tahap mana yang perlu direvisi? Tidak ada, karena setiap bagian sudah saling terhubung.
+> Jika tidak, tahap mana yang perlu direvisi? Tidak ada, karena semua bagian sudah saling berhubungan.
 
 ---
 
@@ -165,4 +165,4 @@ Lengkapi rantai dari RQ hingga metode analisis.
 
 **Judul:** Implementasi Machine Learning untuk Deteksi Intrusi pada Jaringan Komputer
 **RQ yang diekstrak:** Apakah Random Forest memberikan performa yang lebih baik dibandingkan Decision Tree dan SVM dalam mendeteksi intrusi jaringan?
-**Komponen yang hilang:** Paper sudah memiliki metode, dataset, dan metrik evaluasi yang cukup jelas. Namun, penjelasan mengenai alasan pemilihan dataset dan pengujian pada kondisi jaringan modern masih belum dibahas secara mendalam.
+**Komponen yang hilang:** Paper sudah memiliki metode, dataset, dan metrik evaluasi yang cukup jelas. Namun, penjelasan mengenai alasan pemilihan dataset dan pengujian pada kondisi jaringan modern masih belum banyak dibahas.
