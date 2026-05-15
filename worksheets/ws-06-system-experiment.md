@@ -80,25 +80,25 @@ Jika variabel tidak bisa di-map ke komponen apapun → arsitektur perlu didesain
 ```
 SYSTEM-EXPERIMENT MAPPING
 
-Research Question: ____________________
+Research Question: Apakah Random Forest menghasilkan performa deteksi intrusi yang lebih baik dibandingkan Decision Tree dan SVM pada dataset NSL-KDD?
 
 Variable → Component Mapping:
 | Variabel | Tipe | Komponen Sistem | Cara Manipulasi/Pengukuran |
 |----------|------|-----------------|---------------------------|
-|          | IV   |                 |                           |
-|          | DV   |                 |                           |
-|          | CV   |                 |                           |
+|Jenis algoritma machine learning          | IV   | Modul classifier (RF, DT, SVM)                 |Mengganti algoritma yang digunakan saat pelatihan model                           |
+|Performa deteksi intrusi          | DV   |Modul evaluasi dan metrics collector                 |Mengukur akurasi, presisi, recall, F1-Score, dan AUC                           |
+|Dataset NSL-KDD          | CV   |Modul dataset dan preprocessing                 |Menggunakan dataset dan pembagian data yang sama pada setiap eksperimen                           |
 
 4 Prinsip Desain:
-  [ ] Traceability — Setiap komponen bisa ditelusuri ke variabel
-  [ ] Variable Isolation — IV bisa diubah tanpa mengubah CV
-  [ ] Measurement Integration — Pengukuran DV built-in
-  [ ] Reproducibility — Setup bisa direkonstruksi
+  [✓ ] Traceability — Setiap komponen bisa ditelusuri ke variabel
+  [✓ ] Variable Isolation — IV bisa diubah tanpa mengubah CV
+  [✓ ] Measurement Integration — Pengukuran DV built-in
+  [✓ ] Reproducibility — Setup bisa direkonstruksi
 
 Experimental Setup:
-  Input data     : ____________________
-  Parameter      : ____________________
-  Output format  : ____________________
+  Input data     : Dataset NSL-KDD
+  Parameter      : Pembagian data 70:30, cross-validation, dan hyperparameter tuning
+  Output format  : Akurasi, presisi, recall, F1-Score, dan AUC
 ```
 
 ---
@@ -107,16 +107,16 @@ Experimental Setup:
 
 Gunakan RQ dan variabel dari WS-05. Petakan ke komponen sistem.
 
-**RQ:** __________________________________________________
+**RQ:** Apakah Random Forest menghasilkan performa deteksi intrusi yang lebih baik dibandingkan Decision Tree dan SVM pada dataset NSL-KDD?
 
 | Variabel | Tipe | Komponen Sistem | Cara Manipulasi / Pengukuran |
 |----------|------|-----------------|---------------------------|
-| *Contoh: Jenis model* | *IV* | *Modul classifier (swap RF ↔ CNN)* | *Ganti config `model_type`* |
-| | DV | | |
-| | CV | | |
+| jenis algoritma machine learning | IV | Modul classifier | Mengganti algoritma RF, DT, dan SVM |
+|Performa model | DV |Modul evaluasi |Mengukur akurasi, presisi, recall, dan F1-Score |
+|Dataset NSL-KDD | CV |Modul preprocessing dan dataset |Menggunakan data training dan testing yang sama |
 
-**Apakah semua variabel bisa di-map?** [ ] Ya / [ ] Tidak
-> Jika tidak, komponen apa yang perlu ditambahkan? _________
+**Apakah semua variabel bisa di-map?** [✓ ] Ya 
+> Jika tidak, komponen apa yang perlu ditambahkan? Tidak ada, karena semua variabel sudah memiliki komponen sistem yang sesuai.
 
 ---
 
@@ -126,14 +126,14 @@ Evaluasi desain sistem terhadap 4 prinsip.
 
 | Prinsip | Status | Bukti / Penjelasan |
 |---------|--------|-------------------|
-| Traceability | *Contoh: ✅ — setiap modul punya label variabel* | |
-| Modularity | | |
-| Controllability | | |
-| Measurability | | |
+| Traceability | ✅ |Setiap variabel penelitian memiliki komponen sistem yang jelas |
+| Modularity |✅ |Algoritma dapat diganti tanpa mengubah proses preprocessing |
+| Controllability |✅ |Dataset dan parameter pengujian dibuat tetap pada setiap eksperimen |
+| Measurability |✅ |Sistem menghasilkan metrik evaluasi secara otomatis |
 
-**Prinsip mana yang paling sulit dipenuhi?** _______________
+**Prinsip mana yang paling sulit dipenuhi?** Modularity
 **Strategi untuk mengatasinya:**
-> ___________________________________________________
+> Sistem dibuat dalam bentuk modul terpisah antara preprocessing, dataset, dan classifier sehingga perubahan algoritma tidak memengaruhi bagian lain pada sistem.
 
 ---
 
@@ -146,14 +146,14 @@ Jika sistem memiliki 3 komponen utama, rencanakan ablation study.
 
 | Kondisi | Komponen A | Komponen B | Komponen C | Hasil yang Diharapkan |
 |---------|-----------|-----------|-----------|----------------------|
-| Full | *Contoh: ✅ CNN* | *Contoh: ✅ Temporal features* | *Contoh: ✅ Z-score norm* | *Baseline penuh* |
-| – A | ❌ (ganti RF) | ✅ | ✅ | |
-| – B | ✅ | ❌ (tanpa temporal) | ✅ | |
-| – C | ✅ | ✅ | ❌ (tanpa normalisasi) | |
+| Full | ✅ Random Forest | ✅ Normalisasi data | ✅ Feature encoding | Hasil performa terbaik |
+| – A | ❌ (ganti DT/SVM) | ✅ | ✅ |Akurasi diperkirakan menurun |
+| – B | ✅ | ❌ (tanpa normalisasi) | ✅ |Performa model menjadi kurang stabil |
+| – C | ✅ | ✅ | ❌ (tanpa encoding fitur) |Model sulit memproses data kategorikal |
 
-**Komponen mana yang diprediksi paling berkontribusi?** _____
+**Komponen mana yang diprediksi paling berkontribusi?** Random Forest
 **Mengapa?**
-> ___________________________________________________
+> Random Forest diperkirakan memberi kontribusi paling besar karena pada hasil penelitian algoritma ini memiliki akurasi dan nilai evaluasi tertinggi dibandingkan Decision Tree dan SVM.
 
 ---
 
@@ -162,5 +162,5 @@ Jika sistem memiliki 3 komponen utama, rencanakan ablation study.
 > Apa risiko jika sistem dibangun seperti produk (monolitik, fitur lengkap) lalu baru dilakukan eksperimen? Mengapa arsitektur modular penting untuk riset?
 
 **Jawaban:**
-> ___________________________________________________
-> ___________________________________________________
+> Jika sistem dibuat seperti produk yang terlalu kompleks, proses eksperimen akan menjadi lebih sulit karena banyak komponen saling terhubung. Akibatnya, peneliti akan kesulitan mengetahui bagian mana yang benar-benar memengaruhi hasil penelitian.
+> Arsitektur modular penting dalam riset karena setiap komponen dapat diuji atau diganti secara terpisah tanpa mengubah keseluruhan sistem. Dengan cara ini, proses pengujian menjadi lebih jelas, mudah diulang, dan hasil penelitian lebih mudah dianalisis.
