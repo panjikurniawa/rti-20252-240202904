@@ -85,9 +85,9 @@ Research Question: Apakah Random Forest menghasilkan performa deteksi intrusi ya
 Variable → Component Mapping:
 | Variabel | Tipe | Komponen Sistem | Cara Manipulasi/Pengukuran |
 |----------|------|-----------------|---------------------------|
-|Jenis algoritma machine learning          | IV   | Modul classifier (RF, DT, SVM)                 |Mengganti algoritma yang digunakan saat pelatihan model                           |
-|Performa deteksi intrusi          | DV   |Modul evaluasi dan metrics collector                 |Mengukur akurasi, presisi, recall, F1-Score, dan AUC                           |
-|Dataset NSL-KDD          | CV   |Modul dataset dan preprocessing                 |Menggunakan dataset dan pembagian data yang sama pada setiap eksperimen                           |
+|Jenis algoritma machine learning | IV   | Modul classifier (RF, DT, SVM) |Mengganti algoritma yang digunakan saat pelatihan model |
+|Performa deteksi intrusi | DV   |Modul evaluasi dan metrics collector |Mengukur akurasi, presisi, recall, F1-Score, dan AUC |
+|Dataset NSL-KDD | CV   |Modul dataset dan preprocessing |Menggunakan dataset dan pembagian data yang sama pada setiap eksperimen |
 
 4 Prinsip Desain:
   [✓ ] Traceability — Setiap komponen bisa ditelusuri ke variabel
