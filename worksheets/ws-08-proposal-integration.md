@@ -109,13 +109,13 @@ Kumpulkan hasil dari WS-02 sampai WS-07 menjadi satu ringkasan proposal.
 
 | Komponen | Sumber | Isi (1-2 kalimat) |
 |----------|--------|-------------------|
-| Problem Statement | WS-02 | *Contoh: Sistem rekomendasi memiliki akurasi tinggi (RMSE 0.87) tetapi satisfaction score rendah (45/100). Gap antara metrik teknis dan kepuasan pengguna belum diteliti.* |
-| Gap | WS-03 | *Contoh: Tidak ada studi yang mengintegrasikan collaborative filtering dengan user-context signals untuk meningkatkan satisfaction.* |
-| RQ | WS-04 | *Contoh: Apakah penambahan context-aware signals pada collaborative filtering meningkatkan satisfaction score tanpa menurunkan RMSE?* |
-| Hipotesis | WS-04 | *Contoh: H₁: Sistem CF+context menghasilkan satisfaction ≥ 70/100 dengan RMSE ≤ 0.90 dibanding baseline CF murni.* |
-| Variabel & Metrik | WS-05 | *Contoh: IV = jenis sistem (CF vs CF+context); DV = satisfaction score (skala 0-100) + RMSE (regresi).* |
-| Sistem | WS-06 | |
-| Desain Eksperimen | WS-07 | |
+| Problem Statement | WS-02 | Sistem deteksi intrusi berbasis machine learning telah banyak digunakan, namun belum diketahui algoritma mana yang memberikan performa terbaik dalam mendeteksi berbagai jenis serangan jaringan komputer. |
+| Gap | WS-03 | Penelitian sebelumnya menunjukkan penggunaan beberapa algoritma machine learning pada IDS, tetapi masih diperlukan analisis komparatif untuk mengetahui algoritma yang paling efektif dalam mendeteksi intrusi jaringan. |
+| RQ | WS-04 | Apakah Random Forest menghasilkan performa deteksi intrusi yang lebih baik dibandingkan Decision Tree dan SVM pada dataset NSL-KDD berdasarkan metrik evaluasi model? |
+| Hipotesis | WS-04 | H₁: Random Forest memiliki performa lebih baik dibandingkan Decision Tree dan SVM berdasarkan akurasi, presisi, recall, F1-Score, dan AUC. |
+| Variabel & Metrik | WS-05 | IV = jenis algoritma machine learning; DV = performa model; metrik = akurasi, presisi, recall, F1-Score, AUC, serta waktu pemrosesan. |
+| Sistem | WS-06 |Sistem dibangun dengan modul preprocessing data, modul classifier (Decision Tree, Random Forest, SVM), serta modul evaluasi untuk mengukur performa model secara otomatis. |
+| Desain Eksperimen | WS-07 |Penelitian menggunakan comparison study dengan menguji tiga algoritma pada dataset NSL-KDD menggunakan preprocessing dan lingkungan pengujian yang sama agar hasil perbandingan adil. |
 
 ---
 
@@ -125,19 +125,19 @@ Verifikasi 6 koneksi kritis. Isi dengan merujuk tabel di Latihan 1.
 
 | Koneksi | Status | Bukti |
 |---------|--------|-------|
-| Problem → Gap | *Contoh: ✅ — gap muncul dari 15 paper Bab 3 yang tidak ada yang mengkombinasikan CF + context untuk satisfaction* | |
-| Gap → RQ | *Contoh: ✅ — RQ langsung menanyakan apakah CF+context meningkatkan satisfaction* | |
-| RQ → Hypothesis | *Contoh: ✅ — H₁ memprediksi satisfaction ≥ 70 dengan threshold RMSE ≤ 0.90* | |
-| Hypothesis → Metric | | |
-| Metric → System | | |
-| System → Experiment | | |
+| Problem → Gap | ✓ |Masalah berasal dari kebutuhan mengetahui algoritma machine learning yang paling efektif untuk deteksi intrusi jaringan. |
+| Gap → RQ | ✓ |Research Question secara langsung menguji apakah Random Forest lebih unggul dibanding algoritma lain. |
+| RQ → Hypothesis | ✓ |Hipotesis memprediksi bahwa Random Forest akan memberikan hasil evaluasi lebih baik dibanding baseline. |
+| Hypothesis → Metric |✓ |Hipotesis diukur menggunakan akurasi, presisi, recall, F1-Score, AUC, dan waktu pemrosesan. |
+| Metric → System |✓ |Sistem memiliki modul evaluasi yang dapat menghasilkan seluruh metrik performa model secara otomatis. |
+| System → Experiment |✓ |Sistem digunakan sebagai alat eksperimen untuk menguji performa tiga algoritma dalam kondisi pengujian yang identik. |
 
-**Koneksi mana yang paling lemah?** _______________________
+**Koneksi mana yang paling lemah?** Problem → Gap
 **Bagaimana cara memperkuatnya?**
-> ___________________________________________________
+> Menambahkan lebih banyak referensi penelitian terdahulu agar alasan pentingnya analisis komparatif antar algoritma menjadi lebih kuat.
 
-**Konsistensi horizontal — apakah istilah dan scope konsisten?** [ ] Ya / [ ] Tidak
-> Jika tidak, di bagian mana terjadi inkonsistensi? _________
+**Konsistensi horizontal — apakah istilah dan scope konsisten?** [✓ ] Ya / [ ] Tidak
+> Jika tidak, di bagian mana terjadi inkonsistensi? Seluruh istilah seperti Random Forest, Decision Tree, SVM, dataset NSL-KDD, serta metrik evaluasi digunakan secara konsisten dari awal hingga desain eksperimen.
 
 ---
 
@@ -147,15 +147,15 @@ Evaluasi proposal mini menggunakan rubrik.
 
 | Kriteria | Skor (1-3) | Justifikasi |
 |----------|-----------|-------------|
-| Koherensi | *Contoh: 2 — koneksi gap→RQ masih lemah karena gap belum cukup narrow* | |
-| Specificity | *Contoh: 3 — metrik (satisfaction 0-100, RMSE) sudah terdefinisi numerik* | |
-| Feasibility | | |
-| Rigor | | |
+| Koherensi | 3 |Semua bagian proposal saling terhubung mulai dari problem statement hingga desain eksperimen. |
+| Specificity | 3 |Variabel, dataset, algoritma, dan metrik evaluasi telah didefinisikan dengan jelas dan spesifik. |
+| Feasibility |3 |Penelitian realistis dilakukan karena menggunakan dataset publik dan algoritma machine learning yang umum digunakan. |
+| Rigor |3 |Penelitian menggunakan tiga baseline yang jelas dan membandingkannya dengan metode evaluasi yang sama sehingga hasil lebih valid. |
 
-**Skor total:** _____ / 12
+**Skor total:** 12 / 12
 
-**Apakah proposal siap untuk fase eksekusi?** [ ] Ya / [ ] Belum
-> Jika belum, apa yang perlu diperbaiki? __________________
+**Apakah proposal siap untuk fase eksekusi?** [✓ ] Ya / [ ] Belum
+> Jika belum, apa yang perlu diperbaiki? Proposal telah memiliki alur penelitian yang konsisten, variabel yang jelas, serta rancangan eksperimen yang sesuai dengan tujuan penelitian sehingga siap untuk tahap implementasi dan pengujian.
 
 ---
 
@@ -163,8 +163,8 @@ Evaluasi proposal mini menggunakan rubrik.
 
 > Dari seluruh proses WS-01 sampai WS-08, bagian mana yang paling mudah dan paling sulit? Mengapa? Apa yang akan dilakukan berbeda jika mengulang dari awal?
 
-**Bagian termudah:** ____________________________________
-**Bagian tersulit:** ____________________________________
+**Bagian termudah:** Menentukan variabel penelitian dan metrik evaluasi karena jurnal yang digunakan sudah menjelaskan algoritma, dataset, dan ukuran performa secara rinci.
+**Bagian tersulit:** Menentukan gap penelitian dan menyusun research question karena harus memastikan pertanyaan penelitian benar-benar sesuai dengan tujuan penelitian dan tidak menyimpang dari isi jurnal.
 **Yang akan dilakukan berbeda:**
-> ___________________________________________________
-> ___________________________________________________
+> Jika mengulang dari awal, saya akan membaca jurnal secara menyeluruh terlebih dahulu agar dapat memahami hubungan antara masalah penelitian, metode, dan eksperimen dengan lebih baik.
+> Saya juga akan lebih teliti menjaga konsistensi antara problem statement, research question, variabel, dan desain eksperimen agar seluruh proposal tetap berada pada satu jalur penelitian yang sama.
