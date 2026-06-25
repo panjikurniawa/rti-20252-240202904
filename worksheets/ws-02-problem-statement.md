@@ -81,7 +81,7 @@ System Context
 Fenomena → Problem
   Fenomena yang diamati             : Sistem deteksi intrusi berbasis ML menunjukkan akurasi tinggi (>95%)
   Gejala (symptom) yang terukur     : Nilai akurasi tinggi pada dataset uji (NSL-KDD)
-  Masalah yang didiagnosis          : Dataset yang digunakan tidak representatif terhadap kondisi jaringan modern
+  Masalah yang didiagnosis          : Belum diketahui algoritma machine learning mana yang memberikan performa terbaik dalam mendeteksi intrusi jaringan.
   Masalah riset (researchable)      : Belum ada evaluasi komparatif performa model ML pada dataset lama vs dataset modern dalam mendeteksi intrusi jaringan
   Variabel yang terukur             : Akurasi, precision, recall, F1-score, dan AUC pada algoritma Random Forest, Decision Tree, dan SVM.
 
@@ -108,9 +108,9 @@ Pilih satu topik di bidang TI yang diminati. Transformasikan melalui 5 tahap Pro
 |-------|-------|
 | Reality | Banyak organisasi menggunakan IDS berbasis machine learning untuk keamanan jaringan |
 | Observed Issue (Symptom) | Model ML menunjukkan akurasi tinggi (>95%) pada dataset uji |
-| Diagnosed Problem (Root Cause) |Dataset yang digunakan (NSL-KDD) tidak mencerminkan kondisi jaringan modern |
+| Diagnosed Problem (Root Cause) |Belum diketahui algoritma machine learning yang paling efektif untuk mendeteksi intrusi jaringan. |
 | Researchable Problem |Belum terdapat evaluasi komparatif yang menunjukkan algoritma machine learning paling efektif antara Random Forest, Decision Tree, dan SVM dalam mendeteksi intrusi jaringan.|
-| Measurable Variable |Akurasi, precision, recall, F1-score pada beberapa dataset |
+| Measurable Variable |Akurasi, precision, recall, F1-score, dan AUC pada algoritma Random Forest, Decision Tree, dan SVM. |
 
 **Apakah terjebak solution-first thinking?** [ ] Ya / [✓ ] Tidak
 > Jika ya, kembali ke tahap mana?
@@ -131,9 +131,9 @@ Gambarkan konteks sistem dari masalah riset di Latihan 1.
 | Constraints |Dataset lama, keterbatasan generalisasi, resource komputasi |
 | Stakeholders |Admin jaringan, organisasi, pengguna |
 
-**Komponen mana yang paling relevan dengan masalah riset?** Input (dataset)
+**Komponen mana yang paling relevan dengan masalah riset?** Process (algoritma machine learning)
 
-Karena masalah utama ada di kualitas dataset → mempengaruhi hasil
+Karena penelitian berfokus pada perbandingan performa algoritma Random Forest, Decision Tree, dan SVM untuk menentukan model yang paling efektif dalam mendeteksi intrusi jaringan.
 
 ## Latihan 3 — Problem Quality Check
 
