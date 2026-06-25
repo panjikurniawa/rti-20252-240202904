@@ -83,7 +83,7 @@ Fenomena → Problem
   Gejala (symptom) yang terukur     : Nilai akurasi tinggi pada dataset uji (NSL-KDD)
   Masalah yang didiagnosis          : Dataset yang digunakan tidak representatif terhadap kondisi jaringan modern
   Masalah riset (researchable)      : Belum ada evaluasi komparatif performa model ML pada dataset lama vs dataset modern dalam mendeteksi intrusi jaringan
-  Variabel yang terukur             : Akurasi, precision, recall, F1-score pada beberapa dataset (NSL-KDD vs dataset modern seperti CICIDS)
+  Variabel yang terukur             : Akurasi, precision, recall, F1-score, dan AUC pada algoritma Random Forest, Decision Tree, dan SVM.
 
 Problem Quality Check
   [✓] Clarity — Apakah satu orang membaca akan paham?
@@ -109,7 +109,7 @@ Pilih satu topik di bidang TI yang diminati. Transformasikan melalui 5 tahap Pro
 | Reality | Banyak organisasi menggunakan IDS berbasis machine learning untuk keamanan jaringan |
 | Observed Issue (Symptom) | Model ML menunjukkan akurasi tinggi (>95%) pada dataset uji |
 | Diagnosed Problem (Root Cause) |Dataset yang digunakan (NSL-KDD) tidak mencerminkan kondisi jaringan modern |
-| Researchable Problem |Belum ada evaluasi performa model ML pada dataset lama vs dataset modern |
+| Researchable Problem |Belum terdapat evaluasi komparatif yang menunjukkan algoritma machine learning paling efektif antara Random Forest, Decision Tree, dan SVM dalam mendeteksi intrusi jaringan.|
 | Measurable Variable |Akurasi, precision, recall, F1-score pada beberapa dataset |
 
 **Apakah terjebak solution-first thinking?** [ ] Ya / [✓ ] Tidak
@@ -150,7 +150,7 @@ Evaluasi problem statement yang sudah dibuat menggunakan 5 kriteria.
 **Skor total:** 25 / 25
 
 **Problem statement versi final (1 paragraf):**
-> Meskipun berbagai model machine learning seperti Random Forest, Decision Tree, dan Support Vector Machine menunjukkan akurasi tinggi dalam deteksi intrusi jaringan, evaluasi tersebut umumnya dilakukan menggunakan dataset lama seperti NSL-KDD yang tidak merepresentasikan kondisi jaringan modern. Hal ini menimbulkan keraguan terhadap validitas eksternal dari hasil penelitian. Oleh karena itu, diperlukan studi komparatif untuk mengevaluasi performa model machine learning pada dataset lama dan dataset yang lebih representatif terhadap kondisi nyata, dengan menggunakan metrik kuantitatif seperti akurasi, precision, recall, dan F1-score, guna memastikan bahwa model yang diusulkan benar-benar efektif dalam lingkungan operasional.
+> Meskipun machine learning telah banyak digunakan dalam sistem deteksi intrusi jaringan, belum diketahui secara pasti algoritma mana yang memberikan performa terbaik dalam mendeteksi berbagai jenis serangan siber. Beberapa algoritma seperti Random Forest, Decision Tree, dan Support Vector Machine sering digunakan, namun masing-masing memiliki karakteristik performa yang berbeda. Oleh karena itu, diperlukan evaluasi komparatif menggunakan dataset NSL-KDD dengan metrik seperti akurasi, precision, recall, F1-score, dan AUC untuk menentukan algoritma yang paling efektif dalam mendeteksi intrusi jaringan.
 
 
 ---
