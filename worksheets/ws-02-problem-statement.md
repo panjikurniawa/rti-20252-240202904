@@ -82,7 +82,7 @@ Fenomena → Problem
   Fenomena yang diamati             : Sistem deteksi intrusi berbasis ML menunjukkan akurasi tinggi (>95%)
   Gejala (symptom) yang terukur     : Nilai akurasi tinggi pada dataset uji (NSL-KDD)
   Masalah yang didiagnosis          : Belum diketahui algoritma machine learning mana yang memberikan performa terbaik dalam mendeteksi intrusi jaringan.
-  Masalah riset (researchable)      : Belum ada evaluasi komparatif performa model ML pada dataset lama vs dataset modern dalam mendeteksi intrusi jaringan
+  Masalah riset (researchable)      : Belum terdapat evaluasi komparatif yang menunjukkan algoritma machine learning paling efektif antara Random Forest, Decision Tree, dan SVM dalam mendeteksi intrusi jaringan.
   Variabel yang terukur             : Akurasi, precision, recall, F1-score, dan AUC pada algoritma Random Forest, Decision Tree, dan SVM.
 
 Problem Quality Check
