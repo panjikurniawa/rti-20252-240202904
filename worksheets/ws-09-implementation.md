@@ -73,32 +73,36 @@ Mengandalkan "install library terbaru" berbahaya: versi berbeda = perilaku berbe
 EXPERIMENT SETUP DOCUMENTATION
 
 Hardware:
-  CPU     : ____________________
-  RAM     : ____________________
-  GPU     : ____________________
-  Storage : ____________________
+  CPU     : Intel Core i5 / AMD Ryzen 5 (menggunakan Google Colab CPU Runtime)
+  RAM     : 12 GB (Google Colab Standard)
+  GPU     : Tidak digunakan (CPU Only)
+  Storage : Google Drive + Colab Temporary Storage
 
 Software:
-  OS        : ____________________
-  Runtime   : ____________________
-  Framework : ____________________
+  OS        : Linux Ubuntu (Environment Google Colab)
+  Runtime   : Python 3.11
+  Framework : Scikit-Learn, Pandas, NumPy, Matplotlib
+
 
 Dependencies:
 | Library | Version | Sumber | Hash/Checksum |
 |---------|---------|--------|---------------|
-|         |         |        |               |
-|         |         |        |               |
+| pandas  |  2.x    | Google Colab | Default package |
+| numpy   |  1.x    | Google Colab | Default package |
+| scikit-learn | 1.x | Google Colab | Default package |
+| matplotlib | 3.x | Google Colab | Default package |
+| seaborn | 0.x | Google Colab | Default package |
 
 Konfigurasi:
-  Config file     : ____________________
-  Random seed     : ____________________
-  Hyperparameters : ____________________
+  Config file     : penelitian_final_proposal.py
+  Random seed     : 42
+  Hyperparameters : GridSearchCV untuk Decision Tree, Random Forest, dan SVM
 
 Reproducibility Check:
-  [ ] Dependency terdokumentasi (requirements.txt / lock file)
-  [ ] Seed ditetapkan di semua level (Python, NumPy, framework)
-  [ ] Config di version control
-  [ ] README instruksi reproduksi lengkap
+  [✓ ] Dependency terdokumentasi (requirements.txt / lock file)
+  [✓ ] Seed ditetapkan di semua level (Python, NumPy, framework)
+  [✓ ] Config di version control
+  [✓ ] README instruksi reproduksi lengkap
 ```
 
 ---
@@ -109,23 +113,23 @@ Dokumentasikan environment untuk eksperimen Anda (boleh environment saat ini ata
 
 | Komponen | Spesifikasi |
 |----------|------------|
-| CPU | *Contoh: Intel Core i7-12700H, 14 Core* |
-| RAM | *Contoh: 32 GB DDR5* |
-| GPU | *Contoh: NVIDIA RTX 3060 6GB / CPU-only jika tidak ada GPU* |
-| OS | *Contoh: Ubuntu 22.04 LTS / Windows 11* |
-| Runtime | |
-| Framework | |
-| Random Seed | |
+| CPU | Google Colab CPU Runtime |
+| RAM | 12 GB |
+| GPU | Tidak digunakan |
+| OS | Linux Ubuntu (Google Colab Environment) |
+| Runtime |Python 3.11 |
+| Framework |Scikit-Learn |
+| Random Seed |42 |
 
 **Dependencies (minimal 5):**
 
 | Library | Version | Alasan Dibutuhkan |
 |---------|---------|-------------------|
-| *Contoh: scikit-learn* | *1.3.2* | *Klasifikasi + evaluasi metrik* |
-| | | |
-| | | |
-| | | |
-| | | |
+| pandas | 2.x | Membaca dan memproses dataset |
+|numpy |1.x |Operasi numerik dan array |
+|scikit-learn |1.x |Training model machine learning |
+|matplotlib |3.x |Membuat visualisasi grafik |
+|seaborn |0.x |Membantu analisis visual tambahan |
 
 ---
 
@@ -135,9 +139,9 @@ Rancang tes repeatability sederhana: jalankan kode yang sama 3× di environment 
 
 | Run | Seed | Metrik Utama | Hasil Sama? |
 |-----|------|-------------|-------------|
-| 1 | *Contoh: 42* | *Contoh: Accuracy* | — |
-| 2 | | | [ ] Ya / [ ] Tidak |
-| 3 | | | [ ] Ya / [ ] Tidak |
+| 1 | 42 | Accuracy | — |
+| 2 |42 |Accuracy | [✓ ] Ya / [ ] Tidak |
+| 3 |42 |Accuracy | [✓ ] Ya / [ ] Tidak |
 
 **Jika hasil berbeda, kemungkinan penyebab:**
 
@@ -147,13 +151,13 @@ Rancang tes repeatability sederhana: jalankan kode yang sama 3× di environment 
 > - **Cache dari run sebelumnya** — hasil tersimpan di memori/disk sehingga run berikutnya tidak menjalankan komputasi penuh
 > - **Random state tidak dikontrol di semua level** — Python seed di-set, tapi NumPy/PyTorch/TensorFlow punya seed independen
 
-___________________________________________________
+Perbedaan hasil eksperimen biasanya terjadi karena kondisi runtime yang berubah, proses background pada Google Colab, cache yang belum dibersihkan, atau random seed yang tidak dikunci secara konsisten pada setiap library yang digunakan.
 
 **Checklist kontrol yang sudah diterapkan:**
-- [ ] Random seed di-set di semua level
-- [ ] Tidak ada background process yang mengganggu
-- [ ] Cache dibersihkan antar-run
-- [ ] Config file yang sama untuk semua run
+- [✓ ] Random seed di-set di semua level
+- [✓ ] Tidak ada background process yang mengganggu
+- [✓ ] Cache dibersihkan antar-run
+- [✓ ] Config file yang sama untuk semua run
 
 ---
 
@@ -162,25 +166,49 @@ ___________________________________________________
 Tulis README minimum untuk eksperimen Anda (6 komponen wajib).
 
 ```
-# Judul Eksperimen: ____________________
+# Judul Eksperimen: Analisis Implementasi Machine Learning untuk Deteksi Intrusi pada Jaringan Komputer
 
 ## 1. Environment
-> (Salin spesifikasi dari Latihan 1)
+> Eksperimen dilakukan menggunakan Google Colab dengan Python 3.11, CPU runtime, dan library Scikit-Learn.
 
 ## 2. Installation
-> (Langkah instalasi, misal: "pip install -r requirements.txt")
+> Install library menggunakan command:
+pip install pandas numpy scikit-learn matplotlib seaborn
 
 ## 3. Data
-> (Deskripsi data: sumber, format, ukuran)
+> Dataset yang digunakan adalah NSL-KDD yang berisi data trafik jaringan normal dan data serangan.
+File:
+- KDDTrain+.txt
+- KDDTest+.txt
 
 ## 4. Execution
-> (Command untuk menjalankan eksperimen)
+> Menjalankan file eksperimen pada Google Colab:
+python penelitian_final_proposal.py
+atau menjalankan setiap cell secara berurutan pada notebook.
 
 ## 5. Configuration
-> (File config yang digunakan + parameter kunci)
+> Parameter eksperimen:
+- Train Test Split = 70:30
+- Cross Validation = 10 Fold
+- Random Seed = 42
+- Hyperparameter Tuning = GridSearchCV
+Model:
+- Decision Tree
+- Random Forest
+- Support Vector Machine
+
 
 ## 6. Expected Output
-> (Contoh output yang diharapkan + format)
+> Output yang dihasilkan:
+- Accuracy
+- Precision
+- Recall
+- F1 Score
+- AUC Score
+- Confusion Matrix
+- Classification Report
+- ROC Curve
+- CSV hasil evaluasi model
 ```
 
 ---
@@ -189,6 +217,6 @@ Tulis README minimum untuk eksperimen Anda (6 komponen wajib).
 
 > Apakah eksperimen Anda saat ini bisa direproduksi oleh orang lain tanpa bantuan Anda? Komponen apa yang masih hilang?
 
-**Level saat ini:** [ ] Repeatability / [ ] Reproducibility / [ ] Belum keduanya
+**Level saat ini:** [✓ ] Repeatability / [✓ ] Reproducibility / [ ] Belum keduanya
 **Komponen yang belum terdokumentasi:**
-> ___________________________________________________
+> Eksperimen sudah dapat direproduksi oleh peneliti lain karena dataset, library, konfigurasi parameter, serta tahapan implementasi telah dijelaskan secara sistematis. Dokumentasi yang masih dapat ditingkatkan adalah pembuatan file requirements.txt agar versi dependency dapat dikunci secara lebih detail.
