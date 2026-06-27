@@ -84,28 +84,28 @@ Metrik-X     ✗      ✗       ✓ ←     ✗        ✗
 ```
 PAPER STRUCTURE CHECKLIST
 
-Title   : ____________________
-Target  : [ ] Jurnal  [ ] Konferensi  [ ] Laporan
+Title   : Perbandingan Algoritma Decision Tree, Random Forest, dan Support Vector Machine untuk Deteksi Intrusi Jaringan Menggunakan Dataset NSL-KDD
+Target  : [✓ ] Jurnal  [ ] Konferensi  [✓ ] Laporan
 
 Section Check:
-  [ ] Abstract — masalah, metode, hasil utama, kontribusi (max 250 kata)
-  [ ] Introduction — konteks → gap → RQ → kontribusi → struktur paper
-  [ ] Related Work — concept-centric, gap positioning
-  [ ] Method — reproducible: desain, variabel, metrik, setup, prosedur
-  [ ] Results — tabel + grafik + observasi (tanpa interpretasi)
-  [ ] Discussion — interpretasi, perbandingan, implikasi, limitation
-  [ ] Conclusion — jawaban RQ, kontribusi, future work
+  [✓ ] Abstract — masalah, metode, hasil utama, kontribusi (max 250 kata)
+  [✓ ] Introduction — konteks → gap → RQ → kontribusi → struktur paper
+  [✓ ] Related Work — concept-centric, gap positioning
+  [✓ ] Method — reproducible: desain, variabel, metrik, setup, prosedur
+  [✓ ] Results — tabel + grafik + observasi (tanpa interpretasi)
+  [✓ ] Discussion — interpretasi, perbandingan, implikasi, limitation
+  [✓ ] Conclusion — jawaban RQ, kontribusi, future work
 
 Consistency Matrix:
-  [ ] RQ di Introduction = RQ di Method = RQ di Conclusion
-  [ ] Variabel di Method = variabel di Results
-  [ ] Klaim di Discussion didukung data di Results
-  [ ] Limitasi di Discussion di-address di Conclusion/Future Work
+  [✓ ] RQ di Introduction = RQ di Method = RQ di Conclusion
+  [✓ ] Variabel di Method = variabel di Results
+  [✓ ] Klaim di Discussion didukung data di Results
+  [✓ ] Limitasi di Discussion di-address di Conclusion/Future Work
 
 Writing Quality:
-  [ ] Clarity — mudah dipahami tanpa re-read
-  [ ] Precision — tidak ada istilah ambigu
-  [ ] Conciseness — tidak ada kalimat redundan
+  [✓ ] Clarity — mudah dipahami tanpa re-read
+  [✓ ] Precision — tidak ada istilah ambigu
+  [✓ ] Conciseness — tidak ada kalimat redundan
 ```
 
 ---
@@ -116,13 +116,13 @@ Buat outline paper untuk riset Anda menggunakan struktur IMRAD.
 
 | Section | Konten Utama (2-3 kalimat) | Target Kata |
 |---------|---------------------------|------------|
-| Abstract | *Contoh: Sistem rekomendasi memiliki akurasi tinggi tapi satisfaction rendah. Studi ini menguji CF+context signal. Hasil: satisfaction naik 38% tanpa penurunan RMSE signifikan.* | 200-250 |
-| Introduction | *Contoh: Konteks: gap antara akurasi dan kepuasan pengguna. Gap: tidak ada studi yang mengkombinasikan CF+context. RQ: apakah CF+context meningkatkan satisfaction?* | 500-700 |
-| Related Work | | 700-1000 |
-| Method | | 800-1200 |
-| Results | | 500-800 |
-| Discussion | | 600-900 |
-| Conclusion | | 200-400 |
+| Abstract | Penelitian membandingkan tiga algoritma machine learning untuk intrusion detection menggunakan dataset NSL-KDD. Hasil menunjukkan Random Forest memiliki performa terbaik. | 200-250 |
+| Introduction | Menjelaskan pentingnya keamanan jaringan komputer, ancaman intrusion attack, serta kebutuhan algoritma klasifikasi yang akurat. | 500-700 |
+| Related Work |Membahas penelitian sebelumnya mengenai IDS berbasis machine learning khususnya Decision Tree, Random Forest, dan SVM. | 700-1000 |
+| Method |Menjelaskan preprocessing dataset, cleaning, encoding, train test split, normalisasi, cross validation, grid search, training model, dan evaluasi. | 800-1200 |
+| Results |Menampilkan accuracy, precision, recall, F1-score, confusion matrix, ROC Curve, dan hasil statistik. | 500-800 |
+| Discussion |Menjelaskan perbandingan performa model, interpretasi statistik, keterbatasan model, serta failure analysis. | 600-900 |
+| Conclusion |Menyimpulkan model terbaik serta rekomendasi penelitian berikutnya. | 200-400 |
 
 ---
 
@@ -132,22 +132,22 @@ Buat consistency matrix untuk memverifikasi internal consistency paper Anda.
 
 |  | Intro | Method | Result | Discussion | Conclusion |
 |--|-------|--------|--------|-----------|-----------|
-| *Contoh: RQ1* | *✓* | *✓* | *✓* | *✓* | *✓* |
-| *Contoh: Metrik-X* | *✗ ←* | *✗ ←* | *✓* | *✗ ←* | *✗ ←* |
-| RQ1 | | | | | |
-| RQ2 | | | | | |
-| Metrik utama | | | | | |
-| Variabel IV | | | | | |
-| Variabel DV | | | | | |
-| Klaim/kontribusi | | | | | |
+| RQ1 | ✓ | ✓ | ✓ | ✓ | ✓ |
+| RQ2 | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Accuracy |✓ |✓ |✓ |✓ |✓ |
+| Precision |✓ |✓ |✓ |✓ |✓ |
+| Recall |✓ |✓ |✓ |✓ |✓ |
+| F1 Score |✓ |✓ |✓ |✓ |✓ |
+| Variabel Independent |✓ |✓ |✓ |✓ |✓ |
+| Kontribusi Penelitian |✓ |✓ |✓ |✓ |✓ |
 
 **Isi setiap sel:** ✓ (ada & konsisten), ✗ (missing), ~ (ada tapi inkonsisten)
 
 **Inkonsistensi yang ditemukan:**
-> ___________________________________________________
+> Tidak ditemukan inkonsistensi karena seluruh komponen penelitian telah terhubung secara konsisten dari awal hingga akhir penelitian.
 
 **Tindakan perbaikan:**
-> ___________________________________________________
+> Memastikan seluruh pembahasan pada bab hasil dan pembahasan tetap menggunakan metrik evaluasi yang sama seperti pada metodologi penelitian.
 
 ---
 
@@ -160,18 +160,18 @@ Ambil satu paragraf dari tulisan Anda (atau tulis paragraf baru) dan evaluasi ku
 
 | Kriteria | Evaluasi | Perbaikan |
 |----------|---------|-----------|
-| Clarity | *Contoh: kalimat ke-3 ambigu — "performa" bisa berarti accuracy atau speed* | *Ubah menjadi: "accuracy meningkat..."* |
-| Precision | | |
-| Conciseness | | |
+| Clarity | Kalimat cukup jelas namun terlalu umum | Menambahkan konteks intrusion detection system |
+| Precision |Tidak menjelaskan ukuran performa |Menambahkan metrik accuracy, precision, recall |
+| Conciseness |Kalimat masih terlalu sederhana |Membuat struktur kalimat lebih akademik |
 
 **Paragraf setelah perbaikan:**
 > (tulis paragraf yang sudah diperbaiki)
-
----
+Penelitian ini bertujuan membandingkan performa tiga algoritma machine learning yaitu Decision Tree, Random Forest, dan Support Vector Machine dalam mendeteksi intrusi jaringan komputer menggunakan dataset NSL-KDD. Evaluasi dilakukan menggunakan metrik accuracy, precision, recall, F1-score, serta AUC untuk menentukan algoritma dengan performa terbaik dalam sistem intrusion detection.
 
 ## Refleksi
 
 > Apa perbedaan antara menulis "tentang" riset dan menulis sebagai "argumen" riset? Bagaimana urutan penulisan (Method → Discussion → Introduction) mengubah kualitas tulisan?
 
-> ___________________________________________________
-> ___________________________________________________
+> Menulis laporan penelitian tidak hanya menjelaskan apa yang telah dikerjakan, tetapi harus membangun sebuah argumen ilmiah yang menunjukkan hubungan logis antara masalah penelitian, metode yang digunakan, hasil eksperimen, analisis statistik, serta kontribusi penelitian.
+Urutan penulisan yang dimulai dari metodologi, hasil, pembahasan, lalu pendahuluan membantu peneliti menghasilkan tulisan yang lebih konsisten karena seluruh isi penelitian dibangun berdasarkan hasil eksperimen yang benar-benar diperoleh.
+> Dalam penelitian ini, proses penulisan menjadi lebih terarah karena setiap tahap eksperimen mulai dari preprocessing, training model, cross validation, hingga analisis statistik telah terdokumentasi dengan baik sehingga mudah disusun menjadi laporan ilmiah yang sistematis.
