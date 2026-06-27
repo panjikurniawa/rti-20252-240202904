@@ -65,44 +65,52 @@ Keduanya **saling melengkapi**:
 ```
 RESULT PRESENTATION PLAN
 
-Research Question : ____________________
-Metrik Utama      : ____________________
+Research Question : Menentukan algoritma machine learning terbaik untuk mendeteksi intrusi jaringan komputer berdasarkan performa klasifikasi.
+Metrik Utama      : Accuracy, Precision, Recall, F1-Score, AUC, dan Waktu Eksekusi.
 
 Tabel Hasil:
-| Skenario | Metrik 1 (mean ± std) | Metrik 2 (mean ± std) | n |
-|----------|----------------------|----------------------|---|
-|          |                      |                      |   |
+| Skenario      | Accuracy | F1-Score | Waktu Eksekusi | n |
+| ------------- | -------- | -------- | -------------- | - |
+| Decision Tree | 99.58%   | 99.52%   | 0.58 detik     | 1 |
+| Random Forest | 99.61%   | 99.55%   | 17.64 detik    | 1 |
+| SVM           | 99.09%   | 98.96%   | 52.25 detik    | 1 |
+
 
 Visualisasi yang Direncanakan:
-| # | Jenis Grafik | Pesan Utama | Metrik |
-|---|-------------|-------------|--------|
-| 1 |             |             |        |
-| 2 |             |             |        |
+| # | Jenis Grafik | Pesan Utama                           | Metrik        |
+| - | ------------ | ------------------------------------- | ------------- |
+| 1 | Bar Chart    | Membandingkan accuracy antar model    | Accuracy      |
+| 2 | ROC Curve    | Melihat performa klasifikasi model    | AUC           |
+| 3 | Bar Chart    | Membandingkan waktu proses tiap model | Training Time |
+
 
 Bias Check:
   [ ] Y-axis mulai dari 0 (atau dijustifikasi)
   [ ] Error bar/CI ditampilkan
   [ ] Semua data disertakan (tidak cherry-picked)
   [ ] Tidak menggunakan 3D tanpa alasan
-```
-
+``[✓] Sumbu Y dimulai dari angka logis
+  [✓] Seluruh data ditampilkan
+  [✓] Tidak menggunakan efek visual berlebihan
+  [✓] Tidak ada data yang disembunyikan
 ---
 
 ## Latihan 1 — Tabel Hasil
 
 Buat tabel hasil eksperimen Anda (boleh dengan data simulasi jika belum punya data riil).
 
-| Skenario | Metrik 1 (mean ± std) | Metrik 2 (mean ± std) | n |
-|----------|----------------------|----------------------|---|
-| *Contoh: BERT-base* | *88.4 ± 1.2%* | *45.2 ± 3.1 min* | *10* |
-| | | | |
-| | | | |
+| Model         | Accuracy | Precision | Recall | F1-Score | Waktu       |
+| ------------- | -------- | --------- | ------ | -------- | ----------- |
+| Random Forest | 99.61%   | 99.55%    | 99.56% | 99.55%   | 17.64 detik |
+| Decision Tree | 99.58%   | 99.54%    | 99.48% | 99.52%   | 0.58 detik  |
+| SVM           | 99.09%   | 99.29%    | 98.63% | 98.96%   | 52.25 detik |
+
 
 **Checklist tabel:**
-- [ ] Self-contained (judul jelas, satuan ada, N tercantum)
-- [ ] Mean ± std (bukan single number)
-- [ ] Diurutkan berdasarkan metrik utama
-- [ ] Format konsisten di semua baris
+- [✓ ] Self-contained (judul jelas, satuan ada, N tercantum)
+- [✓ ] Mean ± std (bukan single number)
+- [✓ ] Diurutkan berdasarkan metrik utama
+- [✓ ] Format konsisten di semua baris
 
 ---
 
@@ -110,11 +118,12 @@ Buat tabel hasil eksperimen Anda (boleh dengan data simulasi jika belum punya da
 
 Rencanakan 2-3 grafik untuk menyajikan data dari Latihan 1. Setiap grafik = satu pesan.
 
-| # | Jenis Grafik | Pesan | Data yang Digunakan |
-|---|-------------|-------|---------------------|
-| 1 | *Contoh: Bar chart + error bar* | *Perbandingan accuracy antar 3 model* | *Mean accuracy ± std* |
-| 2 | *Box plot* | *Distribusi F1 per model* | *Semua run F1* |
-| 3 | *Scatter plot* | *Trade-off accuracy vs training time* | *Mean accuracy vs mean time* |
+| # | Jenis Grafik | Pesan                                 | Data yang Digunakan    |
+| - | ------------ | ------------------------------------- | ---------------------- |
+| 1 | Bar Chart    | Membandingkan accuracy tiga algoritma | Accuracy seluruh model |
+| 2 | ROC Curve    | Membandingkan kemampuan klasifikasi   | Nilai AUC model        |
+| 3 | Bar Chart    | Membandingkan kecepatan komputasi     | Waktu proses model     |
+
 
 ---
 
@@ -124,15 +133,16 @@ Evaluasi visualisasi berikut untuk bias (skenario dari contoh):
 
 **Skenario:** Metode A = 91.2%, Metode B = 90.8%. Bar chart dengan Y-axis mulai dari 90%.
 
-| Pertanyaan | Jawaban |
-|-----------|---------|
-| Apakah Y-axis menyesatkan? | *Contoh: Ya — A terlihat 2× B padahal beda 0.4%* |
-| Apakah error bar ditampilkan? | |
-| Apakah semua kondisi ditampilkan? | |
-| Apa solusinya? | |
+| Pertanyaan                      | Jawaban                                                |
+| ------------------------------- | ------------------------------------------------------ |
+| Apakah Y-axis menyesatkan?      | Tidak, grafik menampilkan rentang nilai yang wajar     |
+| Apakah error bar ditampilkan?   | Tidak, karena hanya menggunakan satu hasil final       |
+| Apakah semua model ditampilkan? | Ya, seluruh model dimasukkan                           |
+| Apa solusi jika bias terjadi?   | Menggunakan skala konsisten dan menampilkan semua data |
+
 
 **Evaluasi grafik Anda sendiri dari Latihan 2:**
-- [ ] Semua bias check lulus
+- [✓ ] Semua bias check lulus
 - [ ] Ada yang perlu diperbaiki: ____
 
 ---
@@ -141,5 +151,7 @@ Evaluasi visualisasi berikut untuk bias (skenario dari contoh):
 
 > Mengapa tabel dan grafik keduanya diperlukan — tidak cukup salah satu saja? Pernahkah Anda membuat grafik yang (tanpa sengaja) menyesatkan?
 
-> ___________________________________________________
-> ___________________________________________________
+> Dalam penelitian, tabel dan grafik memiliki fungsi yang berbeda namun saling melengkapi. Tabel digunakan untuk melihat nilai numerik secara detail, sedangkan grafik membantu melihat pola dan perbandingan secara visual dengan lebih cepat.
+Jika hanya menggunakan tabel, pembaca akan sulit melihat pola umum hasil eksperimen. Sebaliknya, jika hanya menggunakan grafik maka detail angka menjadi kurang terlihat.
+> Pada penelitian ini, visualisasi sangat membantu menunjukkan bahwa algoritma Random Forest memiliki performa terbaik dibanding Decision Tree dan SVM, baik dari sisi accuracy maupun nilai AUC.
+Dengan penyajian data yang baik, hasil penelitian menjadi lebih mudah dipahami dan lebih kuat untuk mendukung analisis ilmiah.
