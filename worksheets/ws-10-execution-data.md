@@ -70,22 +70,27 @@ EXECUTION PLAN
 
 | Run # | Skenario | Seed | Parameter | Status | Waktu | Output File |
 |-------|----------|------|-----------|--------|-------|-------------|
-| 1     |          |      |           |        |       |             |
-| 2     |          |      |           |        |       |             |
-| 3     |          |      |           |        |       |             |
-| ...   |          |      |           |        |       |             |
+| 1     |Pelatihan Decision Tree | 42 |criterion, max_depth |Selesai |27.7 detik |hasil_perbandingan_model.csv |
+| 2     |Pelatihan Random Forest |42  |n_estimators, max_depth |Selesai |64.21 detik |hasil_perbandingan_model.csv |
+| 3     |Pelatihan SVM | 42     | kernel=rbf, C, gamma |Selesai |19.45 detik |hasil_perbandingan_model.csv  |
+| 4     |Grid Search Decision Tree | 42     |criterion=entropy, max_depth=20 | Selesai  |33.15 detik | hasil_perbandingan_model.csv |
+| 5     |Grid Search Random Forest | 42 | n_estimators=200, max_depth=None | Selesai | 257.74 detik |  hasil_perbandingan_model.csv |
+| 6     |Grid Search SVM | 42 | C=10, gamma=scale | Selesai | 204.0 detik | hasil_perbandingan_model.csv |
+| 7     |Evaluasi Final Decision Tree | 42 | Parameter terbaik DT | Selesai | 0.58 detik | perbandingan_model.png |
+| 8     |Evaluasi Final Random Forest | 42 | Parameter terbaik RF | Selesai | 17.64 detik | perbandingan_model.png |
+| 9     |Evaluasi Final SVM | 42 | Parameter terbaik SVM | Selesai | 52.25 detik | roc_curve.png |
 
-Jumlah runs per skenario : ____
-Total runs               : ____
+Jumlah runs per skenario : 3 model algoritma
+Total runs               : 9 proses pengujian
 
 DATA LOG (per run):
-  Run ID    : ____________________
-  Timestamp : ____________________
-  Skenario  : ____________________
-  Input     : ____________________
-  Output    : ____________________
-  Anomali   : ____________________
-  Catatan   : ____________________
+  Run ID    : run-001
+  Timestamp : 27 Juni 2026
+  Skenario  : Pengujian perbandingan performa Decision Tree, Random Forest, dan SVM pada sistem deteksi intrusi jaringan
+  Input     : Dataset NSL-KDD dengan jumlah data awal 148517 record dan data akhir setelah preprocessing sebanyak 110082 record
+  Output    : Accuracy, Precision, Recall, F1-Score, AUC Score, Confusion Matrix, Classification Report, Grafik Accuracy, ROC Curve
+  Anomali   : Proses komputasi algoritma SVM membutuhkan waktu lebih lama dibanding model lain karena kompleksitas proses training lebih tinggi
+  Catatan   : Random Forest memberikan performa terbaik dibandingkan dua algoritma lainnya berdasarkan seluruh metrik evaluasi
 ```
 
 ---
@@ -96,15 +101,19 @@ Susun execution plan untuk eksperimen Anda. Tentukan skenario, jumlah run, dan s
 
 | Run # | Skenario | Seed | Parameter Kunci | Status |
 |-------|----------|------|----------------|--------|
-| *1* | *Contoh: BERT-base, DS-1* | *42* | *lr=2e-5, epoch=10* | *Planned* |
-| *2* | *BERT-base, DS-1* | *123* | *lr=2e-5, epoch=10* | *Planned* |
-| 3 | | | | |
-| 4 | | | | |
-| 5 | | | | |
+| 1 | Cross Validation Decision Tree | 42 |  cv=10 | Selesai |
+| 2 | Cross Validation Random Forest | 42 |  cv=10 | Selesai |
+| 3 |Cross Validation SVM |42 | subset=15000 |Selesai |
+| 4 |Grid Search Decision Tree |42 |criterion, max_depth |Selesai |
+| 5 |Grid Search Random Forest |42 |n_estimators, max_depth |Selesai |
+| 6 |Grid Search SVM | 42| C, gamma | Selesai |
+| 7 |Final Training Decision Tree | 42 | best parameter DT | Selesai |
+| 8 |Final Training Random Forest | 42 | best parameter RF | Selesai |
+| 9 |Final Training SVM | 42 | best parameter SVM | Selesai |
 
-**Total skenario:** ____
-**Run per skenario:** ____
-**Total run keseluruhan:** ____
+**Total skenario:** 9
+**Run per skenario:** 1 kali
+**Total run keseluruhan:** 9 proses eksperimen
 
 ---
 
@@ -115,25 +124,28 @@ Desain format data log untuk eksperimen Anda. Tentukan field apa saja yang akan 
 **Identitas:**
 | Field | Contoh |
 |-------|--------|
-| Run ID | *run-001* |
-| Timestamp | *2025-03-15T10:30:00* |
-| | |
+| Run ID | run-001 |
+| Timestamp | 27 Juni 2026 |
+|Dataset |NSL-KDD |
+|Platform | Google colab |
 
 **Konfigurasi:**
 | Field | Contoh |
 |-------|--------|
-| Seed | *42* |
-| Code version | *commit abc1234* |
-| | |
+| Seed | 42 |
+| Data Split | 70:30 |
+|Cross Validation |10 Fold |
+|Code Version | Python Notebook Final |
 
 **Hasil:**
 | Metrik | Tipe Data | Range Valid |
 |--------|----------|-------------|
-| *Contoh: Accuracy* | *float* | *0.0 – 1.0* |
-| | | |
-| | | |
-
-**Format output:** [ ] CSV / [ ] JSON / [ ] Database / [ ] Lainnya: ____
+| Accuracy | float | 0.0 – 1.0 |
+|Precision |float |0.0-1.0 |
+|Recall |float |0.0-1.0 |
+|F1-Score|float |0.0-1.0|
+|AUC |float |0.0-1.0|
+**Format output:** [✓ ] CSV / [ ] JSON / [ ] Database / [ ] Lainnya: [✓ ] PNG / [✓ ] TXT Log File
 
 ---
 
@@ -143,10 +155,10 @@ Rencanakan bagaimana menangani anomali. Untuk setiap jenis, tentukan langkah yan
 
 | Jenis Anomali | Contoh | Tindakan |
 |---------------|--------|----------|
-| Run gagal (crash) | *Contoh: OOM pada batch_size=64* | *Contoh: Dokumentasi, re-run batch_size=32, catat perubahan* |
-| Hasil ekstrem | | |
-| Waktu eksekusi anomali | | |
-| Inkonsistensi dengan run lain | | |
+| Program berhenti | Runtime Google Colab disconnect | Menjalankan ulang program |
+| Waktu proses terlalu lama |Training SVM membutuhkan waktu lebih lama |Menunggu proses selesai dan memantau runtime |
+| Hasil tidak sesuai |Accuracy berubah terlalu jauh |Mengecek preprocessing dan parameter |
+| Error membaca data |Dataset gagal dimuat |Upload ulang dataset |
 
 **Prinsip:** Detect → Investigate → Document → Decide
 
@@ -157,6 +169,6 @@ Rencanakan bagaimana menangani anomali. Untuk setiap jenis, tentukan langkah yan
 > Pernahkah Anda melaporkan hasil riset/tugas dari single run? Apa risikonya? Bagaimana multiple run mengubah kepercayaan terhadap hasil?
 
 **Pengalaman sebelumnya:**
-> ___________________________________________________
+> Pada praktik sebelumnya proses pengujian hanya berfokus pada satu hasil accuracy tanpa dokumentasi eksperimen yang lengkap.
 **Yang akan dilakukan berbeda:**
-> ___________________________________________________
+> Pada penelitian ini seluruh proses eksperimen dicatat secara lengkap, hasil disimpan dalam beberapa file, serta dilakukan perbandingan tiga algoritma machine learning agar hasil penelitian menjadi lebih valid.
