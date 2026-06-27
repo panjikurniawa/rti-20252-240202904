@@ -90,12 +90,12 @@ Normalization:
   Parameter : Training set saja
 
 Leakage Check:
-  [ ] Parameter normalisasi dari training set saja
-  [ ] Tidak ada informasi test set dalam preprocessing
-  [ ] Cross-validation dilakukan setelah split
+  [✓ ] Parameter normalisasi dari training set saja
+  [✓ ] Tidak ada informasi test set dalam preprocessing
+  [✓ ] Cross-validation dilakukan setelah split
 
-Jumlah data akhir : ____________________
-Script tersedia   : [ ] Ya → path: ____ | [ ] Belum
+Jumlah data akhir : 110082 records
+Script tersedia   : [✓ ] Ya →Google Colab Notebook path: ____ | [ ] Belum
 ```
 
 ---
@@ -106,14 +106,14 @@ Periksa dataset Anda (atau dataset contoh) dan dokumentasikan masalah yang ditem
 
 | Masalah | Jumlah Kasus | Penanganan | Justifikasi |
 |---------|-------------|------------|-------------|
-| *Contoh: Missing di kolom "label"* | *12 dari 500 (2.4%)* | *Listwise deletion* | *< 5%, distribusi random (MCAR)* |
-| | | | |
-| | | | |
-| | | | |
+| Missing Value | 0 | Tidak ada tindakan | Dataset lengkap |
+|Data Duplikat |610 |Menghapus duplicate rows |Menghindari pengulangan data |
+|Outlier |37825 |Metode IQR |Mengurangi noise pada data |
 
-**Jumlah data sebelum cleaning:** ____
-**Jumlah data setelah cleaning:** ____
-**Persentase data yang hilang/berubah:** ____%
+
+**Jumlah data sebelum cleaning:** 148517
+**Jumlah data setelah cleaning:** 110082
+**Persentase data yang hilang/berubah:** 25.88%
 
 ---
 
@@ -123,16 +123,18 @@ Tentukan apakah data Anda perlu normalisasi, dan jika ya, metode apa yang tepat.
 
 | Variabel | Range Asli | Distribusi | Outlier? | Metode Normalisasi | Alasan |
 |----------|-----------|-----------|----------|-------------------|--------|
-| *Contoh: response_time* | *0.1 – 45.2s* | *Right-skewed* | *Ya (45.2s)* | *Robust scaling* | *Ada outlier, perlu robust* || *Contoh: accuracy_score* | *0.72 – 0.95* | *Normal, narrow* | *Tidak* | *Tidak perlu* | *Sudah dalam [0,1], metode berbasis distance tidak digunakan* || | | | | | |
-| | | | | | |
+| duration | 0 – sangat besar | Tidak merata | Ya| StandardScaler | Menyamakan skala |
+|src_bytes |Nilai tinggi bervariasi |Tidak normal |Ya |StandardScaler |Mengurangi perbedaan rentang |
+|dst_bytes |Nilai tinggi bervariasi | Tidak normal | Ya |StandardScaler | Mempermudah training model |
+|label | 1-0 | Sudah numerik | Tidak | Tidak perlu |Sudah dalam bentuk target|
 
-**Apakah normalisasi diperlukan?** [ ] Ya / [ ] Tidak
+**Apakah normalisasi diperlukan?** [✓ ] Ya / [ ] Tidak
 **Justifikasi:**
-> ___________________________________________________
+> Normalisasi diperlukan karena dataset memiliki banyak fitur numerik dengan skala berbeda. Tanpa normalisasi, algoritma seperti SVM dapat menghasilkan performa yang kurang optimal karena sensitif terhadap perbedaan skala antar fitur.
 
 **Leakage check:**
-- [ ] Parameter dihitung dari training set saja
-- [ ] Normalisasi diterapkan setelah train-test split
+- [✓ ] Parameter dihitung dari training set saja
+- [✓ ] Normalisasi diterapkan setelah train-test split
 
 ---
 
@@ -143,16 +145,17 @@ Buat ringkasan preprocessing lengkap — dokumentasi yang cukup bagi orang lain 
 ```
 PREPROCESSING SUMMARY
 
-1. Dataset: ____________________
-2. Data awal: ____ records, ____ features
+1. Dataset: NSL-KDD Dataset
+2. Data awal: 148517 records, 41 features
 3. Cleaning:
-   - Missing values: ____ kasus, metode: ____
-   - Duplikat: ____ kasus, tindakan: ____
-   - Error: ____ kasus, tindakan: ____
-4. Transformation: ____________________
-5. Normalisasi: ____ (metode), parameter dari ____
-6. Data akhir: ____ records, ____ features
-7. Leakage check: [ ] Lulus / [ ] Ada masalah
+   - Missing values: 0 kasus, metode: tidak diperlukan penanganan
+   - Duplikat: 610 kasus, tindakan: dihapus
+   - Error: 37825 kasus, tindakan: dihapus menggunakan metode IQR
+4. Transformation: Label encoding pada target klasifikasi
+                   One Hot Encoding pada fitur kategorikal
+5. Normalisasi: StandardScaler (Z-Score) (metode), parameter dari training set
+6. Data akhir: 110082 records, 122 features + 1 label
+7. Leakage check: [✓ ] Lulus / [ ] Ada masalah
 ```
 
 ---
@@ -161,5 +164,6 @@ PREPROCESSING SUMMARY
 
 > Apakah Anda pernah melakukan normalisasi "karena biasa dilakukan" tanpa mempertimbangkan apakah benar-benar diperlukan? Apa risiko over-preprocessing?
 
-> ___________________________________________________
-> ___________________________________________________
+> Pada beberapa eksperimen machine learning, proses normalisasi sering dilakukan karena dianggap sebagai langkah standar. Namun sebenarnya tidak semua model membutuhkan normalisasi. Jika preprocessing dilakukan secara berlebihan, terdapat risiko perubahan distribusi data yang justru dapat memengaruhi performa model.
+Dalam penelitian ini, normalisasi dilakukan karena salah satu algoritma yang digunakan adalah SVM yang sangat sensitif terhadap skala data. Oleh karena itu preprocessing dilakukan secukupnya agar kualitas data tetap terjaga tanpa menyebabkan distorsi berlebihan.
+> Dengan preprocessing yang terstruktur, proses eksperimen menjadi lebih valid dan hasil penelitian dapat dipercaya.
