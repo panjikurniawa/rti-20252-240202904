@@ -66,25 +66,28 @@ Data leakage terjadi ketika informasi dari test set "bocor" ke preprocessing:
 ```
 PREPROCESSING LOG
 
-Dataset           : ____________________
-Jumlah data awal  : ____________________
+Dataset           : NSL-KDD Dataset
+Jumlah data awal  : 148517 records
 
 Cleaning:
-| Masalah | Jumlah Kasus | Penanganan | Justifikasi |
-|---------|-------------|------------|-------------|
-| Missing |             |            |             |
-| Duplikat|             |            |             |
-| Error   |             |            |             |
+| Masalah       | Jumlah Kasus | Penanganan                  | Justifikasi                                          |
+| ------------- | ------------ | --------------------------- | ---------------------------------------------------- |
+| Missing Value | 0            | Tidak ada tindakan          | Dataset tidak memiliki data kosong                   |
+| Duplikat      | 610 data     | Menghapus data duplikat     | Menghindari bias pengulangan data                    |
+| Outlier       | 37825 data   | Menghapus dengan metode IQR | Mengurangi data ekstrem yang dapat memengaruhi model |
+
 
 Transformation:
-| Transformasi | Variabel | Detail | Alasan |
-|-------------|----------|--------|--------|
-|             |          |        |        |
+| Transformasi     | Variabel                | Detail                                  | Alasan                             |
+| ---------------- | ----------------------- | --------------------------------------- | ---------------------------------- |
+| Label Encoding   | Label                   | Normal → 1, Attack → 0                  | Mengubah label menjadi numerik     |
+| One Hot Encoding | Protocol, Service, Flag | Mengubah kategori menjadi fitur numerik | Algoritma membutuhkan data numerik |
+
 
 Normalization:
-  Metode    : ____________________
-  Alasan    : ____________________
-  Parameter : (dihitung dari: training set / seluruh data)
+  Metode    : StandardScaler (Z-Score Normalization)
+  Alasan    : Menyamakan skala data agar model SVM bekerja lebih optimal
+  Parameter : Training set saja
 
 Leakage Check:
   [ ] Parameter normalisasi dari training set saja
