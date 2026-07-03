@@ -156,11 +156,11 @@ Buat consistency matrix untuk memverifikasi internal consistency paper Anda.
 Ambil satu paragraf dari tulisan Anda (atau tulis paragraf baru) dan evaluasi kualitasnya.
 
 **Paragraf asli:**
-> (tempel paragraf Anda di sini)
+> Penelitian ini dilakukan untuk mengevaluasi kemampuan algoritma Random Forest dalam mendeteksi intrusi pada jaringan komputer. Selain itu, penelitian juga bertujuan membandingkan performa Random Forest dengan dua algoritma machine learning lainnya, yaitu Decision Tree dan Support Vector Machine (SVM). Dalam penelitian ini, algoritma Decision Tree dan Support Vector Machine (SVM) diposisikan sebagai kondisi baseline (kondisi A), yaitu pendekatan deteksi intrusi yang telah lazim digunakan dan dijadikan acuan pembanding. Algoritma Random Forest diposisikan sebagai kondisi intervensi (kondisi B), yaitu pendekatan yang diusulkan untuk dievaluasi efektivitasnya dalam mendeteksi intrusi jaringan komputer dibandingkan kondisi baseline tersebut.
 
 | Kriteria | Evaluasi | Perbaikan |
 |----------|---------|-----------|
-| Clarity | Kalimat cukup jelas namun terlalu umum | Menambahkan konteks intrusion detection system |
+| Clarity | Cukup jelas namun ada pengulangan informasi | Kalimat 1 dan 2 menyampaikan hal yang sama (evaluasi + perbandingan RF), sehingga pembaca membaca ulang tanpa mendapat informasi baru |
 | Precision |Tidak menjelaskan ukuran performa |Menambahkan metrik accuracy, precision, recall |
 | Conciseness |Kalimat masih terlalu sederhana |Membuat struktur kalimat lebih akademik |
 
