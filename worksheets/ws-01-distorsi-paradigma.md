@@ -70,7 +70,7 @@ Tanggal          : 23 April 2026
 
 2. Posisi paradigma:
    - Pendekatan: [✓ ] Positivis  [ ] Interpretivis  [✓ ] Design Science  [ ] Mixed
-   - Alasan: “Penelitian ini menggunakan data dan pengujian angka untuk melihat performa model, sekaligus membuat model machine learning sebagai solusi deteksi intrusi.
+   - Alasan: Penelitian ini menggunakan pendekatan kuantitatif melalui pengujian performa tiga algoritma machine learning pada dataset intrusion detection, serta memanfaatkan model klasifikasi sebagai artefak untuk menghasilkan pengetahuan mengenai metode yang paling efektif.
 
 3. Identifikasi distorsi:
    - Asumsi tersembunyi:  Penelitian menganggap dataset NSL-KDD masih cocok untuk kondisi jaringan saat ini.
