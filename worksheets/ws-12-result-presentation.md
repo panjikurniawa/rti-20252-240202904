@@ -65,44 +65,43 @@ Keduanya **saling melengkapi**:
 ```
 RESULT PRESENTATION PLAN
 
-Research Question : Menentukan algoritma machine learning terbaik untuk mendeteksi intrusi jaringan komputer berdasarkan performa klasifikasi.
-Metrik Utama      : Accuracy, Precision, Recall, F1-Score, AUC, dan Waktu Eksekusi.
+Research Question :  Menentukan algoritma machine learning terbaik untuk
+                    mendeteksi intrusi jaringan komputer berdasarkan
+                    performa klasifikasi (Decision Tree vs Random Forest vs SVM).
+Metrik Utama      : Accuracy, Precision, Recall, F1-Score, AUC, Waktu Eksekusi.
 
 Tabel Hasil:
 | Skenario      | Accuracy | F1-Score | Waktu Eksekusi | n |
 | ------------- | -------- | -------- | -------------- | - |
-| Decision Tree | 99.58%   | 99.52%   | 0.58 detik     | 1 |
-| Random Forest | 99.61%   | 99.55%   | 17.64 detik    | 1 |
-| SVM           | 99.09%   | 98.96%   | 52.25 detik    | 1 |
+| Decision Tree | 99.57% ± 0.05% | 99.55%   | 16.58 detik | 10 |
+| Random Forest | 99.49% ± 0.07% | 99.52%   | 0.66 detik  | 10 |
+| SVM           | 98.29% ± 0.30% | 98.96%   | 46.10 detik | 10 |
 
 
 Visualisasi yang Direncanakan:
 | # | Jenis Grafik | Pesan Utama                           | Metrik        |
 | - | ------------ | ------------------------------------- | ------------- |
-| 1 | Bar Chart    | Membandingkan accuracy antar model    | Accuracy      |
-| 2 | ROC Curve    | Melihat performa klasifikasi model    | AUC           |
-| 3 | Bar Chart    | Membandingkan waktu proses tiap model | Training Time |
+| 1 | Bar Chart    | Membandingkan accuracy  model         | Accuracy      |
+| 2 | ROC Curve    | Melihat kemampuan klasifikasi model   | AUC           |
+| 3 | Bar Chart    | Membandingkan kecepatan komputasi     | Training Time |
 
 
 Bias Check:
-  [ ] Y-axis mulai dari 0 (atau dijustifikasi)
-  [ ] Error bar/CI ditampilkan
-  [ ] Semua data disertakan (tidak cherry-picked)
-  [ ] Tidak menggunakan 3D tanpa alasan
-``[✓] Sumbu Y dimulai dari angka logis
-  [✓] Seluruh data ditampilkan
-  [✓] Tidak menggunakan efek visual berlebihan
-  [✓] Tidak ada data yang disembunyikan
+  [✓] Y-axis mulai dari 0 (atau dijustifikasi secara eksplisit jika dipotong)
+  [✓] Error bar/CI ditampilkan (std dari 10-fold CV tersedia di tabel)
+  [✓] Semua data disertakan — tidak ada model yang disembunyikan
+  [✓] Tidak menggunakan efek 3D tanpa alasan
+  [✓] Skala konsisten di semua visualisasi
 ---
 
 ## Latihan 1 — Tabel Hasil
 
 Buat tabel hasil eksperimen Anda (boleh dengan data simulasi jika belum punya data riil).
 
-| Model         | Accuracy | Precision | Recall | F1-Score | Waktu       |
-| ------------- | -------- | --------- | ------ | -------- | ----------- |
-| Random Forest | 99.61%   | 99.55%    | 99.56% | 99.55%   | 17.64 detik |
-| Decision Tree | 99.58%   | 99.54%    | 99.48% | 99.52%   | 0.58 detik  |
+| Model         | Accuracy | Precision | Recall | F1-Score | AUC      | Std (10-fold) | Waktu |
+| ------------- | -------- | --------- | ------ | -------- | ----------- |------------|---------|
+| Random Forest | 99.61%   | 99.55%    | 99.56% | 99.55%   | 0.9997 | ±0.05% | 16.58 dtk |
+| Decision Tree | 99.58%   | 99.54%    | 99.48% | 99.52%   | 0.9961  | ±0.07% | 
 | SVM           | 99.09%   | 99.29%    | 98.63% | 98.96%   | 52.25 detik |
 
 
