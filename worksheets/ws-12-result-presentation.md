@@ -101,15 +101,15 @@ Buat tabel hasil eksperimen Anda (boleh dengan data simulasi jika belum punya da
 | Model         | Accuracy | Precision | Recall | F1-Score | AUC      | Std (10-fold) | Waktu |
 | ------------- | -------- | --------- | ------ | -------- | ----------- |------------|---------|
 | Random Forest | 99.61%   | 99.55%    | 99.56% | 99.55%   | 0.9997 | ±0.05% | 16.58 dtk |
-| Decision Tree | 99.58%   | 99.54%    | 99.48% | 99.52%   | 0.9961  | ±0.07% | 
-| SVM           | 99.09%   | 99.29%    | 98.63% | 98.96%   | 52.25 detik |
+| Decision Tree | 99.58%   | 99.54%    | 99.48% | 99.52%   | 0.9961  | ±0.07% | 0.66 dtk |
+| SVM           | 99.09%   | 99.29%    | 98.63% | 98.96%   | 0.9993 | ±0.30% | 46.10 dtk |
 
 
 **Checklist tabel:**
-- [✓ ] Self-contained (judul jelas, satuan ada, N tercantum)
-- [✓ ] Mean ± std (bukan single number)
-- [✓ ] Diurutkan berdasarkan metrik utama
-- [✓ ] Format konsisten di semua baris
+- [✓] Self-contained (judul jelas, satuan ada, N tercantum)
+- [✓] Mean ± Std dari 10-fold CV tersedia di kolom "Std"
+- [✓] Diurutkan berdasarkan metrik utama (Accuracy, tertinggi ke terendah)
+- [✓] Format konsisten di semua baris
 
 ---
 
@@ -119,9 +119,9 @@ Rencanakan 2-3 grafik untuk menyajikan data dari Latihan 1. Setiap grafik = satu
 
 | # | Jenis Grafik | Pesan                                 | Data yang Digunakan    |
 | - | ------------ | ------------------------------------- | ---------------------- |
-| 1 | Bar Chart    | Membandingkan accuracy tiga algoritma | Accuracy seluruh model |
-| 2 | ROC Curve    | Membandingkan kemampuan klasifikasi   | Nilai AUC model        |
-| 3 | Bar Chart    | Membandingkan kecepatan komputasi     | Waktu proses model     |
+| 1 | Bar Chart    | Membandingkan accuracy tiga algoritma | Accuracy final dari test set (30%) |
+| 2 | ROC Curve    | Membandingkan kemampuan membedakan normal vs attack | Nilai AUC ketiga model  |
+| 3 | Bar Chart    | Membandingkan kecepatan komputasi — trade-off penting | Waktu training final (detik)  |
 
 
 ---
@@ -134,15 +134,16 @@ Evaluasi visualisasi berikut untuk bias (skenario dari contoh):
 
 | Pertanyaan                      | Jawaban                                                |
 | ------------------------------- | ------------------------------------------------------ |
-| Apakah Y-axis menyesatkan?      | Tidak, grafik menampilkan rentang nilai yang wajar     |
-| Apakah error bar ditampilkan?   | Tidak, karena hanya menggunakan satu hasil final       |
-| Apakah semua model ditampilkan? | Ya, seluruh model dimasukkan                           |
-| Apa solusi jika bias terjadi?   | Menggunakan skala konsisten dan menampilkan semua data |
+| Apakah Y-axis menyesatkan?      | Ya, menyesatkan. Y-axis dimulai dari 90% membuat perbedaan 0,4 poin (91,2% vs 90,8%) terlihat sangat besar secara visual — padahal secara absolut perbedaannya sangat kecil dan kemungkinan tidak signifikan secara statistik. Ini adalah contoh klasik truncated axis bias yang dibahas dalam materi WS-12. |
+| Apakah error bar ditampilkan?   | Tidak ditampilkan. Ini masalah karena tanpa std/CI, pembaca tidak bisa menilai apakah perbedaan 0,4 poin itu nyata atau dalam rentang variabilitas normal. |
+| Apakah semua model ditampilkan? | Ya, kedua metode ditampilkan — tidak ada yang disembunyikan. |
+| Apa solusi jika bias terjadi?   | (1) Mulai Y-axis dari 0, atau (2) jika dipotong, tambahkan catatan eksplisit "axis truncated at 90%" beserta justifikasi ilmiah. Selalu tambahkan error bar (std atau CI 95%) agar pembaca bisa menilai signifikansi perbedaan. |
 
 
 **Evaluasi grafik Anda sendiri dari Latihan 2:**
-- [✓ ] Semua bias check lulus
-- [ ] Ada yang perlu diperbaiki: ____
+- [✓] Y-axis dari 0 (bar chart accuracy dan waktu)
+- [✓] Semua model ditampilkan (tidak cherry-picked)
+- [✓] Tidak ada efek 3D
 
 ---
 
@@ -150,7 +151,4 @@ Evaluasi visualisasi berikut untuk bias (skenario dari contoh):
 
 > Mengapa tabel dan grafik keduanya diperlukan — tidak cukup salah satu saja? Pernahkah Anda membuat grafik yang (tanpa sengaja) menyesatkan?
 
-> Dalam penelitian, tabel dan grafik memiliki fungsi yang berbeda namun saling melengkapi. Tabel digunakan untuk melihat nilai numerik secara detail, sedangkan grafik membantu melihat pola dan perbandingan secara visual dengan lebih cepat.
-Jika hanya menggunakan tabel, pembaca akan sulit melihat pola umum hasil eksperimen. Sebaliknya, jika hanya menggunakan grafik maka detail angka menjadi kurang terlihat.
-> Pada penelitian ini, visualisasi sangat membantu menunjukkan bahwa algoritma Random Forest memiliki performa terbaik dibanding Decision Tree dan SVM, baik dari sisi accuracy maupun nilai AUC.
-Dengan penyajian data yang baik, hasil penelitian menjadi lebih mudah dipahami dan lebih kuat untuk mendukung analisis ilmiah.
+> Dalam penelitian, tabel dan grafik memiliki fungsi yang berbeda namun saling melengkapi. Tabel digunakan untuk melihat nilai numerik secara detail, sedangkan grafik membantu melihat pola dan perbandingan secara visual dengan lebih cepat. Jika hanya menggunakan tabel, pembaca akan sulit melihat pola umum hasil eksperimen. Sebaliknya, jika hanya menggunakan grafik maka detail angka menjadi kurang terlihat — dan seperti yang terjadi dalam penelitian ini, ketika semua model memiliki accuracy >99%, grafik bar saja tidak cukup untuk membedakan performa antar model tanpa tabel pendukung. Pada penelitian ini, visualisasi sangat membantu menunjukkan bahwa algoritma Random Forest memiliki performa terbaik dibanding Decision Tree dan SVM, baik dari sisi accuracy maupun nilai AUC (ROC Curve). Dengan penyajian data yang lengkap — tabel presisi + grafik pola + uji statistik (Friedman test, p=0.00013) — hasil penelitian menjadi lebih mudah dipahami dan lebih kuat secara ilmiah.
