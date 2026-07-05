@@ -242,20 +242,4 @@ Estimasi waktu:
 
 **Level saat ini:** [✓ ] Repeatability / [✓ ] Reproducibility / [ ] Belum keduanya
 **Komponen yang belum terdokumentasi:**
-> Eksperimen ini sudah mencapai level repeatability (terbukti dari
-dua run dengan seed 42 menghasilkan angka identik hingga 7 desimal)
-dan mendekati level reproducibility — siapapun yang mengikuti
-README di atas dapat mereproduksi hasil yang sama.
-
-Komponen yang masih bisa ditingkatkan untuk reproducibility penuh:
-(1) Membuat requirements.txt dengan output pip freeze dari
-environment Colab aktual untuk mengunci semua dependency transitif
-(bukan hanya 5 library utama), dan (2) mencantumkan versi Python
-yang lebih spesifik (misalnya 3.11.7) karena versi minor pun
-bisa mempengaruhi perilaku beberapa library.
-
-Pelajaran utama dari WS-09: dokumentasi environment bukan formalitas —
-ini yang menentukan apakah hasil penelitian bisa diverifikasi orang lain
-atau tidak. Tanpa versi spesifik, orang yang mencoba mereproduksi
-bisa mendapat hasil berbeda hanya karena scikit-learn 1.5.x
-mengubah default parameter yang tidak kita sadari.
+> Eksperimen ini sudah mencapai level repeatability (terbukti dari dua run dengan seed 42 menghasilkan angka identik hingga 7 desimal) dan mendekati level reproducibility — siapapun yang mengikuti README di atas dapat mereproduksi hasil yang sama. Komponen yang masih bisa ditingkatkan untuk reproducibility penuh: (1) Membuat requirements.txt dengan output pip freeze dari environment Colab aktual untuk mengunci semua dependency transitif (bukan hanya 5 library utama), dan (2) mencantumkan versi Python yang lebih spesifik (misalnya 3.11.7) karena versi minor pun bisa mempengaruhi perilaku beberapa library. Pelajaran utama dari WS-09: dokumentasi environment bukan formalitas — ini yang menentukan apakah hasil penelitian bisa diverifikasi orang lain atau tidak. Tanpa versi spesifik, orang yang mencoba mereproduksi bisa mendapat hasil berbeda hanya karena scikit-learn 1.5.x mengubah default parameter yang tidak kita sadari.
