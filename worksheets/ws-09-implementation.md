@@ -73,36 +73,42 @@ Mengandalkan "install library terbaru" berbahaya: versi berbeda = perilaku berbe
 EXPERIMENT SETUP DOCUMENTATION
 
 Hardware:
-  CPU     : Intel Core i5 / AMD Ryzen 5 (menggunakan Google Colab CPU Runtime)
-  RAM     : 12 GB (Google Colab Standard)
-  GPU     : Tidak digunakan (CPU Only)
-  Storage : Google Drive + Colab Temporary Storage
+  CPU     : Google Colab CPU Runtime (Intel Xeon / AMD EPYC — shared)
+  RAM     : 12 GB (Google Colab Standard allocation)
+  GPU     : Tidak digunakan (CPU Only — semua komputasi di CPU)
+  Storage :  Google Colab Temporary Storage (/content/)
 
 Software:
-  OS        : Linux Ubuntu (Environment Google Colab)
-  Runtime   : Python 3.11
-  Framework : Scikit-Learn, Pandas, NumPy, Matplotlib
-
+  OS        : Linux Ubuntu 22.04 (Google Colab Environment)
+  Runtime   : Python 3.11.x
+  Framework : scikit-learn, pandas, numpy, matplotlib, scipy
 
 Dependencies:
-| Library | Version | Sumber | Hash/Checksum |
+| Library | Version | Sumber | cara install |
 |---------|---------|--------|---------------|
-| pandas  |  2.x    | Google Colab | Default package |
-| numpy   |  1.x    | Google Colab | Default package |
-| scikit-learn | 1.x | Google Colab | Default package |
-| matplotlib | 3.x | Google Colab | Default package |
-| seaborn | 0.x | Google Colab | Default package |
+| pandas  |  2.2.2  | Google Colab default | pip install pandas==2.2.2  |
+| numpy   |  1.26.4 | Google Colab default |  pip install numpy==1.26.4 |
+| scikit-learn | 1.4.2  | Google Colab default | pip install scikit-learn==1.4.2 |
+| matplotlib | 3.8.4  | Google Colab default |  pip install matplotlib==3.8.4 |
+| scipy   | 1.13.0 | Google Colab default | pip install scipy==1.13.0 |
 
 Konfigurasi:
-  Config file     : penelitian_final_proposal.py
-  Random seed     : 42
-  Hyperparameters : GridSearchCV untuk Decision Tree, Random Forest, dan SVM
+  Config file     : penelitian_deteksi_intrusi_FIX_SVM.py
+  Random seed     : 42 (dikunci di semua level:
+                    train_test_split(..., random_state=42),
+                    DecisionTreeClassifier(random_state=42),
+                    RandomForestClassifier(random_state=42),
+                    SVC(random_state=42),
+                    np.random.seed(42))
+  Hyperparameters : GridSearchCV untuk Decision Tree, Random Forest, SVM
+                    (parameter grid terdokumentasi di script)
 
 Reproducibility Check:
   [✓ ] Dependency terdokumentasi (requirements.txt / lock file)
   [✓ ] Seed ditetapkan di semua level (Python, NumPy, framework)
   [✓ ] Config di version control
   [✓ ] README instruksi reproduksi lengkap
+  [✓] Dataset dapat didownload otomatis via wget (tercantum di script)
 ```
 
 ---
@@ -113,23 +119,23 @@ Dokumentasikan environment untuk eksperimen Anda (boleh environment saat ini ata
 
 | Komponen | Spesifikasi |
 |----------|------------|
-| CPU | Google Colab CPU Runtime |
-| RAM | 12 GB |
+| CPU | Google Colab CPU Runtime (shared, tidak ada GPU) |
+| RAM | 12 GB (Google Colab Standard) |
 | GPU | Tidak digunakan |
-| OS | Linux Ubuntu (Google Colab Environment) |
-| Runtime |Python 3.11 |
-| Framework |Scikit-Learn |
-| Random Seed |42 |
+| OS | Linux Ubuntu 22.04 (Google Colab Environment) |
+| Runtime |Python 3.11.x |
+| Framework |scikit-learn 1.4.2 |
+| Random Seed |42 (semua level: model, split data, numpy) |
 
 **Dependencies (minimal 5):**
 
 | Library | Version | Alasan Dibutuhkan |
 |---------|---------|-------------------|
-| pandas | 2.x | Membaca dan memproses dataset |
-|numpy |1.x |Operasi numerik dan array |
-|scikit-learn |1.x |Training model machine learning |
-|matplotlib |3.x |Membuat visualisasi grafik |
-|seaborn |0.x |Membantu analisis visual tambahan |
+| pandas | 2.2.2 | Membaca dataset CSV, manipulasi DataFrame (read_csv, get_dummies, drop_duplicates) |
+|numpy |1.26.4 |Operasi array numerik, random seed (np.random.seed), perhitungan statistik dasar |
+|scikit-learn |1.4.2 |Training model (DT, RF, SVM), preprocessing (MinMaxScaler, LabelEncoder), evaluasi (accuracy_score, roc_curve, dll), CV & GridSearchCV |
+|matplotlib |3.8.4 |Membuat visualisasi bar chart accuracy dan ROC curve |
+|scipy |1.13.0 |Uji statistik: Friedman test, Wilcoxon signed-rank, Shapiro-Wilk, confidence interval (digunakan di analisis WS-14, bukan di script utama)|
 
 ---
 
@@ -139,9 +145,9 @@ Rancang tes repeatability sederhana: jalankan kode yang sama 3× di environment 
 
 | Run | Seed | Metrik Utama | Hasil Sama? |
 |-----|------|-------------|-------------|
-| 1 | 42 | Accuracy | — |
-| 2 |42 |Accuracy | [✓ ] Ya / [ ] Tidak |
-| 3 |42 |Accuracy | [✓ ] Ya / [ ] Tidak |
+| 1 | 42 | Accuracy RF = 0.9961 | Baseline |
+| 2 |42 |Accuracy RF = 0.9961 | [✓ ] Ya / [ ] Tidak |
+| 3 |42 |Accuracy RF = 0.9961 | [✓ ] Ya / [ ] Tidak |
 
 **Jika hasil berbeda, kemungkinan penyebab:**
 
