@@ -189,22 +189,6 @@ sebagai keterbatasan komputasi yang valid)
 > Pernahkah Anda melaporkan hasil riset/tugas dari single run? Apa risikonya? Bagaimana multiple run mengubah kepercayaan terhadap hasil?
 
 **Pengalaman sebelumnya:**
-> Pada praktik sebelumnya, proses pengujian hanya berfokus pada satu
-hasil accuracy tanpa dokumentasi eksperimen yang lengkap. Risikonya:
-hasil dari single run bisa saja kebetulan sangat baik atau sangat buruk
-karena variabilitas random — tanpa multiple run, klaim "model A lebih
-baik dari model B" tidak bisa dibuktikan secara statistik.
+> Pada praktik sebelumnya, proses pengujian hanya berfokus pada satu hasil accuracy tanpa dokumentasi eksperimen yang lengkap. Risikonya: hasil dari single run bisa saja kebetulan sangat baik atau sangat buruk karena variabilitas random — tanpa multiple run, klaim "model A lebih baik dari model B" tidak bisa dibuktikan secara statistik.
 **Yang akan dilakukan berbeda:**
-> Dalam penelitian ini, prinsip multiple run diterapkan melalui 10-fold
-cross-validation (setiap model dievaluasi 10 kali pada subset berbeda),
-menghasilkan distribusi performa yang kemudian diuji menggunakan
-Friedman test (p=0.00013) dan repeated-measures ANOVA (F=156.49,
-p<0.0001). Hasilnya: klaim "Random Forest lebih baik" bukan sekadar
-satu angka, melainkan kesimpulan yang terbukti signifikan secara
-statistik dengan effect size besar (Kendall's W = 0.895).
-
-Perbedaan utama dari approach sebelumnya: semua proses kini terdokumentasi
-lengkap dalam log file (hasil_lengkap.txt), semua parameter tercatat
-(termasuk subset size SVM yang sering tidak disebutkan), dan anomali
-(waktu SVM yang ekstrem, hasil accuracy >99%) tidak dihapus melainkan
-diinvestigasi dan didokumentasikan sebagai temuan atau keterbatasan.
+> Dalam penelitian ini, prinsip multiple run diterapkan melalui 10-fold cross-validation (setiap model dievaluasi 10 kali pada subset berbeda), menghasilkan distribusi performa yang kemudian diuji menggunakan Friedman test (p=0.00013) dan repeated-measures ANOVA (F=156.49, p<0.0001). Hasilnya: klaim "Random Forest lebih baik" bukan sekadar satu angka, melainkan kesimpulan yang terbukti signifikan secara statistik dengan effect size besar (Kendall's W = 0.895). Perbedaan utama dari approach sebelumnya: semua proses kini terdokumentasi lengkap dalam log file (hasil_lengkap.txt), semua parameter tercatat (termasuk subset size SVM yang sering tidak disebutkan), dan anomali (waktu SVM yang ekstrem, hasil accuracy >99%) tidak dihapus melainkan diinvestigasi dan didokumentasikan sebagai temuan atau keterbatasan.
