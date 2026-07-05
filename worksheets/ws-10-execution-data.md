@@ -70,27 +70,38 @@ EXECUTION PLAN
 
 | Run # | Skenario | Seed | Parameter | Status | Waktu | Output File |
 |-------|----------|------|-----------|--------|-------|-------------|
-| 1     |Pelatihan Decision Tree | 42 |criterion, max_depth |Selesai |27.7 detik |hasil_perbandingan_model.csv |
-| 2     |Pelatihan Random Forest |42  |n_estimators, max_depth |Selesai |64.21 detik |hasil_perbandingan_model.csv |
-| 3     |Pelatihan SVM | 42     | kernel=rbf, C, gamma |Selesai |19.45 detik |hasil_perbandingan_model.csv  |
-| 4     |Grid Search Decision Tree | 42     |criterion=entropy, max_depth=20 | Selesai  |33.15 detik | hasil_perbandingan_model.csv |
-| 5     |Grid Search Random Forest | 42 | n_estimators=200, max_depth=None | Selesai | 257.74 detik |  hasil_perbandingan_model.csv |
-| 6     |Grid Search SVM | 42 | C=10, gamma=scale | Selesai | 204.0 detik | hasil_perbandingan_model.csv |
-| 7     |Evaluasi Final Decision Tree | 42 | Parameter terbaik DT | Selesai | 0.58 detik | perbandingan_model.png |
-| 8     |Evaluasi Final Random Forest | 42 | Parameter terbaik RF | Selesai | 17.64 detik | perbandingan_model.png |
-| 9     |Evaluasi Final SVM | 42 | Parameter terbaik SVM | Selesai | 52.25 detik | roc_curve.png |
+| 1     |Cross-Val Decision Tree | 42 |cv=10, data penuh (77.057 record) |Selesai |27.22 detik |hasil_cv_10fold.csv |
+| 2     |Cross-Val Random Forest |42  |cv=10, n_estimators=100, data penuh  |Selesai |58.83 detik |hasil_cv_10fold.csv |
+| 3     |Cross-Val SVM  | 42     | cv=10, subset=15.000 record |Selesai |16.20 detik |hasil_cv_10fold.csv  |
+| 4     |Grid Search Decision Tree | 42     |criterion=[gini,entropy], max_depth | Selesai  |31.38 detik | - |
+| 5     |Grid Search Random Forest | 42 | n_estimators=[100,200], max_depth | Selesai | 233.12 detik | - |
+| 6     |Grid Search SVM  | 42 | C=[1,10], gamma=[scale,0.01], sub=15.000 | Selesai | 179.97 detik | - |
+| 7     |Final Training DT | 42 | criterion=entropy, max_depth=20  | Selesai | 0.66 detik | hasil_perbandingan_model.csv |
+| 8     |Final Training RF | 42 | n_estimators=200, max_depth=None | Selesai | 16.58 detik |hasil_perbandingan_model.csv |
+| 9     |Final Training SVM  | 42 | C=10, gamma=scale, subset=30.000 record | Selesai | 46.10 detik | hasil_perbandingan_model.csv |
 
-Jumlah runs per skenario : 3 model algoritma
-Total runs               : 9 proses pengujian
+Jumlah skenario    : 9 proses (3 CV + 3 Grid Search + 3 Final Training)
+Fold per model     : 10 fold (CV) → total 30 fold untuk 3 model
+Total run overall  : 30 fold CV + 6 proses GS + 3 final training
 
 DATA LOG (per run):
   Run ID    : run-001
   Timestamp : 27 Juni 2026
-  Skenario  : Pengujian perbandingan performa Decision Tree, Random Forest, dan SVM pada sistem deteksi intrusi jaringan
-  Input     : Dataset NSL-KDD dengan jumlah data awal 148517 record dan data akhir setelah preprocessing sebanyak 110082 record
-  Output    : Accuracy, Precision, Recall, F1-Score, AUC Score, Confusion Matrix, Classification Report, Grafik Accuracy, ROC Curve
-  Anomali   : Proses komputasi algoritma SVM membutuhkan waktu lebih lama dibanding model lain karena kompleksitas proses training lebih tinggi
-  Catatan   : Random Forest memberikan performa terbaik dibandingkan dua algoritma lainnya berdasarkan seluruh metrik evaluasi
+  Skenario  : Perbandingan performa Decision Tree, Random Forest, SVM
+              pada sistem deteksi intrusi jaringan (NSL-KDD)
+  Input     : Dataset NSL-KDD — data awal 148.517 record,
+              data akhir setelah preprocessing 110.082 record,
+              split 70:30 → training 77.057 / testing 33.025 record
+  Output    : Accuracy, Precision, Recall, F1-Score, AUC,
+              Confusion Matrix, Classification Report,
+              Bar Chart, ROC Curve, CSV hasil, TXT log
+  Anomali   : SVM membutuhkan waktu komputasi jauh lebih lama
+              (46 detik final training, 180 detik grid search)
+              dibanding DT (0.66 dtk) dan RF (16.58 dtk).
+              Penyebab: kompleksitas kernel RBF O(n²-n³) pada
+              dataset besar. Ditangani dengan subset data.
+  Catatan   : Random Forest memberikan performa terbaik (Accuracy
+              99.61%, AUC 0.9997) pada semua metrik evaluasi.
 ```
 
 ---
@@ -101,19 +112,21 @@ Susun execution plan untuk eksperimen Anda. Tentukan skenario, jumlah run, dan s
 
 | Run # | Skenario | Seed | Parameter Kunci | Status |
 |-------|----------|------|----------------|--------|
-| 1 | Cross Validation Decision Tree | 42 |  cv=10 | Selesai |
-| 2 | Cross Validation Random Forest | 42 |  cv=10 | Selesai |
-| 3 |Cross Validation SVM |42 | subset=15000 |Selesai |
-| 4 |Grid Search Decision Tree |42 |criterion, max_depth |Selesai |
-| 5 |Grid Search Random Forest |42 |n_estimators, max_depth |Selesai |
-| 6 |Grid Search SVM | 42| C, gamma | Selesai |
-| 7 |Final Training Decision Tree | 42 | best parameter DT | Selesai |
-| 8 |Final Training Random Forest | 42 | best parameter RF | Selesai |
-| 9 |Final Training SVM | 42 | best parameter SVM | Selesai |
+| 1 | Cross-Validation Decision Tree | 42 |  cv=10, data penuh (77.057 record) | Selesai |
+| 2 | Cross-Validation Random Forest | 42 |  cv=10, n_estimators=100, data penuh | Selesai |
+| 3 |Cross-Validation SVM |42 | cv=10, subset=15.000 record |Selesai |
+| 4 |Grid Search Decision Tree |42 |criterion=[gini,entropy], max_depth=[10,20,30,None] |Selesai |
+| 5 |Grid Search Random Forest |42 |n_estimators=[100,200], max_depth=[10,20,None] |Selesai |
+| 6 |Grid Search SVM | 42| C=[1,10], gamma=[scale,0.01], subset=15.000 | Selesai |
+| 7 |Final Training Decision Tree | 42 | criterion=entropy, max_depth=20 | Selesai |
+| 8 |Final Training Random Forest | 42 | n_estimators=200, max_depth=None | Selesai |
+| 9 |Final Training SVM | 42 | C=10, gamma=scale, subset=30.000 record | Selesai |
 
-**Total skenario:** 9
-**Run per skenario:** 1 kali
-**Total run keseluruhan:** 9 proses eksperimen
+**Total skenario:**  9 proses eksperimen
+Fold per model (CV): 10 fold × 3 model = 30 fold total
+Prinsip multiple run terpenuhi melalui 10-fold cross-validation
+(setiap model dievaluasi 10 kali pada subset data berbeda,
+menghasilkan distribusi performa yang bisa diuji secara statistik)
 
 ---
 
@@ -126,25 +139,29 @@ Desain format data log untuk eksperimen Anda. Tentukan field apa saja yang akan 
 |-------|--------|
 | Run ID | run-001 |
 | Timestamp | 27 Juni 2026 |
-|Dataset |NSL-KDD |
-|Platform | Google colab |
+|Dataset |NSL-KDD (KDDTrain+ + KDDTest+, digabung lalu split 70:30) |
+|Platform | Google Colab (Python 3, CPU runtime) |
 
 **Konfigurasi:**
-| Field | Contoh |
+| Field | Nilai |
 |-------|--------|
-| Seed | 42 |
-| Data Split | 70:30 |
-|Cross Validation |10 Fold |
-|Code Version | Python Notebook Final |
+| Random Seed | 42 (dikunci di semua proses: train_test_split, semua model, np.random) |
+| Data Split | 70% training (77.057) : 30% testing (33.025) |
+|Cross Validation |10-fold (stratified, data training saja) |
+|Normalisasi | MinMaxScaler — fit pada training, transform pada testing |
+|SVM CV subset size | 15.000 record (dari 77.057 training) |
+|SVM Final training subset | 30.000 record (dari 77.057 training) |
+|Code Version | penelitian_deteksi_intrusi_FIX_SVM.py (versi final) |
 
 **Hasil:**
-| Metrik | Tipe Data | Range Valid |
-|--------|----------|-------------|
-| Accuracy | float | 0.0 – 1.0 |
-|Precision |float |0.0-1.0 |
-|Recall |float |0.0-1.0 |
-|F1-Score|float |0.0-1.0|
-|AUC |float |0.0-1.0|
+| Metrik | Tipe Data | Range Valid | Nilai Aktual (RF) |
+|--------|----------|-------------|--------------------|
+| Accuracy | float | 0.0 – 1.0 |0.9961|
+|Precision |float |0.0-1.0 |0.9955 |
+|Recall |float |0.0-1.0 |0.9956 |
+|F1-Score|float |0.0-1.0|0.9955 |
+|AUC |float |0.0-1.0|0.9997 |
+|Waktu training | float (detik) | >0 |16.58 dtk|
 **Format output:** [✓ ] CSV / [ ] JSON / [ ] Database / [ ] Lainnya: [✓ ] PNG / [✓ ] TXT Log File
 
 ---
@@ -155,12 +172,15 @@ Rencanakan bagaimana menangani anomali. Untuk setiap jenis, tentukan langkah yan
 
 | Jenis Anomali | Contoh | Tindakan |
 |---------------|--------|----------|
-| Program berhenti | Runtime Google Colab disconnect | Menjalankan ulang program |
-| Waktu proses terlalu lama |Training SVM membutuhkan waktu lebih lama |Menunggu proses selesai dan memantau runtime |
-| Hasil tidak sesuai |Accuracy berubah terlalu jauh |Mengecek preprocessing dan parameter |
-| Error membaca data |Dataset gagal dimuat |Upload ulang dataset |
+| Waktu proses ekstrem | Training SVM 46 detik (final) dan 180 detik (grid search) — jauh lebih lama dari DT (0.66 dtk) dan RF (16.58 dtk) | Dokumentasikan sebagai karakteristik komputasi SVM kernel RBF, bukan error. Gunakan subset data (15.000 untuk CV/GS, 30.000 untuk final training) sebagai solusi |
+| Program berhenti / disconnect |Google Colab disconnect saat menjalankan SVM penuh (pernah terjadi — macet 2 jam 43 menit) |Interrupt execution → restart runtime → jalankan ulang script yang sudah dioptimalkan dengan subset SVM |
+| Hasil tidak sesuai ekspektasi |Accuracy sangat tinggi (>99%) — lebih tinggi dari jurnal rujukan (96.8%) |Investigasi penyebab: ditemukan bahwa penggabungan KDDTrain+ dan KDDTest+ lalu split acak 70:30 menghilangkan tantangan "unseen attack" pada test set asli → didokumentasikan sebagai limitation penelitian |
+| Error membaca dataset |FileNotFoundError: KDDTrain+.txt not found |Upload ulang dataset ke Colab atau gunakan cell wget untuk download otomatis dari GitHub |
+|Run ke-n hasilnya sangat berbeda | Belum terjadi — std semua model kecil (DT ±0.07%, RF ±0.05%) | Jika terjadi: cek seed consistency, periksa apakah ada data leakage, dokumentasikan fold yang anomali |
 
 **Prinsip:** Detect → Investigate → Document → Decide
+(anomali SVM tidak dihapus, melainkan diinvestigasi dan didokumentasikan
+sebagai keterbatasan komputasi yang valid)
 
 ---
 
@@ -169,6 +189,22 @@ Rencanakan bagaimana menangani anomali. Untuk setiap jenis, tentukan langkah yan
 > Pernahkah Anda melaporkan hasil riset/tugas dari single run? Apa risikonya? Bagaimana multiple run mengubah kepercayaan terhadap hasil?
 
 **Pengalaman sebelumnya:**
-> Pada praktik sebelumnya proses pengujian hanya berfokus pada satu hasil accuracy tanpa dokumentasi eksperimen yang lengkap.
+> Pada praktik sebelumnya, proses pengujian hanya berfokus pada satu
+hasil accuracy tanpa dokumentasi eksperimen yang lengkap. Risikonya:
+hasil dari single run bisa saja kebetulan sangat baik atau sangat buruk
+karena variabilitas random — tanpa multiple run, klaim "model A lebih
+baik dari model B" tidak bisa dibuktikan secara statistik.
 **Yang akan dilakukan berbeda:**
-> Pada penelitian ini seluruh proses eksperimen dicatat secara lengkap, hasil disimpan dalam beberapa file, serta dilakukan perbandingan tiga algoritma machine learning agar hasil penelitian menjadi lebih valid.
+> Dalam penelitian ini, prinsip multiple run diterapkan melalui 10-fold
+cross-validation (setiap model dievaluasi 10 kali pada subset berbeda),
+menghasilkan distribusi performa yang kemudian diuji menggunakan
+Friedman test (p=0.00013) dan repeated-measures ANOVA (F=156.49,
+p<0.0001). Hasilnya: klaim "Random Forest lebih baik" bukan sekadar
+satu angka, melainkan kesimpulan yang terbukti signifikan secara
+statistik dengan effect size besar (Kendall's W = 0.895).
+
+Perbedaan utama dari approach sebelumnya: semua proses kini terdokumentasi
+lengkap dalam log file (hasil_lengkap.txt), semua parameter tercatat
+(termasuk subset size SVM yang sering tidak disebutkan), dan anomali
+(waktu SVM yang ekstrem, hasil accuracy >99%) tidak dihapus melainkan
+diinvestigasi dan didokumentasikan sebagai temuan atau keterbatasan.
