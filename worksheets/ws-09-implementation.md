@@ -151,19 +151,17 @@ Rancang tes repeatability sederhana: jalankan kode yang sama 3× di environment 
 
 **Jika hasil berbeda, kemungkinan penyebab:**
 
-> Penyebab umum non-repeatability:
-> - **Thermal throttling** — CPU/GPU overheating pada run berturut-turut → clock speed turun → waktu eksekusi berubah
-> - **Background process** — antivirus scan, update OS, atau cloud sync aktif saat run berlangsung
-> - **Cache dari run sebelumnya** — hasil tersimpan di memori/disk sehingga run berikutnya tidak menjalankan komputasi penuh
-> - **Random state tidak dikontrol di semua level** — Python seed di-set, tapi NumPy/PyTorch/TensorFlow punya seed independen
+> Versi library berbeda -> Cek pip show scikit-learn -> Gunakan versi spesifik di requirements.txt
+> Random state tidak dikunci di semua level -> Cek apakah np.random.seed(42) ada -> Tambahkan seed di semua komponen stokastik
+> Dataset berbeda/berubah -> Bandingkan jumlah record (harus 148.517 awal) -> Download ulang dari URL yang sama (GitHub defcom17)
+> Cache Colab dari session lama -> Hasil berbeda meski seed sama -> Runtime → Restart runtime → jalankan ulang dari awal
 
-Perbedaan hasil eksperimen biasanya terjadi karena kondisi runtime yang berubah, proses background pada Google Colab, cache yang belum dibersihkan, atau random seed yang tidak dikunci secara konsisten pada setiap library yang digunakan.
 
 **Checklist kontrol yang sudah diterapkan:**
-- [✓ ] Random seed di-set di semua level
-- [✓ ] Tidak ada background process yang mengganggu
-- [✓ ] Cache dibersihkan antar-run
-- [✓ ] Config file yang sama untuk semua run
+- [✓ ] Random seed dikunci di semua level (train_test_split, DT, RF, SVM, numpy)
+- [✓ ] Dataset didownload dari URL tetap (raw.githubusercontent.com/defcom17/NSL_KDD)
+- [✓ ] Tidak ada state tersimpan antar-run (script dijalankan fresh setiap kali)
+- [✓ ] Config file (script Python) sama untuk semua run
 
 ---
 
@@ -175,46 +173,65 @@ Tulis README minimum untuk eksperimen Anda (6 komponen wajib).
 # Judul Eksperimen: Analisis Implementasi Machine Learning untuk Deteksi Intrusi pada Jaringan Komputer
 
 ## 1. Environment
-> Eksperimen dilakukan menggunakan Google Colab dengan Python 3.11, CPU runtime, dan library Scikit-Learn.
+> Platform  : Google Colab (CPU Runtime, 12GB RAM)
+> OS        : Linux Ubuntu 22.04 (Colab environment)
+> Python    : 3.11.x
+
+> Dependencies (versi spesifik):
+  pandas==2.2.2
+  numpy==1.26.4
+  scikit-learn==1.4.2
+  matplotlib==3.8.4
+  scipy==1.13.0
+
 
 ## 2. Installation
 > Install library menggunakan command:
-pip install pandas numpy scikit-learn matplotlib seaborn
+pip install pandas==2.2.2 numpy==1.26.4 scikit-learn==1.4.2 \
+              matplotlib==3.8.4 scipy==1.13.0
 
 ## 3. Data
 > Dataset yang digunakan adalah NSL-KDD yang berisi data trafik jaringan normal dan data serangan.
 File:
-- KDDTrain+.txt
-- KDDTest+.txt
+- KDDTrain+.txt (125.973 record, data training asli)
+- KDDTest+.txt  (22.544 record, data testing asli)
 
 ## 4. Execution
 > Menjalankan file eksperimen pada Google Colab:
-python penelitian_final_proposal.py
-atau menjalankan setiap cell secara berurutan pada notebook.
+  python penelitian_deteksi_intrusi_FIX_SVM.py
+
 
 ## 5. Configuration
-> Parameter eksperimen:
-- Train Test Split = 70:30
-- Cross Validation = 10 Fold
-- Random Seed = 42
-- Hyperparameter Tuning = GridSearchCV
-Model:
-- Decision Tree
-- Random Forest
-- Support Vector Machine
+> Random seed   : 42 (semua level — model, split, numpy)
+> Train-test    : 70% training / 30% testing (stratified)
+> CV            : 10-fold cross-validation
+> Normalisasi   : MinMaxScaler (fit pada training saja)
+> SVM subset    : 15.000 (CV & grid search) / 30.000 (final training)
+
+> Best parameters dari grid search:
+  Decision Tree : criterion=entropy, max_depth=20
+  Random Forest : n_estimators=200, max_depth=None
+  SVM           : C=10, gamma=scale
 
 
 ## 6. Expected Output
 > Output yang dihasilkan:
-- Accuracy
-- Precision
-- Recall
-- F1 Score
-- AUC Score
-- Confusion Matrix
-- Classification Report
-- ROC Curve
-- CSV hasil evaluasi model
+hasil_cv_10fold.csv          — 10 nilai akurasi fold per model
+  hasil_perbandingan_model.csv — ringkasan metrik evaluasi final
+  perbandingan_model.png       — bar chart perbandingan accuracy
+  roc_curve.png                — ROC curve ketiga model
+  hasil_lengkap.txt            — log output seluruh proses
+
+Nilai yang diharapkan (hasil aktual):
+  Decision Tree : Accuracy 99.58%, F1 99.52%, AUC 0.9961
+  Random Forest : Accuracy 99.61%, F1 99.55%, AUC 0.9997 ← TERBAIK
+  SVM           : Accuracy 99.09%, F1 98.96%, AUC 0.9993
+
+Estimasi waktu:
+  Cross-validation : ~2 menit (DT + RF data penuh, SVM subset)
+  Grid search      : ~7 menit (DT cepat, RF & SVM lebih lama)
+  Final training   : ~1 menit
+  Total            : ±10–15 menit
 ```
 
 ---
@@ -225,4 +242,20 @@ Model:
 
 **Level saat ini:** [✓ ] Repeatability / [✓ ] Reproducibility / [ ] Belum keduanya
 **Komponen yang belum terdokumentasi:**
-> Eksperimen sudah dapat direproduksi oleh peneliti lain karena dataset, library, konfigurasi parameter, serta tahapan implementasi telah dijelaskan secara sistematis. Dokumentasi yang masih dapat ditingkatkan adalah pembuatan file requirements.txt agar versi dependency dapat dikunci secara lebih detail.
+> Eksperimen ini sudah mencapai level repeatability (terbukti dari
+dua run dengan seed 42 menghasilkan angka identik hingga 7 desimal)
+dan mendekati level reproducibility — siapapun yang mengikuti
+README di atas dapat mereproduksi hasil yang sama.
+
+Komponen yang masih bisa ditingkatkan untuk reproducibility penuh:
+(1) Membuat requirements.txt dengan output pip freeze dari
+environment Colab aktual untuk mengunci semua dependency transitif
+(bukan hanya 5 library utama), dan (2) mencantumkan versi Python
+yang lebih spesifik (misalnya 3.11.7) karena versi minor pun
+bisa mempengaruhi perilaku beberapa library.
+
+Pelajaran utama dari WS-09: dokumentasi environment bukan formalitas —
+ini yang menentukan apakah hasil penelitian bisa diverifikasi orang lain
+atau tidak. Tanpa versi spesifik, orang yang mencoba mereproduksi
+bisa mendapat hasil berbeda hanya karena scikit-learn 1.5.x
+mengubah default parameter yang tidak kita sadari.
