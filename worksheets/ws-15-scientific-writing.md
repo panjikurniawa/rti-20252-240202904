@@ -161,7 +161,7 @@ Ambil satu paragraf dari tulisan Anda (atau tulis paragraf baru) dan evaluasi ku
 |----------|---------|-----------|
 | Clarity | Cukup jelas namun ada pengulangan informasi | Kalimat 1 dan 2 menyampaikan hal yang sama (evaluasi + perbandingan RF), sehingga pembaca membaca ulang tanpa mendapat informasi baru |
 | Precision |Tidak menjelaskan ukuran performa |Menambahkan metrik accuracy, precision, recall |
-| Conciseness |Kalimat masih terlalu sederhana |Membuat struktur kalimat lebih akademik |
+| Conciseness |Paragraf asli mengulang informasi yang sama di kalimat 1 dan 2 (evaluasi RF = perbandingan RF — sama saja) serta kalimat 3 dan 4 (baseline & intervensi dijelaskan dua kali dengan kalimat berbeda) → redundan ±90 kata jadi ±55 kata |Gabung dua kalimat pertama, hapus pengulangan definisi baseline/intervensi |
 
 **Paragraf setelah perbaikan:**
 > (tulis paragraf yang sudah diperbaiki)
