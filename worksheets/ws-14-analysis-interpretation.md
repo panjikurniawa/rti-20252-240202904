@@ -80,38 +80,39 @@ ANALYSIS & INTERPRETATION
 1. Statistik Deskriptif:
 | Skenario      | Mean Accuracy | Std    | Median | Min    | Max    | n  |
 | ------------- | ------------- | ------ | ------ | ------ | ------ | -- |
-| Decision Tree | 99.49%        | ±0.07% | 99.50% | 99.41% | 99.61% | 10 |
-| Random Forest | 99.57%        | ±0.05% | 99.57% | 99.50% | 99.66% | 10 |
-| SVM           | 98.29%        | ±0.30% | 98.30% | 97.80% | 98.66% | 10 |
+| Decision Tree | 99.49%        | ±0.07% | 99.50% | 99.36% | 99.61% | 10 |
+| Random Forest | 99.57%        | ±0.05% | 99.57% | 99.47% | 99.64% | 10 |
+| SVM           | 98.29%        | ±0.30% | 98.37% | 97.80% | 98.67% | 10 |
 
 
 2. Uji Hipotesis:
-   Uji yang digunakan  : One Way ANOVA dan Friedman Test
-   Justifikasi          : Penelitian membandingkan tiga algoritma berbeda dengan data hasil cross validation sebanyak 10 fold pada masing-masing model. Oleh karena itu digunakan pengujian statistik untuk mengetahui apakah terdapat perbedaan performa yang signifikan antar model.
-   Hasil: p = 0.00013 (χ² = 17.897), effect size (d/r/η²) = Kendall's W = 0.895 
-   CI 95%               : [99.42%, 99.56%]
+   Uji yang digunakan  :  Friedman Test (uji utama) + Repeated-Measures ANOVA (konfirmasi)
+   Justifikasi          : 3 grup dibandingkan (DT, RF, SVM), data berpasangan karena dievaluasi pada fold cross-validation yang identik (paired), n=10 per model. Friedman dipilih sebagai uji konservatif untuk data berpasangan dengan n kecil.
+   Hasil Friedman: χ² = 17.897, p = 0.00013 (p < 0.001, sangat signifikan)
+   Hasil ANOVA         : F = 156.49, p < 0.0001 (konfirmasi konsisten)
+   Effect size         : Kendall's W = 0.895 → kategori LARGE
 
 3. Keputusan:
    [✓] H₀ ditolak → H₁ diterima
    [ ] H₀ tidak ditolak
 
 4. Interpretasi:
-   Hubungan ke RQ       : RQ mempertanyakan efektivitas Random Forest dibanding Decision Tree dan SVM. Hasil Friedman test (p<0.001) dan post-hoc Wilcoxon membuktikan Random Forest signifikan lebih unggul dari kedua model lain, menjawab RQ secara definitif
-   Practical significance: Meski selisih mean akurasi DT vs RF kecil (0.99490 vs 0.99572, selisih 0.08 poin), konsistensi RF lebih tinggi (Std lebih kecil: 0.00051 vs 0.00079) — RF lebih stabil antar fold. Selisih RF vs SVM jauh lebih besar dan jelas relevan secara praktis (SVM ±1.3 poin lebih rendah, dengan variabilitas 6x lebih besar)
-   Perbandingan literatur: Pola hasil ini (Random Forest > Decision Tree > / >> SVM) konsisten dengan jurnal referensi (Sari et al., 2024) yang juga menemukan Random Forest sebagai model terbaik, meski besaran akurasi absolut berbeda karena perbedaan skema split data
+   Hubungan ke RQ       : RQ penelitian ini menanyakan "bagaimana tingkat efektivitas algoritma Random Forest dibanding Decision Tree dan SVM dalam mendeteksi intrusi jaringan komputer?" Hasil Friedman test (p<0.001) dan post-hoc Wilcoxon (semua pasangan signifikan) membuktikan RF secara statistik lebih baik dari keduanya — RQ terjawab secara definitif.
+   Practical significance: Selisih mean RF vs DT kecil secara absolut (99.57% vs 99.49%, selisih 0.08 poin), namun RF lebih konsisten (std ±0.05% vs ±0.07%) dan CI RF tidak overlap dengan CI DT secara penuh. Selisih RF vs SVM jauh lebih besar (±1.3 poin) dan jelas relevan secara praktis — SVM juga 6× lebih tidak stabil. Dari sisi waktu komputasi: DT (0.66 dtk) vs RF (16.58 dtk) vs SVM (46.10 dtk) → DT paling efisien untuk sistem real-time.
+   Perbandingan literatur: Pola urutan performa (RF > DT >> SVM) konsisten dengan jurnal referensi (Sari et al., 2024) yang juga menemukan RF sebagai model terbaik untuk deteksi intrusi pada NSL-KDD. Akurasi absolut lebih tinggi (>99%) karena perbedaan skema split data (70:30 acak vs split asli KDDTrain+/KDDTest+).
 
 5. Limitation:
    | Jenis | Ancaman | Dampak | Mitigasi |
    |-------|---------|--------|----------|
-   | Internal validity |Parameter model terbatas pada eksperimen tertentu |Performa dapat berubah pada konfigurasi lain |Menggunakan Grid Search |
-   |External validity | Dataset hanya menggunakan NSL-KDD| Sulit digeneralisasi ke dataset lain | Penelitian lanjutan menggunakan UNSW-NB15 atau CICIDS|
-   |Computational limitation | SVM memerlukan komputasi tinggi | Waktu training lebih lama | Menggunakan subset representatif |
-   |Statistical limitation | Dataset tunggal | Generalisasi statistik terbatas | Menambah dataset pada penelitian lanjutan |
+   | Internal validity |Split 70:30 acak menghilangkan unseen attack |Akurasi artifisial tinggi (>99%), kurang representatif untuk zero-day attack |Uji lanjutan dengan split asli KDDTrain+/KDDTest+ |
+   |External validity | Hanya menggunakan dataset NSL-KDD | Sulit digeneralisasi ke dataset/domain lain | enelitian lanjutan dengan UNSW-NB15 atau CICIDS|
+   |Computational limitation | SVM dilatih pada subset (bukan data penuh) | Perbandingan SVM vs DT/RF tidak sepenuhnya setara | Dokumentasikan secara transparan di metode |
+   |Statistical limitation | ataset tunggal, satu domain | eneralisasi statistik terbatas | Tambah dataset pada penelitian lanjutan |
 
 6. Failure Analysis (jika H₀ tidak ditolak):
-   Penyebab potensial  : Kombinasi: (1) SVM dilatih pada subset data yang lebih kecil dari DT/RF, dan (2) kernel RBF SVM secara inheren lebih sensitif terhadap jumlah data latih untuk menemukan decision boundary optimal dibanding model tree-based
-   Boundary condition   : SVM cenderung bekerja optimal pada dataset berukuran kecil hingga menengah, tetapi kurang efisien ketika jumlah data semakin besar.
-   Insight              : Trade-off waktu-akurasi: SVM butuh waktu pelatihan terlama (46-180 detik) namun hasilnya justru paling rendah dan paling tidak stabil (Std tertinggi) — menunjukkan SVM bukan pilihan efisien untuk kasus ini, baik dari sisi akurasi maupun efisiensi komputasi
+   Penyebab potensial  : (1) SVM dilatih pada subset data lebih kecil (30.000 dari 77.057 record), sehingga perbandingan tidak sepenuhnya setara. (2) Kernel RBF SVM secara inheren lebih sensitif terhadap jumlah data latih dibanding model tree-based.
+   Boundary condition   : SVM cenderung kompetitif pada dataset kecil-menengah, namun kurang efisien pada data berskala besar karena kompleksitas komputasi O(n²-n³). Pada dataset ini (77.057 record training), SVM butuh waktu 46-180 detik — vs DT yang hanya 0.66 detik.
+   Insight              :Trade-off waktu-akurasi yang jelas: SVM memerlukan waktu komputasi paling lama namun menghasilkan performa terendah dan variabilitas tertinggi (std ±0.30% vs RF ±0.05%). Untuk sistem deteksi intrusi yang membutuhkan respons cepat, Decision Tree adalah pilihan paling efisien (0.66 detik, akurasi 99.58%), sementara Random Forest adalah pilihan terbaik jika waktu training bukan kendala utama.
 ```
 
 ---
@@ -123,12 +124,12 @@ Tentukan uji statistik yang tepat untuk eksperimen Anda.
 | Pertanyaan | Jawaban |
 |-----------|---------|
 | Berapa grup yang dibandingkan? | 3  (Decision Tree, Random Forest, SVM) |
-| Apakah data berpasangan (paired)? |Ya, karena berasal dari fold cross validation yang sama |
-| Apakah distribusi normal? (uji normalitas) |Diasumsikan mendekati normal berdasarkan cross validation |
-| **Uji yang dipilih:** |One Way ANOVA dan Friedman Test |
-| **Justifikasi:** |Membandingkan performa tiga model menggunakan data 10-fold |
+| Apakah data berpasangan (paired)? |Ya — ketiga model dievaluasi pada fold cross-validation yang identik (paired) |
+| Apakah distribusi normal? (uji normalitas) |Terbukti normal berdasarkan uji Shapiro-Wilk (p > 0.05 untuk ketiga model: DT, RF, SVM) — bukan sekadar diasumsikan |
+| **Uji yang dipilih:** |Friedman Test (uji utama, non-parametrik, konservatif untuk n kecil) + Repeated-Measures ANOVA (konfirmasi, karena data lolos normalitas) |
+| **Justifikasi:** |>2 grup + data berpasangan + n=10 → Friedman sebagai pilihan aman; ANOVA sebagai konfirmasi. Keduanya menghasilkan p < 0.001 → konsisten. |
 
-**Effect size yang akan dilaporkan:** [✓] Cohen's d / [ ] Eta-squared / [ ] Lainnya: [✓] Cohen’s d (pairwise comparison)/[✓]Confidence Interval
+**Effect size yang akan dilaporkan:** [ ] Cohen's d / [ ] Eta-squared / [ ] Lainnya: [ ] Cohen’s d (pairwise comparison)/[ ]Confidence Interva/l[✓] Kendall's W = 0.895 (effect size global untuk Friedman test) → Large [✓] Cohen's d untuk post-hoc berpasangan (RF vs DT: d=-1.16, RF vs SVM: d=3.98, DT vs SVM: d=4.03) [✓] Confidence Interval 95% per model
 
 ---
 
@@ -143,15 +144,15 @@ Gunakan data berikut (atau data riil Anda) untuk berlatih interpretasi.
 | Decision Tree | 99.49% ± 0.07% | 10 |
 |SVM | 98.29% ± 0.30% | 10|
 
-p = 0.045, Cohen's d = 0.74, CI 95% = [0.03, 2.77]
+
 
 | Aspek | Interpretasi |
 |-------|-------------|
-| Signifikansi statistik | p-value < 0.05 sehingga signifikan |
-| Effect size | Kendall’s W = 0.895 menunjukkan efek besar |
-| Practical significance |Random Forest memberikan performa terbaik |
-| Hubungan ke RQ |Menjawab tujuan penelitian |
-| Perbandingan literatur |Konsisten dengan penelitian terdahulu |
+| Signifikansi statistik | p = 0.00013 jauh di bawah α=0.05 bahkan α=0.001 → sangat signifikan. Dikonfirmasi oleh ANOVA (F=156.49, p<0.0001). Tidak ada keraguan statistik bahwa perbedaan performa ketiga model adalah nyata, bukan kebetulan. |
+| Effect size | Kendall's W = 0.895 → Large effect. Artinya perbedaan antar model bukan hanya signifikan secara statistik, tapi juga substansial secara praktis — terutama antara model tree-based (DT/RF) vs SVM (Cohen's d ≈ 4.0). |
+| Practical significance |Selisih RF vs DT kecil (0.08 poin) — mungkin tidak relevan secara praktis untuk semua aplikasi. Tapi RF lebih konsisten (std ±0.05% vs ±0.07%) dan CI tidak overlap. Selisih RF vs SVM besar (±1.3 poin) dan jelas relevan. Dari sisi waktu: DT 0.66 dtk vs RF 16.58 dtk → untuk sistem real-time, DT lebih efisien. |
+| Hubungan ke RQ |RQ: "Bagaimana efektivitas Random Forest dibanding Decision Tree dan SVM?" → Terjawab definitif: RF signifikan lebih baik dari keduanya (p<0.001, W=0.895), dengan selisih terbesar terhadap SVM (d=3.98). |
+| Perbandingan literatur |Konsisten dengan Sari et al. (2024): RF terbaik untuk deteksi intrusi NSL-KDD. Akurasi lebih tinggi (99.61% vs 96.8%) karena perbedaan skema split, bukan karena metode yang berbeda secara fundamental. |
 
 ---
 
@@ -159,22 +160,22 @@ p = 0.045, Cohen's d = 0.74, CI 95% = [0.03, 2.77]
 
 Latih kemampuan failure analysis: hipotesis TIDAK didukung. Apa yang bisa dipelajari?
 
-**Skenario:** Metode baru Anda mendapat F1 = 83.2%, baseline = 84.7%. p = 0.12 (tidak signifikan).
+**Skenario:** Metode baru F1 = 83.2%, baseline F1 = 84.7%. p = 0.12 (tidak signifikan).
 
 | Pertanyaan | Jawaban |
 |-----------|---------|
-| Apakah ini "gagal"? | Tidak, seluruh model memiliki performa tinggi |
-| Kemungkinan penyebab? | SVM membutuhkan komputasi tinggi pada dataset besar |
-| Boundary condition? | SVM kurang optimal pada dataset dengan jumlah record besar |
-| Insight yang bisa diambil? | Random Forest lebih stabil untuk intrusion detection |
-| Apakah layak dilaporkan? Mengapa? | Ya, karena menunjukkan keterbatasan masing-masing model |
+| Apakah ini "gagal"? | Bukan gagal total. p = 0.12 berarti tidak ada cukup bukti statistik bahwa metode baru berbeda dari baseline — bukan bukti bahwa metode baru "lebih buruk". Hipotesis tidak terdukung adalah temuan yang valid, bukan kesalahan eksperimen. |
+| Kemungkinan penyebab? | (1) Sample size terlalu kecil sehingga power test rendah (sulit mendeteksi perbedaan 1.5 poin F1 yang memang kecil). (2) Metode baru menambah kompleksitas tanpa manfaat F1 yang cukup besar untuk melampaui variabilitas natural data. |
+| Boundary condition? | Metode baru mungkin hanya unggul pada kondisi data tertentu (misalnya dataset besar, data noisy, atau kelas imbalanced) yang tidak tercakup dalam eksperimen ini. Tidak bisa disimpulkan "metode tidak berguna" tanpa menguji di berbagai kondisi. |
+| Insight yang bisa diambil? | Trade-off: kompleksitas tambahan metode baru tidak sebanding dengan manfaat performa di kondisi ini. Perlu investigasi lebih lanjut: apakah ada kondisi spesifik di mana metode baru unggul? Ini adalah boundary condition yang berharga untuk penelitian selanjutnya. |
+| Apakah layak dilaporkan? Mengapa? | Ya, sangat layak. Hasil negatif + analisis boundary condition mencegah peneliti lain mengulang eksperimen yang sama, menghemat waktu komunitas riset. Komunitas ilmiah (ACL, NeurIPS, SIGIR) secara eksplisit mengakui kontribusi hasil negatif yang dianalisis dengan baik. |
 
 **Limitation terkait:**
 | Jenis | Ancaman | Dampak |
 |-------|---------|--------|
-| Statistical | Dataset hanya satu sumber | Generalisasi terbatas |
-|Computational |Training SVM lebih lama |Eksperimen membutuhkan waktu lebih besar |
-|Dataset |Tidak membandingkan dataset lain |Validasi eksternal terbatas |
+| Statistical | Sample size kecil → low statistical power |Risiko Type II error: gagal mendeteksi perbedaan yang sebenarnya ada |
+|Construct validity |F1-score mungkin tidak menangkap semua kualitas metode baru (misal robustness, interpretability, inference speed) |Kesimpulan "tidak berbeda" mungkin hanya berlaku untuk metrik F1, bukan kualitas metode secara keseluruhan |
+|External validity |THanya diuji pada satu dataset/kondisi |Tidak bisa digeneralisasi sebelum diuji di kondisi yang lebih beragam |
 
 ---
 
@@ -182,6 +183,4 @@ Latih kemampuan failure analysis: hipotesis TIDAK didukung. Apa yang bisa dipela
 
 > Apakah "failure" dalam riset benar-benar gagal, atau justru kontribusi? Bagaimana failure analysis mengubah cara Anda melihat hasil negatif?
 
-> Dalam penelitian, model dengan akurasi tinggi belum tentu langsung dianggap terbaik tanpa proses analisis statistik. Pengujian statistik seperti ANOVA dan Friedman Test membantu memastikan bahwa perbedaan performa yang terjadi memang signifikan secara ilmiah.
-Failure analysis juga penting karena membantu memahami keterbatasan model tertentu. Pada penelitian ini dapat disimpulkan bahwa Random Forest menjadi model terbaik, sedangkan SVM memiliki keterbatasan pada efisiensi komputasi ketika digunakan pada dataset berukuran besar.
-> Dengan demikian, penelitian tidak hanya menghasilkan model dengan performa terbaik, tetapi juga memberikan pemahaman mengenai kondisi penggunaan masing-masing algoritma.
+> Dalam penelitian, model dengan akurasi tinggi belum tentu langsung dianggap terbaik tanpa proses analisis statistik. Pengujian statistik seperti Friedman Test dan ANOVA membantu memastikan bahwa perbedaan performa yang terjadi memang signifikan secara ilmiah — bukan sekadar kebetulan dari satu kali split data. Failure analysis juga penting karena membantu memahami keterbatasan model tertentu. Pada penelitian ini, SVM menunjukkan performa terendah dengan variabilitas tertinggi, yang mengungkap boundary condition: SVM kurang efisien untuk dataset berskala besar, baik dari sisi waktu komputasi maupun stabilitas performa. Dengan demikian, penelitian tidak hanya menghasilkan model dengan performa terbaik (Random Forest), tetapi juga memberikan pemahaman menyeluruh mengenai kondisi penggunaan masing-masing algoritma — termasuk kapan DT lebih direkomendasikan daripada RF (sistem real-time dengan resource terbatas) dan kapan SVM kurang cocok digunakan.
