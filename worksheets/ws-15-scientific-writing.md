@@ -133,7 +133,6 @@ Buat consistency matrix untuk memverifikasi internal consistency paper Anda.
 |  | Intro | Method | Result | Discussion | Conclusion |
 |--|-------|--------|--------|-----------|-----------|
 | RQ1 | ✓ | ✓ | ✓ | ✓ | ✓ |
-| RQ2 | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Accuracy |✓ |✓ |✓ |✓ |✓ |
 | Precision |✓ |✓ |✓ |✓ |✓ |
 | Recall |✓ |✓ |✓ |✓ |✓ |
@@ -166,7 +165,7 @@ Ambil satu paragraf dari tulisan Anda (atau tulis paragraf baru) dan evaluasi ku
 
 **Paragraf setelah perbaikan:**
 > (tulis paragraf yang sudah diperbaiki)
-Penelitian ini bertujuan membandingkan performa tiga algoritma machine learning yaitu Decision Tree, Random Forest, dan Support Vector Machine dalam mendeteksi intrusi jaringan komputer menggunakan dataset NSL-KDD. Evaluasi dilakukan menggunakan metrik accuracy, precision, recall, F1-score, serta AUC untuk menentukan algoritma dengan performa terbaik dalam sistem intrusion detection.
+Penelitian ini membandingkan performa tiga algoritma machine learning — Decision Tree dan Support Vector Machine (SVM) sebagai kondisi baseline (kondisi A), serta Random Forest sebagai kondisi intervensi (kondisi B) — dalam mendeteksi intrusi jaringan komputer menggunakan dataset NSL-KDD (110.082 record setelah preprocessing, split 70:30). Evaluasi dilakukan menggunakan lima metrik: akurasi, presisi, recall, F1-score, dan AUC, yang divalidasi melalui 10-fold cross-validation dan hyperparameter tuning dengan grid search.
 
 ## Refleksi
 
