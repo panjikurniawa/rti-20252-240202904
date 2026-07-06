@@ -138,7 +138,7 @@ Rencanakan presentasi 15 menit untuk riset Anda.
 | 8 |Hasil statistik ANOVA dan Friedman Test |Grafik statistik |1.5 min |
 | 9 |Kesimpulan penelitian dan rekomendasi penelitian berikutnya |Closing slide | 2 min |
 
-**Total waktu estimasi:** ____ menit
+**Total waktu estimasi:** 15 menit
 
 ---
 
