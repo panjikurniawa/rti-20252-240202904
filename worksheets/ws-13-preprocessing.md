@@ -67,7 +67,7 @@ Data leakage terjadi ketika informasi dari test set "bocor" ke preprocessing:
 PREPROCESSING LOG
 
 Dataset           : NSL-KDD Dataset
-Jumlah data awal  : 148517 records
+Jumlah data awal  : 148.517 records
 
 Cleaning:
 | Masalah       | Jumlah Kasus | Penanganan                  | Justifikasi                                          |
@@ -81,18 +81,25 @@ Transformation:
 | Transformasi     | Variabel                | Detail                                  | Alasan                             |
 | ---------------- | ----------------------- | --------------------------------------- | ---------------------------------- |
 | Label Encoding   | Label                   | Normal → 1, Attack → 0                  | Mengubah label menjadi numerik     |
-| One Hot Encoding | Protocol, Service, Flag | Mengubah kategori menjadi fitur numerik | Algoritma membutuhkan data numerik |
+| One Hot Encoding | protocol_type, Service, Flag | Mengubah kategori menjadi fitur numerik | Algoritma machine learning membutuhkan data numerik |
 
 
 Normalization:
-  Metode    : StandardScaler (Z-Score Normalization)
-  Alasan    : Menyamakan skala data agar model SVM bekerja lebih optimal
-  Parameter : Training set saja
+  Metode    : MinMaxScaler (Min-Max Normalization)
+  Formula   : (x - min) / (max - min)
+  Output    : Nilai dalam rentang [0, 1]
+  Alasan    : Menyamakan skala seluruh fitur numerik agar setiap fitur
+              berkontribusi seimbang dalam model, khususnya SVM yang
+              sangat sensitif terhadap perbedaan skala antar fitur.
+  Parameter : Dihitung dari training set saja (fit_transform pada X_train,
+              transform saja pada X_test) — mencegah data leakage.
 
 Leakage Check:
-  [✓ ] Parameter normalisasi dari training set saja
-  [✓ ] Tidak ada informasi test set dalam preprocessing
-  [✓ ] Cross-validation dilakukan setelah split
+  [✓] Parameter normalisasi dari training set saja
+      (scaler.fit_transform(X_train) → scaler.transform(X_test))
+  [✓] Tidak ada informasi test set dalam preprocessing
+  [✓] Cross-validation dilakukan setelah split 70:30
+
 
 Jumlah data akhir : 110082 records
 Script tersedia   : [✓ ] Ya →Google Colab Notebook path: ____ | [ ] Belum
@@ -108,7 +115,7 @@ Periksa dataset Anda (atau dataset contoh) dan dokumentasikan masalah yang ditem
 |---------|-------------|------------|-------------|
 | Missing Value | 0 | Tidak ada tindakan | Dataset lengkap |
 |Data Duplikat |610 |Menghapus duplicate rows |Menghindari pengulangan data |
-|Outlier |37825 |Metode IQR |Mengurangi noise pada data |
+|Outlier |37825 |Metode IQR (Interquartile Range) pada fitur duration, src_bytes, dst_bytes |Mengurangi noise dan nilai ekstrem yang dapat memengaruhi decision boundary model |
 
 
 **Jumlah data sebelum cleaning:** 148517
@@ -123,18 +130,19 @@ Tentukan apakah data Anda perlu normalisasi, dan jika ya, metode apa yang tepat.
 
 | Variabel | Range Asli | Distribusi | Outlier? | Metode Normalisasi | Alasan |
 |----------|-----------|-----------|----------|-------------------|--------|
-| duration | 0 – sangat besar | Tidak merata | Ya| StandardScaler | Menyamakan skala |
-|src_bytes |Nilai tinggi bervariasi |Tidak normal |Ya |StandardScaler |Mengurangi perbedaan rentang |
-|dst_bytes |Nilai tinggi bervariasi | Tidak normal | Ya |StandardScaler | Mempermudah training model |
-|label | 1-0 | Sudah numerik | Tidak | Tidak perlu |Sudah dalam bentuk target|
+| duration | 0 – sangat besar | Tidak merata | Ya| MinMaxScaler | Menyamakan skala ke [0,1]; setelah IQR, outlier ekstrem sudah dibuang |
+|src_bytes |Nilai tinggi bervariasi |Tidak normal |Ya | MinMaxScaler |Mengurangi perbedaan rentang antar fitur |
+|dst_bytes |Nilai tinggi bervariasi | Tidak normal | Ya |MinMaxScaler | Mempermudah training model, khususnya SVM |
+|label | 0 atau 1 | Sudah numerik | Tidak | Tidak perlu |Sudah dalam bentuk target biner |
 
 **Apakah normalisasi diperlukan?** [✓ ] Ya / [ ] Tidak
 **Justifikasi:**
-> Normalisasi diperlukan karena dataset memiliki banyak fitur numerik dengan skala berbeda. Tanpa normalisasi, algoritma seperti SVM dapat menghasilkan performa yang kurang optimal karena sensitif terhadap perbedaan skala antar fitur.
-
+> Normalisasi diperlukan karena dataset memiliki banyak fitur numerik dengan skala yang sangat berbeda (contoh: fitur duration bernilai 0–58.329, sementara fitur flag hasil one-hot encoding bernilai 0–1). Tanpa normalisasi, algoritma seperti SVM yang berbasis jarak/margin akan didominasi oleh fitur dengan nilai besar, sehingga performa model menjadi suboptimal. MinMaxScaler dipilih karena setelah penghapusan outlier dengan metode IQR, tidak ada lagi nilai ekstrem yang signifikan sehingga sensitivitas MinMaxScaler terhadap outlier tidak menjadi masalah.
+> 
 **Leakage check:**
-- [✓ ] Parameter dihitung dari training set saja
-- [✓ ] Normalisasi diterapkan setelah train-test split
+- [✓ ] Parameter MinMaxScaler (nilai min dan max) dihitung dari training set saja menggunakan fit_transform(X_train)
+- [✓ ] Normalisasi pada data testing hanya menggunakan transform(X_test) — bukan fit_transform
+- [✓ ] Normalisasi dilakukan setelah train-test split 70:30
 
 ---
 
@@ -145,16 +153,32 @@ Buat ringkasan preprocessing lengkap — dokumentasi yang cukup bagi orang lain 
 ```
 PREPROCESSING SUMMARY
 
-1. Dataset: NSL-KDD Dataset
-2. Data awal: 148517 records, 41 features
+1. Dataset: NSL-KDD Dataset (gabungan KDDTrain+ dan KDDTest+)
+2. Data awal: 148.517 records, 41 fitur asli
 3. Cleaning:
    - Missing values: 0 kasus, metode: tidak diperlukan penanganan
    - Duplikat: 610 kasus, tindakan: dihapus
-   - Error: 37825 kasus, tindakan: dihapus menggunakan metode IQR
-4. Transformation: Label encoding pada target klasifikasi
-                   One Hot Encoding pada fitur kategorikal
-5. Normalisasi: StandardScaler (Z-Score) (metode), parameter dari training set
-6. Data akhir: 110082 records, 122 features + 1 label
+   - Outlier        : 37.825 kasus → dihapus menggunakan metode IQR
+                      pada fitur duration, src_bytes, dst_bytes
+                      (batas: Q1 - 3×IQR sampai Q3 + 3×IQR)
+4. Transformation:
+    - Label encoding   : Label dikategorikan biner
+                        attack → 0, normal → 1
+                        menggunakan LabelEncoder dari scikit-learn
+     - One-Hot Encoding : Fitur kategorikal (protocol_type, service, flag)
+                        diubah menjadi fitur numerik biner
+                        menggunakan pd.get_dummies()
+                        Jumlah fitur bertambah dari 41 → 122 fitur
+5. Train-Test Split:
+   - Rasio : 70% training (77.057 records) : 30% testing (33.025 records)
+   - Metode: train_test_split(stratify=y, random_state=42)                        
+6. Normalisasi:
+   - Metode  : MinMaxScaler (Min-Max Normalization)
+   - Formula : (x - min) / (max - min) → output rentang [0, 1]
+   - Parameter (min, max) dihitung HANYA dari training set:
+     X_train_scaled = scaler.fit_transform(X_train)
+     X_test_scaled  = scaler.transform(X_test)
+6. Data akhir: 110.082 records, 122 fitur + 1 label
 7. Leakage check: [✓ ] Lulus / [ ] Ada masalah
 ```
 
@@ -164,6 +188,4 @@ PREPROCESSING SUMMARY
 
 > Apakah Anda pernah melakukan normalisasi "karena biasa dilakukan" tanpa mempertimbangkan apakah benar-benar diperlukan? Apa risiko over-preprocessing?
 
-> Pada beberapa eksperimen machine learning, proses normalisasi sering dilakukan karena dianggap sebagai langkah standar. Namun sebenarnya tidak semua model membutuhkan normalisasi. Jika preprocessing dilakukan secara berlebihan, terdapat risiko perubahan distribusi data yang justru dapat memengaruhi performa model.
-Dalam penelitian ini, normalisasi dilakukan karena salah satu algoritma yang digunakan adalah SVM yang sangat sensitif terhadap skala data. Oleh karena itu preprocessing dilakukan secukupnya agar kualitas data tetap terjaga tanpa menyebabkan distorsi berlebihan.
-> Dengan preprocessing yang terstruktur, proses eksperimen menjadi lebih valid dan hasil penelitian dapat dipercaya.
+> Pada beberapa eksperimen machine learning, proses normalisasi sering dilakukan karena dianggap sebagai langkah standar. Namun sebenarnya tidak semua model membutuhkan normalisasi. Jika preprocessing dilakukan secara berlebihan, terdapat risiko perubahan distribusi data yang justru dapat memengaruhi performa model. Dalam penelitian ini, normalisasi (MinMaxScaler) dilakukan karena salah satu algoritma yang digunakan adalah SVM yang sangat sensitif terhadap skala data. Selain itu, Decision Tree dan Random Forest juga mendapat manfaat dari skala fitur yang seragam. Oleh karena itu preprocessing dilakukan secukupnya agar kualitas data tetap terjaga tanpa menyebabkan distorsi berlebihan. Dengan preprocessing yang terstruktur dan terdokumentasi, proses eksperimen menjadi lebih valid, dapat direplikasi, dan hasil penelitian dapat dipercaya.
