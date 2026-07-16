@@ -1,14 +1,14 @@
-# Rencana Penelitian: Mitigasi JWKS Endpoint Flooding dengan Redis-PostgreSQL Hybrid Caching
-
+# Rencana Penelitian: Analisis Penerapan Algoritma Random Forest dalam Meningkatkan Akurasi Deteksi Intrusi pada Jaringan Komputer
 ## 1. Ringkasan
 
 | Item | Keterangan |
 |---|---|
-| Judul | Performance and Security Evaluation of Mitigating JWKS Endpoint Flooding on Microservices Gateway Using Redis-PostgreSQL Hybrid Caching |
-| Target Publikasi | Sinta 2 (Jurnal RESTI/Telematika) atau Scopus Q3-Q4 |
-| Stack | Docker, PostgreSQL, Redis, API Gateway (Go), k6 |
-| Masalah | JWKS Endpoint Flooding via `kid` acak → kueri tak terbatas ke Identity Service/DB → resource exhaustion |
-| Solusi | Hybrid cache (Redis L1 + PostgreSQL L2) + negative caching + rate-limiting pada lookup kunci |
+| Judul |  Analisis Penerapan Algoritma Random Forest dalam Meningkatkan Akurasi Deteksi Intrusi pada Jaringan Komputer |
+| Target Publikasi | Technology and Informatics Insight Journal (TIIJ) |
+| Stack | Python, Google Colab, Scikit-learn, Pandas, NumPy, Matplotlib |
+| Dataset | NSL-KDD |
+| Masalah | Sistem Intrusion Detection System (IDS) konvensional memiliki keterbatasan dalam mendeteksi serangan baru sehingga diperlukan metode machine learning yang lebih adaptif. |
+| Solusi | Menerapkan dan mengevaluasi algoritma Random Forest serta membandingkan performanya dengan Decision Tree dan Support Vector Machine (SVM) menggunakan metrik akurasi, presisi, recall, F1-score, dan AUC. |
 
 ## 2. Alur Kerja (Roadmap)
 
