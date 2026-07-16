@@ -86,24 +86,25 @@ Tahapan preprocessing meliputi:
 Penelitian membandingkan tiga algoritma machine learning, yaitu:
 
 | Algoritma | Fungsi |
-|---|---|---|---|
+|---|---|
 | Decision Tree | Sebagai algoritma baseline pertama. |
 | Random Forest | Algoritma utama yang dianalisis dalam penelitian. |
 | Support Vector Machine (SVM) | Sebagai algoritma baseline kedua untuk perbandingan performa. |
-
 
 ## 5. Metrik Evaluasi
 
 Model dievaluasi menggunakan beberapa metrik, yaitu:
 
 | Metrik | Tujuan |
-|  Accuracy | Mengukur tingkat ketepatan klasifikasi. |
+|---|---|
+| Accuracy | Mengukur tingkat ketepatan klasifikasi. |
 | Precision | Mengukur ketepatan prediksi data positif. |
 | Recall | Mengukur kemampuan mendeteksi seluruh data positif. |
 | F1-Score | Menggabungkan Precision dan Recall. |
 | AUC | Mengukur kemampuan model membedakan dua kelas. |
 | Confusion Matrix | Mengetahui jumlah prediksi benar dan salah. |
 | ROC Curve | Membandingkan performa klasifikasi setiap algoritma. |
+
 
 ## 6. Keputusan Penelitian
 
