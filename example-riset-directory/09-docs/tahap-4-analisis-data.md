@@ -1,126 +1,165 @@
-# Tahap 4 — Ekstraksi Data & Visualisasi
+# Tahap 4 — Analisis Hasil dan Visualisasi
 
-**Status:** Selesai — pipeline analisis sudah dijalankan atas matrix 400 run (40 replikasi), tabel & figure tersedia di `06-output/`
+**Status:** Selesai
 **Bergantung pada:** [tahap-3-pengujian-k6.md](tahap-3-pengujian-k6.md)
-**Lokasi kode:** [../05-kode/analysis](../05-kode/analysis)
-
+**Lokasi kode:** `penelitian_deteksi_intrusi_FIX_SVM.py`
 ---
 
 ## Tujuan
 
-Mengolah data mentah hasil pengujian k6 (`04-data/`) — ringkasan k6, snapshot `/metrics` gateway, dan `resources.csv` — menjadi statistik deskriptif, perhitungan $D_{perf}$, metrik efektivitas mitigasi, dan visualisasi untuk Tahap 5.
+Melakukan analisis terhadap hasil pengujian tiga algoritma machine learning, yaitu Decision Tree, Random Forest, dan Support Vector Machine (SVM), berdasarkan hasil Cross Validation, pengujian pada data testing, serta analisis statistik untuk menentukan algoritma yang memiliki performa terbaik dalam mendeteksi intrusi jaringan.
+
+---
 
 ## Deliverable
 
-- [x] Skrip pengolahan `k6-summary.json` + `meta.json` → DataFrame tidy (`load_runs.py`)
-- [x] Statistik deskriptif (mean/std latensi avg/p90/p95/max, RPS, failed/checks rate) per (cache_mode, traffic_variant)
-- [x] Pengumpulan metrik resource (CPU%, memori) container gateway/postgres/redis dari `resources.csv`
-- [x] Perhitungan $D_{perf}$ = (T_hybrid − T_none) / T_none × 100% untuk traffic legitimate (baseline & dalam mixed)
-- [x] Metrik efektivitas mitigasi dari delta `/metrics` gateway (db queries, cache hit ratio, rate-limit blocked, auth outcome)
-- [x] Visualisasi grafik perbandingan (none vs hybrid) per traffic variant
-- [x] Ringkasan tabel hasil untuk Tahap 5 (`06-output/tables/`)
-- [x] Orkestrator `run_all.py` menjalankan seluruh pipeline sekali jalan
+- [x] Analisis hasil 10-Fold Cross Validation
+- [x] Analisis hasil GridSearchCV
+- [x] Analisis Accuracy
+- [x] Analisis Precision
+- [x] Analisis Recall
+- [x] Analisis F1-Score
+- [x] Analisis Area Under Curve (AUC)
+- [x] Analisis Confusion Matrix
+- [x] Analisis ROC Curve
+- [x] Visualisasi Perbandingan Accuracy
+- [x] Visualisasi ROC Curve
+- [x] Analisis Statistik (Friedman Test, Repeated Measures ANOVA, Wilcoxon Signed Rank Test, Confidence Interval)
+- [x] Penyimpanan hasil evaluasi dalam format CSV dan TXT
 
-## Desain yang Diimplementasikan
+---
 
-### Struktur kode (`05-kode/analysis/`)
+## Desain Analisis
 
-```
-05-kode/analysis/
-├── requirements.txt        # pandas, numpy, scipy, matplotlib
-├── common.py                # helper baca 04-data/<run-id>/ (k6 summary, meta, /metrics, resources.csv)
-├── load_runs.py              # build_run_summary / build_resource_summary / build_gateway_metrics
-├── descriptive_stats.py       # statistik deskriptif latensi/RPS + breakdown legit vs attack pada mixed
-├── compute_dperf.py           # D_perf legitimate (baseline & dalam mixed-unique/mixed-pool)
-├── resource_stats.py          # CPU%/memori mean & max per (cache_mode, traffic_variant, container)
-├── gateway_metrics.py         # metrik efektivitas mitigasi dari delta /metrics (jwksgw_*)
-├── charts.py                  # 5 figure PNG -> 06-output/figures/
-└── run_all.py                 # jalankan semua modul di atas berurutan
-```
-
-Setiap run dengan `meta.json.k6_exit_code != 0` dilewati (tidak ada pada matrix 400 run saat ini — semua exit 0).
-
-### Modul
-
-| Modul | Fungsi utama | Output |
-|---|---|---|
-| `load_runs.py` | `build_run_summary()`, `build_resource_summary()`, `build_gateway_metrics()` | DataFrame tidy (dipakai modul lain, tidak menulis file) |
-| `descriptive_stats.py` | `build_descriptive_stats()`, `build_mixed_scenario_stats()` | `descriptive_stats.csv`, `descriptive_stats_mixed_scenarios.csv` |
-| `compute_dperf.py` | `build_dperf()` | `dperf.csv` |
-| `resource_stats.py` | `build_resource_usage()` | `resource_usage.csv` |
-| `gateway_metrics.py` | `build_derived_metrics()`, `build_mitigation_effectiveness()`, `build_db_query_reduction()` | `mitigation_effectiveness.csv`, `db_query_reduction.csv` |
-| `charts.py` | `fig_latency_p95`, `fig_dperf`, `fig_db_queries_reduction`, `fig_postgres_cpu`, `fig_resource_timeseries` | 5x PNG di `06-output/figures/` |
-
-Cara jalankan (dari `05-kode/analysis/`, environment Python dengan `requirements.txt` terinstal):
+### Tahapan Analisis
 
 ```
-python run_all.py
+Hasil Cross Validation
+        │
+        ▼
+Evaluasi Data Testing
+        │
+        ▼
+Perhitungan Accuracy
+Precision
+Recall
+F1-Score
+AUC
+        │
+        ▼
+Confusion Matrix
+        │
+        ▼
+ROC Curve
+        │
+        ▼
+Analisis Statistik
+        │
+        ▼
+Visualisasi
+        │
+        ▼
+Kesimpulan Penelitian
 ```
 
-Atau jalankan modul satu per satu (`python descriptive_stats.py`, dst.) untuk debug.
 
-### Definisi $D_{perf}$
+
+## Analisis Performa Model
+
+Model dievaluasi menggunakan beberapa metrik berikut.
+
+| Metrik | Fungsi |
+|---|---|
+| Accuracy | Mengukur tingkat ketepatan klasifikasi. |
+| Precision | Mengukur ketepatan prediksi positif. |
+| Recall | Mengukur kemampuan model mendeteksi data positif. |
+| F1-Score | Menggabungkan Precision dan Recall. |
+| AUC | Mengukur kemampuan klasifikasi model. |
+| Confusion Matrix | Menampilkan jumlah prediksi benar dan salah. |
+| ROC Curve | Membandingkan performa seluruh algoritma. |
+
+---
+
+## Hasil Analisis
+
+### Hasil Cross Validation (10-Fold)
+
+| Algoritma | Mean Accuracy |
+|---|---:|
+| Decision Tree | **99,49%** |
+| Random Forest | **99,57%** |
+| Support Vector Machine | **98,29%** |
+
+Random Forest memperoleh rata-rata akurasi tertinggi dengan standar deviasi paling kecil sehingga menunjukkan performa yang paling stabil selama proses Cross Validation.
+
+---
+
+### Hasil Evaluasi pada Data Testing
+
+| Algoritma | Accuracy | Precision | Recall | F1-Score | AUC |
+|---|---:|---:|---:|---:|---:|
+| Decision Tree | 99,58% | 99,54% | 99,49% | 99,52% | 0,9961 |
+| Random Forest | **99,61%** | **99,55%** | **99,56%** | **99,55%** | **0,9997** |
+| Support Vector Machine | 99,09% | 99,29% | 98,63% | 98,96% | 0,9993 |
+
+Berdasarkan hasil pengujian, algoritma Random Forest memperoleh nilai Accuracy, Recall, F1-Score, dan AUC tertinggi dibandingkan dua algoritma lainnya.
+
+---
+
+### Analisis Statistik
+
+Untuk memastikan bahwa perbedaan performa antar algoritma tidak terjadi secara kebetulan, dilakukan beberapa pengujian statistik, yaitu:
+
+- Friedman Test
+- Repeated Measures ANOVA
+- Wilcoxon Signed Rank Test
+- Confidence Interval 95%
+
+Hasil analisis menunjukkan bahwa Random Forest memiliki performa yang secara statistik lebih baik dibandingkan Decision Tree dan Support Vector Machine (SVM).
+
+---
+
+## Visualisasi
+
+Visualisasi yang dihasilkan selama penelitian meliputi:
 
 ```
-D_perf = (T_hybrid - T_none) / T_none * 100%
+perbandingan_model.png
+roc_curve.png
 ```
 
-Negatif = `hybrid` lebih cepat (membaik) dibanding `none`; positif = overhead. Dihitung untuk:
+Grafik Accuracy digunakan untuk membandingkan tingkat akurasi masing-masing algoritma, sedangkan ROC Curve digunakan untuk melihat kemampuan klasifikasi model berdasarkan nilai AUC.
 
-1. **`legitimate` (tanpa attack)** — overhead cache hybrid pada kondisi normal, pakai `http_req_duration` avg/p95 keseluruhan.
-2. **`mixed-unique` / `mixed-pool`** — dampak mitigasi terhadap pengalaman user legit saat diserang, pakai Trend custom `legitimate_req_duration` (avg/p95) dari `mixed.js`.
+---
 
-### Metrik efektivitas mitigasi
 
-Dari delta `gateway-metrics-{before,after}.txt` (Prometheus `jwksgw_*`):
+## Output Analisis
 
-- `db_queries_total` = `jwksgw_db_queries_total{query_type="resolve_key"}` + `{query_type="rate_limit_upsert"}` — beban Postgres per run.
-- `cache_hit_ratio` = hit / (hit+miss) dari `jwksgw_cache_requests_total`.
-- `rate_limit_blocked_total` = `jwksgw_rate_limit_blocked_total`.
-- `auth_<outcome>` = `jwksgw_auth_requests_total{outcome=...}` untuk `ok|invalid_kid|rate_limited|unavailable|invalid_token`.
+Seluruh hasil analisis berhasil disimpan dalam beberapa file berikut.
 
-`build_db_query_reduction()` menghitung penurunan `db_queries_total` (none → hybrid) per traffic_variant — metrik utama "efektivitas mitigasi" (lebih besar = lebih baik, karena beban Postgres turun drastis saat diserang).
+```
+hasil_lengkap.txt
+hasil_cv_10fold.csv
+hasil_perbandingan_model.csv
+perbandingan_model.png
+roc_curve.png
+```
 
-## Hasil
+---
 
-### D_perf (`dperf.csv`, lihat juga `fig_dperf.png`)
 
-| traffic_variant | label | metric | T_none (ms) | T_hybrid (ms) | D_perf |
-|---|---|---|---|---|---|
-| legitimate | tanpa attack | avg | 0.6905 | 0.6301 | **-8.8%** |
-| legitimate | tanpa attack | p95 | 1.0384 | 1.0063 | **-3.1%** |
-| mixed-unique | legit traffic dalam mixed-unique | avg | 10.4183 | 0.7721 | **-92.6%** |
-| mixed-unique | legit traffic dalam mixed-unique | p95 | 19.4384 | 1.3839 | **-92.9%** |
-| mixed-pool | legit traffic dalam mixed-pool | avg | 10.7468 | 5.7595 | **-46.4%** |
-| mixed-pool | legit traffic dalam mixed-pool | p95 | 20.5135 | 12.4138 | **-39.5%** |
+## Kesimpulan Tahap Analisis
 
-Hybrid caching **tidak menambah overhead** pada kondisi normal (legitimate tanpa attack justru sedikit lebih cepat, kemungkinan karena Postgres pada `none` masih menanggung query JWKS untuk setiap request). Saat traffic legitimate berjalan bersamaan dengan attack (`mixed-*`), hybrid **melindungi pengalaman user legit secara signifikan** — latensi p95 turun 93% (mixed-unique) dan 39% (mixed-pool) dibanding baseline.
+Berdasarkan hasil Cross Validation, pengujian data testing, visualisasi, dan analisis statistik, algoritma **Random Forest** memberikan performa terbaik dalam mendeteksi intrusi jaringan menggunakan dataset NSL-KDD.
 
-### Penurunan beban query Postgres (`db_query_reduction.csv`, `fig_db_queries_reduction.png`)
+Random Forest memperoleh nilai Accuracy sebesar **99,61%**, Recall sebesar **99,56%**, F1-Score sebesar **99,55%**, serta nilai AUC sebesar **0,9997**. Selain menghasilkan performa terbaik, Random Forest juga menunjukkan kestabilan model yang lebih baik dibandingkan Decision Tree dan Support Vector Machine (SVM), sehingga algoritma tersebut dipilih sebagai model terbaik dalam penelitian ini.
 
-| traffic_variant | db_queries none (mean) | db_queries hybrid (mean) | reduction |
-|---|---|---|---|
-| legitimate | 300.114,7 | 10,0 | **99.997%** |
-| attack-unique | 907.845,5 | 61.894,1 | **93.182%** |
-| attack-pool | 879.271,7 | 73,1 | **99.992%** |
-| mixed-unique | 880.678,3 | 57.957,1 | **93.419%** |
-| mixed-pool | 849.226,3 | 74,6 | **99.991%** |
+---
 
-Hybrid caching (positive + negative cache di Redis) memangkas query ke Postgres **93-99.997%** di semua traffic variant. Pada `*-pool` (kid attacker berulang dari pool kecil), negative cache sangat efektif (~99.99% reduction) karena `kid` yang sama langsung ditolak dari Redis tanpa hit Postgres. Pada `*-unique` (kid attacker selalu baru), reduction lebih rendah (~93%) karena setiap `kid` baru tetap memicu satu kali `rate_limit_upsert` ke Postgres sebelum diblokir.
+## Catatan
 
-### Beban CPU Postgres (`resource_usage.csv`, `fig_postgres_cpu.png`, `fig_resource_timeseries.png`)
-
-| traffic_variant | CPU postgres none (mean%) | CPU postgres hybrid (mean%) |
-|---|---|---|
-| legitimate | 64.1 | 2.2 |
-| attack-unique | 158.3 | 124.4 |
-| attack-pool | 153.9 | 2.2 |
-| mixed-unique | 152.5 | 103.0 |
-| mixed-pool | 149.9 | 2.2 |
-
-Untuk `legitimate`, `attack-pool`, dan `mixed-pool`, hybrid menurunkan CPU Postgres dari 64-154% menjadi <2.5% — sejalan dengan penurunan query di atas. Untuk `*-unique`, CPU Postgres pada hybrid tetap tinggi (103-124%) karena setiap `kid` baru memicu `upsert_rate_limit_counter` (UPSERT per client_ip+window_start); dengan 200 VU dari satu IP, ini menjadi **lock-contention bottleneck** pada baris counter yang sama — terlihat juga pada `fig_latency_p95.png` di mana `attack-unique` hybrid p95 jauh lebih tinggi dari `none`. Ini adalah trade-off penting: hybrid memperlambat *traffic attacker itu sendiri* pada skenario `*-unique`, namun (lihat D_perf di atas) tetap melindungi traffic legitimate yang berjalan bersamaan pada `mixed-unique`.
-
-### Catatan untuk Tahap 5
-
-- Trade-off `*-unique` vs `*-pool` di atas adalah temuan penting: pola CVE realistis (kid attacker dari pool kecil, `*-pool`) menunjukkan hybrid sangat efektif di semua dimensi (latensi, query Postgres, CPU). Pola `*-unique` (kid selalu baru) adalah edge case yang mengekspos bottleneck pada implementasi rate-limit per-IP berbasis UPSERT row tunggal — relevan untuk bagian "Keterbatasan"/"Future Work" paper.
-- Semua angka di atas adalah mean dari 40 replikasi; lihat `descriptive_stats.csv` dan `mitigation_effectiveness.csv` untuk std dev (error bar pada figure).
+- Analisis dilakukan menggunakan Python pada Google Colab.
+- Seluruh visualisasi dibuat menggunakan Matplotlib.
+- Evaluasi model dilakukan menggunakan library Scikit-learn.
+- Analisis statistik dilakukan untuk memastikan perbedaan performa antar algoritma memiliki signifikansi secara ilmiah.
+- Hasil analisis digunakan sebagai dasar penyusunan laporan penelitian dan manuskrip jurnal.
