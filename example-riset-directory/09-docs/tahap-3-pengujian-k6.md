@@ -52,6 +52,7 @@ Pengujian dilakukan menggunakan metode **10-Fold Cross Validation**, **GridSearc
 
 ### Tahapan Pengujian
 
+```
 Dataset NSL-KDD
         │
         ▼
@@ -77,6 +78,9 @@ Testing Model
         │
         ▼
 Evaluasi Model
+```
+
+---
 
 
 ### Parameter Pengujian
