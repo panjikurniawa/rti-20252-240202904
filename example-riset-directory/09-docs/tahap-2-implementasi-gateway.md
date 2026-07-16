@@ -1,39 +1,84 @@
-# Tahap 2 — Implementasi API Gateway (Go)
+# Tahap 2 — Implementasi Model Machine Learning
+
 
 **Status:** Selesai
 **Acuan arsitektur:** [tahap-1-arsitektur-dan-skema-database.md](tahap-1-arsitektur-dan-skema-database.md)
 **Lokasi kode:** [../05-kode/gateway/](../05-kode/gateway/)
+**Lokasi kode:** `penelitian_deteksi_intrusi_FIX_SVM.py`
+
 
 ---
 
 ## Tujuan
 
-Mengimplementasikan API Gateway (Go + Echo) yang mendukung dua mode operasi melalui `CACHE_MODE`:
+Mengimplementasikan model machine learning untuk mendeteksi intrusi jaringan menggunakan dataset NSL-KDD dengan membandingkan tiga algoritma klasifikasi, yaitu:
 
-- `none` — baseline, setiap request langsung query `signing_keys` di PostgreSQL.
-- `hybrid` — mitigasi penuh: Redis L1 cache (positive/negative) + rate-limit counter permanen di PostgreSQL.
+- Decision Tree
+- Random Forest
+- Support Vector Machine (SVM)
+
+Seluruh implementasi dilakukan menggunakan Python pada Google Colab dengan library Scikit-learn.
+
 
 ## Deliverable
 
-- [x] Struktur project Go (`cmd/gateway`, `internal/...`) — DDD-lite per bounded-context (`jwks`, `ratelimit`, `jwtauth`, `httpapi`, `platform`, `metrics`)
-- [x] `docker-compose.yml` (gateway, postgres, redis) dengan healthcheck & `depends_on: condition: service_healthy`
-- [x] Migration SQL via Sqitch (`signing_keys`, `rate_limit_counters`, `upsert_rate_limit_counter` function)
-- [x] Skrip seed (`scripts/seed`): generate RSA-2048 keypair, insert ke `signing_keys`, cetak contoh JWT valid (exp +24h)
-- [x] Middleware verifikasi JWT (RS256) + resolusi `kid` (mode `none` dan `hybrid`, fail-closed pada Postgres down, fail-open pada Redis down)
-- [x] Endpoint `/metrics` (Prometheus, prefix `jwksgw_`): cache hit/miss, db query count, rate-limit blocked count, auth outcome, request duration
-- [x] Konfigurasi via environment variable (`.env.example`)
-- [x] `/healthz` (dipakai healthcheck compose & runner Tahap 3)
-- [x] `README.md` dengan command mentah (sqitch deploy, seed, run, docker compose, switch `CACHE_MODE`)
+- [x] Import dataset NSL-KDD (KDDTrain+ dan KDDTest+)
+- [x] Pemeriksaan missing value
+- [x] Penghapusan data duplikat
+- [x] Penanganan outlier menggunakan metode IQR
+- [x] Konversi label menjadi klasifikasi biner (Normal dan Attack)
+- [x] One-Hot Encoding pada fitur kategorikal
+- [x] Pembagian data Training (70%) dan Testing (30%)
+- [x] Normalisasi data menggunakan MinMaxScaler
+- [x] Implementasi algoritma Decision Tree
+- [x] Implementasi algoritma Random Forest
+- [x] Implementasi algoritma Support Vector Machine (SVM)
+- [x] Optimasi parameter menggunakan GridSearchCV
+- [x] Validasi model menggunakan 10-Fold Cross Validation
+- [x] Evaluasi model menggunakan Accuracy, Precision, Recall, F1-Score, AUC, Confusion Matrix, dan ROC Curve
+- [x] Penyimpanan hasil evaluasi dalam format CSV
+- [x] Pembuatan visualisasi grafik Accuracy dan ROC Curve
 
-## Hasil Verifikasi End-to-End
+## Hasil Implementasi
 
-Diverifikasi manual via `docker compose` + curl (lihat [../05-kode/gateway/README.md](../05-kode/gateway/README.md) bagian "Verifikasi end-to-end"):
+Seluruh tahapan implementasi berhasil dijalankan sesuai rancangan penelitian.
 
-- **Hybrid**: valid kid → 200 (cache miss → DB → fill cache) → 200 (cache hit); unknown kid → 401 `invalid_kid` (negative cache) tanpa query DB berulang; flood concurrent dengan `kid` unik → sebagian `429 rate_limited` setelah >20 req/s per `client_ip`.
-- **None**: valid kid selalu 200 dengan `jwksgw_db_queries_total{resolve_key}` naik 1:1 per request; tidak pernah `429`.
-- **Fail-closed**: Postgres down → `503 service_unavailable` (kedua mode). Redis down (hybrid) → kid yang sudah ter-cache tetap `200` (fallback Postgres), `/healthz` melaporkan `redis:false`.
+Tahapan preprocessing berhasil menghasilkan dataset sebanyak **110.082 record** setelah proses penghapusan missing value, data duplikat, dan outlier.
 
-## Catatan Lingkungan
+Model kemudian dilatih menggunakan tiga algoritma machine learning, yaitu Decision Tree, Random Forest, dan Support Vector Machine (SVM). Optimasi parameter dilakukan menggunakan GridSearchCV, kemudian setiap model dievaluasi menggunakan 10-Fold Cross Validation serta pengujian pada data testing.
 
-- PostgreSQL container di-expose ke host pada port **5433** (bukan 5432) untuk menghindari konflik dengan instance PostgreSQL lokal di mesin development. Di dalam jaringan Docker, gateway tetap mengakses `postgres:5432`.
-- Sqitch project (`migrations/`) adalah dokumentasi migrasi resmi (deploy/revert/verify), namun di mesin development saat ini `sqitch` CLI tidak punya driver `DBD::Pg` — migrasi diverifikasi dengan menjalankan file `deploy/*.sql` langsung via `psql`. Pastikan environment dengan `DBD::Pg` terpasang untuk `sqitch deploy` penuh.
+Hasil evaluasi menunjukkan bahwa algoritma **Random Forest** memperoleh performa terbaik dibandingkan dua algoritma lainnya berdasarkan nilai Accuracy, Precision, Recall, F1-Score, dan AUC.
+
+---
+
+## Catatan Implementasi
+
+- Bahasa pemrograman menggunakan **Python**.
+- Lingkungan pengembangan menggunakan **Google Colab**.
+- Library utama yang digunakan meliputi:
+  - Pandas
+  - NumPy
+  - Scikit-learn
+  - Matplotlib
+- Support Vector Machine (SVM) menggunakan subset data saat proses Cross Validation dan GridSearchCV untuk mengurangi waktu komputasi pada dataset yang besar.
+- Seluruh hasil penelitian disimpan dalam bentuk:
+  - `hasil_lengkap.txt`
+  - `hasil_cv_10fold.csv`
+  - `hasil_perbandingan_model.csv`
+  - `perbandingan_model.png`
+  - `roc_curve.png`
+
+## Output Penelitian
+
+Implementasi menghasilkan:
+
+- Model Decision Tree
+- Model Random Forest
+- Model Support Vector Machine (SVM)
+- Hasil Cross Validation
+- Hasil Grid Search
+- Confusion Matrix
+- Classification Report
+- Grafik Perbandingan Accuracy
+- Grafik ROC Curve
+- File CSV hasil evaluasi model
