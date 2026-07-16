@@ -24,4 +24,4 @@ Setiap tahap memiliki file rencana detail tersendiri agar lebih rapi:
 
 ## 3. Catatan
 
-Dokumen ini adalah indeks utama. Detail teknis, skema, dan keputusan masing-masing tahap dicatat pada file `tahap-N-*.md` terkait dan diperbarui seiring progres pengerjaan.
+Dokumen ini merupakan ringkasan pelaksanaan penelitian mengenai penerapan algoritma Random Forest dalam meningkatkan akurasi deteksi intrusi pada jaringan komputer menggunakan dataset NSL-KDD. Penelitian meliputi tahapan studi literatur, preprocessing data, pembangunan model machine learning, optimasi parameter menggunakan GridSearchCV, evaluasi model menggunakan Accuracy, Precision, Recall, F1-Score, AUC, serta analisis statistik sebelum disusun menjadi laporan penelitian dan artikel jurnal.
